@@ -18,16 +18,16 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Set up JDK 21 for Android Gradle
+      - name: Set up JDK 17 (Required by Capacitor 6)
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '21'
+          java-version: '17'
 
-      - name: Initialize Capacitor & Native TTS Plugin
+      - name: Initialize Capacitor 6 & Native TTS Plugin
         run: |
           npm init -y
-          npm install @capacitor/core @capacitor/cli @capacitor/android @capacitor-community/text-to-speech
+          npm install @capacitor/core@^6.0.0 @capacitor/cli@^6.0.0 @capacitor/android@^6.0.0 @capacitor-community/text-to-speech@^6.0.0
           cat << 'EOF' > capacitor.config.json
           {
             "appId": "com.abhijeet.babasanvad",
@@ -42,7 +42,7 @@ jobs:
         working-directory: ./android
         run: |
           chmod +x gradlew
-          ./gradlew assembleDebug
+          ./gradlew assembleDebug --no-daemon
 
       - name: Upload Compiled APK for Download
         uses: actions/upload-artifact@v4
