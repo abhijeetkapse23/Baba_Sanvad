@@ -18,16 +18,23 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Set up JDK 17 (Matches Capacitor 6 & SDK 34)
+      - name: Set up JDK 17 (Capacitor 6 / SDK 34)
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Initialize Capacitor 6 & Matching TTS Plugin v5
+      - name: Set up Gradle (caching)
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Initialize Capacitor 6 and TTS Plugin v5
         run: |
           npm init -y
-          npm install @capacitor/core@6.1.2 @capacitor/cli@6.1.2 @capacitor/android@6.1.2 @capacitor-community/text-to-speech@5.0.0
+          npm install @capacitor/core@6.1.2 @capacitor/cli@6.1.2 @capacitor/android@6.1.2 @capacitor-community/text-to-speech@5
+          mkdir -p www
+          if [ ! -f www/index.html ]; then
+            echo '<!DOCTYPE html><html><head><meta charset="utf-8"><title>Baba Sanvad</title></head><body>Baba Sanvad</body></html>' > www/index.html
+          fi
           printf '{"appId":"com.abhijeet.babasanvad","appName":"Baba Sanvad","webDir":"www"}\n' > capacitor.config.json
           npx cap add android
           npx cap sync android
@@ -36,9 +43,16 @@ jobs:
         working-directory: ./android
         run: |
           chmod +x gradlew
-          ./gradlew assembleDebug --no-daemon
+          for i in 1 2 3; do
+            ./gradlew assembleDebug --no-daemon --stacktrace && exit 0
+            echo "Attempt $i failed, retrying in 20s..."
+            sleep 20
+          done
+          exit 1
 
       - name: Upload Compiled APK for Download
         uses: actions/upload-artifact@v4
         with:
-          name: Baba-Sanvad-Android-
+          name: Baba-Sanvad-Android-APK
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+
