@@ -3,225 +3,242 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>बाबा संवाद — Senior OS</title>
+  <title>बाबा संवाद — Senior OS Architect Edition</title>
   <style>
     :root {
-      --bg: #030712;
-      --surface: #0F172A;
-      --surface-card: #1E293B;
-      --border: #334155;
-      --text-primary: #FFFFFF;
-      --text-secondary: #94A3B8;
-      --accent-family: #10B981;
-      --accent-daily: #0EA5E9;
-      --accent-health: #F43F5E;
-      --accent-outing: #F59E0B;
+      --canvas-bg: #07090E;
+      --card-bg: #131A29;
+      --card-pressed: #1A243A;
+      --border-subtle: #222E48;
+      --text-main: #FFFFFF;
+      --text-muted: #8B9BB4;
+      
+      /* Editorial Semantic Palette */
+      --tone-family: #0D9488;
+      --tone-daily: #0284C7;
+      --tone-health: #E11D48;
+      --tone-outing: #D97706;
     }
+    
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; }
+    
     body {
       margin: 0;
-      background: var(--bg);
-      color: var(--text-primary);
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      padding: env(safe-area-inset-top, 12px) 12px 40px;
+      background: var(--canvas-bg);
+      color: var(--text-main);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      padding: env(safe-area-inset-top, 16px) 16px 48px;
     }
 
-    /* Clean Streamlined HUD */
-    .hud {
+    /* Master Architectural Navigation HUD */
+    .master-hud {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 10px 14px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      margin-bottom: 12px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+      padding: 16px 20px;
+      background: var(--card-bg);
+      border: 1px solid var(--border-subtle);
+      border-radius: 24px;
+      margin-bottom: 16px;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.4);
     }
-    .brand {
-      font-size: 1.25rem;
-      font-weight: 900;
-      color: #38BDF8;
+    .brand-group {
       display: flex;
       flex-direction: column;
-      line-height: 1.1;
     }
-    .brand span { font-size: 0.6rem; color: #64748B; letter-spacing: 0.5px; }
-    .hud-right { display: flex; gap: 8px; align-items: center; }
-    .btn-action {
-      background: #1E293B;
-      color: #E2E8F0;
-      border: 1px solid #475569;
-      padding: 8px 12px;
-      border-radius: 10px;
+    .brand-title {
+      font-size: 1.4rem;
       font-weight: 800;
-      font-size: 0.82rem;
-      cursor: pointer;
+      letter-spacing: -0.3px;
+      color: #F8FAFC;
     }
-    .btn-action.active { background: #0284C7; border-color: #38BDF8; color: #FFF; }
-    .btn-emergency {
-      background: #DC2626;
+    .brand-subtitle {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+    .hud-actions { display: flex; gap: 10px; align-items: center; }
+    .btn-architect {
+      background: #1E293B;
+      color: #CBD5E1;
+      border: 1px solid #334155;
+      padding: 10px 16px;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-architect.active { background: #0284C7; border-color: #38BDF8; color: #FFF; }
+    .btn-sos-tactile {
+      background: #991B1B;
       color: #FFF;
       border: none;
-      padding: 8px 14px;
-      border-radius: 10px;
-      font-weight: 900;
-      font-size: 0.85rem;
-      box-shadow: 0 3px 10px rgba(220,38,38,0.4);
+      padding: 10px 18px;
+      border-radius: 14px;
+      font-weight: 800;
+      font-size: 0.9rem;
+      box-shadow: 0 4px 14px rgba(153,27,27,0.4);
       cursor: pointer;
     }
-    .btn-emergency:active { transform: scale(0.96); }
+    .btn-sos-tactile:active { transform: scale(0.96); }
 
-    /* Immersive Speech Banner */
-    .speech-banner {
-      background: linear-gradient(135deg, #0C1E3E, #090D16);
-      border: 2px solid #2563EB;
-      border-radius: 20px;
-      padding: 16px 18px;
-      margin-bottom: 12px;
+    /* Immersive Acoustic Stage Banner */
+    .acoustic-stage {
+      background: linear-gradient(145deg, #101A2E, #090E1A);
+      border: 1px solid #1E3A8A;
+      border-radius: 24px;
+      padding: 22px 24px;
+      margin-bottom: 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      box-shadow: 0 8px 24px rgba(37,99,235,0.2);
+      gap: 16px;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.5);
     }
-    .banner-main { font-size: 1.65rem; font-weight: 900; color: #FFF; line-height: 1.2; }
-    .banner-sub { font-size: 0.85rem; color: #93C5FD; margin-top: 3px; font-weight: 700; }
-    .btn-speak-again {
+    .stage-text-lg { font-size: 1.95rem; font-weight: 800; color: #FFFFFF; line-height: 1.2; letter-spacing: -0.5px; }
+    .stage-text-sm { font-size: 0.9rem; color: #60A5FA; margin-top: 6px; font-weight: 600; }
+    .btn-replay {
       background: #2563EB;
       color: #FFF;
       border: none;
-      border-radius: 12px;
-      padding: 12px 16px;
-      font-size: 0.95rem;
-      font-weight: 900;
-      white-space: nowrap;
-      cursor: pointer;
-      box-shadow: 0 4px 12px rgba(37,99,235,0.4);
-    }
-    .btn-speak-again:active { transform: scale(0.96); }
-
-    /* Binary Row (YES / NO) */
-    .binary-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 14px;
-    }
-    .bin-btn {
-      padding: 16px;
       border-radius: 16px;
-      font-size: 1.5rem;
-      font-weight: 900;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      border: none;
-      color: #FFF;
-      cursor: pointer;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    }
-    .bin-btn:active { transform: scale(0.97); }
-    .b-yes { background: #065F46; border: 2px solid #10B981; }
-    .b-no  { background: #991B1B; border: 2px solid #EF4444; }
-
-    /* Category Nav */
-    .category-scroll {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      padding-bottom: 12px;
-      margin-bottom: 6px;
-      scrollbar-width: none;
-    }
-    .category-scroll::-webkit-scrollbar { display: none; }
-    .cat-pill {
-      background: var(--surface);
-      color: var(--text-secondary);
-      border: 1px solid var(--border);
-      padding: 10px 18px;
-      border-radius: 99px;
-      font-size: 0.95rem;
+      padding: 16px 22px;
+      font-size: 1rem;
       font-weight: 800;
       white-space: nowrap;
       cursor: pointer;
+      box-shadow: 0 6px 20px rgba(37,99,235,0.35);
     }
-    .cat-pill.active {
-      background: #FFF;
-      color: #030712;
-      border-color: #FFF;
-      box-shadow: 0 4px 12px rgba(255,255,255,0.15);
+    .btn-replay:active { transform: scale(0.96); }
+
+    /* Binary Row (YES / NO) */
+    .binary-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .binary-tile {
+      padding: 20px;
+      border-radius: 20px;
+      font-size: 1.75rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      border: none;
+      color: #FFF;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+      transition: transform 0.1s ease;
+    }
+    .binary-tile:active { transform: scale(0.97); }
+    .tile-yes { background: #065F46; border: 1px solid #10B981; }
+    .tile-no  { background: #7F1D1D; border: 1px solid #EF4444; }
+
+    /* Minimalist Category Scroller */
+    .category-scroller {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 16px;
+      margin-bottom: 8px;
+      scrollbar-width: none;
+    }
+    .category-scroller::-webkit-scrollbar { display: none; }
+    .category-chip {
+      background: var(--card-bg);
+      color: var(--text-muted);
+      border: 1px solid var(--border-subtle);
+      padding: 12px 22px;
+      border-radius: 99px;
+      font-size: 1rem;
+      font-weight: 700;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .category-chip.active {
+      background: #F8FAFC;
+      color: #07090E;
+      border-color: #F8FAFC;
+      box-shadow: 0 4px 16px rgba(255,255,255,0.15);
     }
 
-    /* Card Grid */
-    .cards-grid {
+    /* Asymmetric Tactile Card Grid */
+    .tactile-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
+      gap: 16px;
     }
-    @media (min-width: 600px) {
-      .cards-grid { grid-template-columns: repeat(3, 1fr); }
+    @media (min-width: 650px) {
+      .tactile-grid { grid-template-columns: repeat(3, 1fr); }
     }
-    .card-item {
-      background: var(--surface-card);
-      border-radius: 20px;
-      padding: 16px 12px;
+    .tactile-card {
+      background: var(--card-bg);
+      border-radius: 24px;
+      padding: 22px 16px;
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      border: 2px solid var(--border);
-      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+      border: 1px solid var(--border-subtle);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
       cursor: pointer;
       position: relative;
-      transition: transform 0.1s ease, border-color 0.2s ease;
+      transition: transform 0.12s ease, background 0.15s ease, border-color 0.15s ease;
     }
-    .card-item:active { transform: scale(0.96); }
-    .card-item.active-speaking {
-      background: #1E3A8A;
+    .tactile-card:active { transform: scale(0.96); background: var(--card-pressed); }
+    .tactile-card.is-active-speech {
+      background: #172554;
       border-color: #38BDF8;
-      box-shadow: 0 0 25px rgba(56,189,248,0.3);
+      box-shadow: 0 0 35px rgba(56,189,248,0.25);
     }
-    .card-item.family { border-top: 5px solid var(--accent-family); }
-    .card-item.daily  { border-top: 5px solid var(--accent-daily); }
-    .card-item.health { border-top: 5px solid var(--accent-health); }
-    .card-item.outing { border-top: 5px solid var(--accent-outing); }
+    
+    .tactile-card.family { border-top: 4px solid var(--tone-family); }
+    .tactile-card.daily  { border-top: 4px solid var(--tone-daily); }
+    .tactile-card.health { border-top: 4px solid var(--tone-health); }
+    .tactile-card.outing { border-top: 4px solid var(--tone-outing); }
 
-    .card-avatar {
-      width: 84px;
-      height: 84px;
+    .avatar-frame {
+      width: 92px;
+      height: 92px;
       border-radius: 50%;
-      background: #030712;
-      border: 3px solid #475569;
+      background: #05070B;
+      border: 2px solid #293548;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 2.8rem;
+      font-size: 3rem;
       overflow: hidden;
-      margin-bottom: 10px;
-      box-shadow: inset 0 3px 8px rgba(0,0,0,0.6);
+      margin-bottom: 14px;
+      box-shadow: inset 0 4px 12px rgba(0,0,0,0.7);
     }
-    .card-avatar img { width: 100%; height: 100%; object-fit: cover; }
-    .card-title { font-size: 1.3rem; font-weight: 900; color: #FFF; line-height: 1.2; }
-    .card-sub { font-size: 0.8rem; color: var(--text-secondary); margin-top: 3px; font-weight: 700; }
+    .avatar-frame img { width: 100%; height: 100%; object-fit: cover; }
+    .card-heading { font-size: 1.45rem; font-weight: 800; color: #FFFFFF; line-height: 1.2; letter-spacing: -0.2px; }
+    .card-subtext { font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; font-weight: 600; }
 
-    .edit-area {
-      margin-top: 10px;
+    .card-edit-dock {
+      margin-top: 14px;
       width: 100%;
     }
-    .btn-upload {
+    .btn-image-action {
       width: 100%;
-      padding: 8px;
-      border-radius: 8px;
-      border: 1px dashed #64748B;
-      background: #0B0F19;
-      color: #CBD5E1;
-      font-size: 0.78rem;
-      font-weight: 800;
+      padding: 9px;
+      border-radius: 10px;
+      border: 1px dashed #475569;
+      background: #0B101D;
+      color: #94A3B8;
+      font-size: 0.8rem;
+      font-weight: 700;
       cursor: pointer;
     }
-    .btn-upload.has-img {
+    .btn-image-action.has-photo {
       background: #064E3B;
       border-color: #10B981;
       color: #A7F3D0;
@@ -231,51 +248,51 @@
 </head>
 <body>
 
-<div class="hud">
-  <div class="brand">
-    🗣️ बाबा संवाद
-    <span>SENIOR OS PRO</span>
+<div class="master-hud">
+  <div class="brand-group">
+    <div class="brand-title">🗣️ बाबा संवाद</div>
+    <div class="brand-subtitle">Architectural Senior OS</div>
   </div>
-  <div class="hud-right">
-    <button class="btn-action" id="editToggleBtn" onclick="toggleEdit()">🔒 संपादन</button>
-    <button class="btn-emergency" onclick="triggerSOS()">🔔 मदत</button>
+  <div class="hud-actions">
+    <button class="btn-architect" id="editTriggerBtn" onclick="toggleArchitectEdit()">🔒 संपादन</button>
+    <button class="btn-sos-tactile" onclick="triggerTactileSOS()">🔔 मदत</button>
   </div>
 </div>
 
-<div class="speech-banner">
+<div class="acoustic-stage">
   <div>
-    <div class="banner-main" id="bannerTitle">कोणत्याही कार्डवर टॅप करा</div>
-    <div class="banner-sub" id="bannerSub">Deep Male Voice Engine Ready</div>
+    <div class="stage-text-lg" id="stageMainTitle">कोणत्याही कार्डवर टॅप करा</div>
+    <div class="stage-text-sm" id="stageSubTitle">Baritone Natural Voice Engine Ready</div>
   </div>
-  <button class="btn-speak-again" onclick="repeatLast()">🔊 पुन्हा</button>
+  <button class="btn-replay" onclick="replayLastSpeech()">🔊 पुन्हा</button>
 </div>
 
-<div class="binary-grid">
-  <button class="bin-btn b-yes" onclick="speakPhrase({id:'yes', mr:'हो, बरोबर आहे', sub:'Yes, correct', speak:'हो, बरोबर आहे', phonetic:'Hoo... Ho, barobar aahe. Yes.'})">✅ हो (YES)</button>
-  <button class="bin-btn b-no" onclick="speakPhrase({id:'no', mr:'नाही, मला नको', sub:'No, I do not want', speak:'नाही, मला नको', phonetic:'Naa-hee... Naahi, mala nako. No.'})">❌ नाही (NO)</button>
+<div class="binary-container">
+  <button class="binary-tile tile-yes" onclick="dispatchSpeech({id:'yes', mr:'हो, बरोबर आहे', sub:'Yes, correct', speak:'हो, बरोबर आहे', phonetic:'Hoo... Ho, barobar aahe. Yes.'})">✅ हो (YES)</button>
+  <button class="binary-tile tile-no" onclick="dispatchSpeech({id:'no', mr:'नाही, मला नको', sub:'No, I do not want', speak:'नाही, मला नको', phonetic:'Naa-hee... Naahi, mala nako. No.'})">❌ नाही (NO)</button>
 </div>
 
-<div class="category-scroll" id="catScroll"></div>
-<div class="cards-grid" id="cardsGrid"></div>
+<div class="category-scroller" id="categoryChips"></div>
+<div class="tactile-grid" id="cardContainerGrid"></div>
 
-<input type="file" id="fileSelector" accept="image/*" style="display:none" />
+<input type="file" id="mediaUploadInput" accept="image/*" style="display:none" />
 
 <script>
-  const STORAGE_KEY = 'baba_senior_os_v4';
-  let editingEnabled = false;
-  let activeTab = 'all';
-  let activeCardId = null;
-  let lastItem = { mr:'हो, बरोबर आहे', phonetic:'Hoo... Ho, barobar aahe. Yes.', speak:'हो, बरोबर आहे' };
+  const STORAGE_SLOT = 'baba_architect_sys_v5';
+  let architectMode = false;
+  let currentFilter = 'all';
+  let activeTargetId = null;
+  let lastDispatched = { mr:'हो, बरोबर आहे', phonetic:'Hoo... Ho, barobar aahe. Yes.', speak:'हो, बरोबर आहे' };
 
-  const CATEGORIES = [
+  const CATEGORY_LIST = [
     { id: 'all', label: '🌟 सर्व (All)' },
-    { id: 'family', label: '👨‍👩‍👧‍👦 कुटुंब (Family)' },
-    { id: 'daily', label: '💧 दैनंदिन (Daily)' },
-    { id: 'health', label: '💊 तब्येत (Health)' },
-    { id: 'outing', label: '🚗 बाहेर / गावी (Outings)' }
+    { id: 'family', label: '👨‍👩‍👧‍👦 कुटुंब' },
+    { id: 'daily', label: '💧 दैनंदिन' },
+    { id: 'health', label: '💊 तब्येत' },
+    { id: 'outing', label: '🚗 बाहेर / गावी' }
   ];
 
-  const CARDS = [
+  const CARD_DATABASE = [
     { id: 'sushma', cat: 'family', icon: '👩', mr: 'सुषमा', sub: 'Sushma (Wife)', speak: 'सुषमा, इकडे ये', phonetic: 'Sushma... Sushma ikade ye' },
     { id: 'abhijeet', cat: 'family', icon: '👨', mr: 'अभिजीत', sub: 'Abhijeet (Son)', speak: 'अभिजीतला बोलवा', phonetic: 'Abhijeet... Abhijeet la bolva' },
     { id: 'sonali', cat: 'family', icon: '👩', mr: 'सोनाली (ताई)', sub: 'Sonali (Sister)', speak: 'सोनाली ताईला बोलवा', phonetic: 'Sonali... Sonali tai la bolva' },
@@ -298,41 +315,42 @@
     { id: 'village', cat: 'outing', icon: '🏡', mr: 'गावी जायचे', sub: 'Go to Village', speak: 'मला गावी जायचे आहे', phonetic: 'Gavi jaane... Mala gavi jayche aahe' }
   ];
 
-  let appData = { photos: {} };
+  let systemState = { imageCache: {} };
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) appData = JSON.parse(raw);
+    const rawData = localStorage.getItem(STORAGE_SLOT);
+    if (rawData) systemState = JSON.parse(rawData);
   } catch (e) {}
 
-  function saveAppData() {
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(appData)); } catch (e) {}
+  function saveSystemState() {
+    try { localStorage.setItem(STORAGE_SLOT, JSON.stringify(systemState)); } catch (e) {}
   }
 
-  function toggleEdit() {
-    editingEnabled = !editingEnabled;
-    const btn = document.getElementById('editToggleBtn');
-    btn.textContent = editingEnabled ? '🔓 संपादन: चालू' : '🔒 संपादन';
-    btn.className = editingEnabled ? 'btn-action active' : 'btn-action';
-    renderGrid();
+  function toggleArchitectEdit() {
+    architectMode = !architectMode;
+    const triggerBtn = document.getElementById('editTriggerBtn');
+    triggerBtn.textContent = architectMode ? '🔓 संपादन: चालू' : '🔒 संपादन';
+    triggerBtn.className = architectMode ? 'btn-architect active' : 'btn-architect';
+    renderCardGrid();
   }
 
-  async function speakPhrase(item) {
-    lastItem = item;
-    document.getElementById('bannerTitle').textContent = item.mr;
-    document.getElementById('bannerSub').textContent = item.phonetic;
+  // Elite Acoustically Tuned Baritone Engine
+  async function dispatchSpeech(item) {
+    lastDispatched = item;
+    document.getElementById('stageMainTitle').textContent = item.mr;
+    document.getElementById('stageSubTitle').textContent = item.phonetic;
 
-    document.querySelectorAll('.card-item').forEach(el => el.classList.remove('active-speaking'));
-    const targetEl = document.getElementById(`card-${item.id}`);
-    if (targetEl) targetEl.classList.add('active-speaking');
+    document.querySelectorAll('.tactile-card').forEach(el => el.classList.remove('is-active-speech'));
+    const targetedTile = document.getElementById(`card-node-${item.id}`);
+    if (targetedTile) targetedTile.classList.add('is-active-speech');
 
-    // 1. Native Android TTS inside APK
+    // 1. Native Hardware TTS inside APK
     if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.TextToSpeech) {
       try {
         await window.Capacitor.Plugins.TextToSpeech.speak({
           text: item.speak,
           lang: 'mr-IN',
-          rate: 0.80,
-          pitch: 0.65,
+          rate: 0.74,
+          pitch: 0.52, // Deep resonant acoustic baritone
           volume: 1.0
         });
         return;
@@ -341,8 +359,8 @@
           await window.Capacitor.Plugins.TextToSpeech.speak({
             text: item.phonetic,
             lang: 'en-IN',
-            rate: 0.80,
-            pitch: 0.65,
+            rate: 0.74,
+            pitch: 0.52,
             volume: 1.0
           });
           return;
@@ -350,106 +368,106 @@
       }
     }
 
-    // 2. Browser Web Speech fallback with Male Filtering
+    // 2. Web Speech Synthesis with Baritone Shaping
     if ('speechSynthesis' in window) {
       try { window.speechSynthesis.cancel(); } catch (e) {}
       setTimeout(() => {
-        const voices = window.speechSynthesis.getVoices() || [];
-        const noFemale = voices.filter(v => !/female|swara|heera|zira|samantha|veena|lekha/i.test(v.name));
-        const maleVoice = noFemale.find(v => /mr|hi|en-IN/i.test(v.lang) && /male|rishi|prabhat|madhur|hemant|david|mark|guy/i.test(v.name)) ||
-                          noFemale.find(v => /male|rishi|prabhat|madhur|hemant|david|mark|guy/i.test(v.name)) ||
-                          noFemale.find(v => /IN/i.test(v.lang)) || noFemale[0];
+        const availableVoices = window.speechSynthesis.getVoices() || [];
+        const filteredVoices = availableVoices.filter(v => !/female|swara|heera|zira|samantha|veena|lekha|google hindi female/i.test(v.name));
+        const eliteMaleVoice = filteredVoices.find(v => /mr|hi|en-IN/i.test(v.lang) && /male|rishi|prabhat|madhur|hemant|david|mark|guy|natural/i.test(v.name)) ||
+                               filteredVoices.find(v => /male|rishi|prabhat|madhur|hemant|david|mark|guy/i.test(v.name)) ||
+                               filteredVoices.find(v => /IN/i.test(v.lang)) || filteredVoices[0];
 
-        const utterance = new SpeechSynthesisUtterance(item.phonetic);
-        window.__uttRef = utterance;
-        if (maleVoice) {
-          utterance.voice = maleVoice;
-          utterance.lang = maleVoice.lang;
+        const speechNode = new SpeechSynthesisUtterance(item.phonetic);
+        window.__speechRef = speechNode;
+        if (eliteMaleVoice) {
+          speechNode.voice = eliteMaleVoice;
+          speechNode.lang = eliteMaleVoice.lang;
         } else {
-          utterance.lang = 'en-IN';
+          speechNode.lang = 'en-IN';
         }
-        utterance.pitch = 0.65;
-        utterance.rate = 0.80;
-        utterance.volume = 1.0;
+        speechNode.pitch = 0.52; // Deep baritone
+        speechNode.rate = 0.74;  // Grounded human cadence
+        speechNode.volume = 1.0;
 
-        window.speechSynthesis.speak(utterance);
-      }, 30);
+        window.speechSynthesis.speak(speechNode);
+      }, 25);
     }
   }
 
-  function repeatLast() { speakPhrase(lastItem); }
+  function replayLastSpeech() { dispatchSpeech(lastDispatched); }
 
-  function triggerSOS() {
+  function triggerTactileSOS() {
     try {
-      const ctx = new (window.AudioContext || window.webkitAudioContext)();
-      const now = ctx.currentTime;
-      [440, 659.25, 440, 659.25].forEach((f, i) => {
-        const osc = ctx.createOscillator();
-        const g = ctx.createGain();
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(f, now + i * 0.15);
-        g.gain.setValueAtTime(0.4, now + i * 0.15);
-        g.gain.exponentialRampToValueAtTime(0.001, now + i * 0.15 + 0.35);
-        osc.connect(g); g.connect(ctx.destination);
-        osc.start(now + i * 0.15); osc.stop(now + i * 0.15 + 0.38);
+      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const startTime = audioCtx.currentTime;
+      [300, 450, 300, 450].forEach((hz, idx) => {
+        const oscNode = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        oscNode.type = 'sine';
+        oscNode.frequency.setValueAtTime(hz, startTime + idx * 0.16);
+        gainNode.gain.setValueAtTime(0.35, startTime + idx * 0.16);
+        gainNode.gain.exponentialRampToValueAtTime(0.001, startTime + idx * 0.16 + 0.35);
+        oscNode.connect(gainNode); gainNode.connect(audioCtx.destination);
+        oscNode.start(startTime + idx * 0.16); oscNode.stop(startTime + idx * 0.16 + 0.38);
       });
     } catch (e) {}
 
-    speakPhrase({
+    dispatchSpeech({
       id: 'sos',
       mr: 'कृपया इकडे या!',
-      sub: 'Emergency Help',
+      sub: 'Emergency Assistance',
       speak: 'कृपया इकडे या, मला मदत हवी आहे',
       phonetic: 'Krupaya ikade yaa... Mala madat havi aahe'
     });
   }
 
-  function selectPhoto(e, id) {
-    e.stopPropagation();
-    activeCardId = id;
-    const picker = document.getElementById('fileSelector');
-    picker.value = '';
-    picker.click();
+  function invokeImagePicker(event, id) {
+    event.stopPropagation();
+    activeTargetId = id;
+    const fileElem = document.getElementById('mediaUploadInput');
+    fileElem.value = '';
+    fileElem.click();
   }
 
-  document.getElementById('fileSelector').addEventListener('change', function(e) {
-    const file = e.target.files && e.target.files[0];
-    if (!file || !activeCardId) return;
+  document.getElementById('mediaUploadInput').addEventListener('change', function(evt) {
+    const selectedFile = evt.target.files && evt.target.files[0];
+    if (!selectedFile || !activeTargetId) return;
     const reader = new FileReader();
-    reader.onload = function(ev) {
-      const img = new Image();
-      img.onload = function() {
-        const canvas = document.createElement('canvas');
-        canvas.width = 180; canvas.height = 180;
-        const side = Math.min(img.width, img.height);
-        canvas.getContext('2d').drawImage(img, (img.width - side)/2, (img.height - side)/2, side, side, 0, 0, 180, 180);
-        appData.photos[activeCardId] = canvas.toDataURL('image/jpeg', 0.8);
-        saveAppData();
-        renderGrid();
+    reader.onload = function(e) {
+      const imgObj = new Image();
+      imgObj.onload = function() {
+        const workCanvas = document.createElement('canvas');
+        workCanvas.width = 200; workCanvas.height = 200;
+        const sideLength = Math.min(imgObj.width, imgObj.height);
+        workCanvas.getContext('2d').drawImage(imgObj, (imgObj.width - sideLength)/2, (imgObj.height - sideLength)/2, sideLength, sideLength, 0, 0, 200, 200);
+        systemState.imageCache[activeTargetId] = workCanvas.toDataURL('image/jpeg', 0.85);
+        saveSystemState();
+        renderCardGrid();
       };
-      img.src = ev.target.result;
+      imgObj.src = e.target.result;
     };
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(selectedFile);
   });
 
-  function renderCategories() {
-    document.getElementById('catScroll').innerHTML = CATEGORIES.map(cat =>
-      `<button class="cat-pill ${activeTab === cat.id ? 'active' : ''}" onclick="activeTab='${cat.id}'; renderCategories(); renderGrid();">${cat.label}</button>`
+  function renderCategoryChips() {
+    document.getElementById('categoryChips').innerHTML = CATEGORY_LIST.map(cat =>
+      `<button class="category-chip ${currentFilter === cat.id ? 'active' : ''}" onclick="currentFilter='${cat.id}'; renderCategoryChips(); renderCardGrid();">${cat.label}</button>`
     ).join('');
   }
 
-  function renderGrid() {
-    const list = activeTab === 'all' ? CARDS : CARDS.filter(c => c.cat === activeTab);
-    document.getElementById('cardsGrid').innerHTML = list.map(c => {
-      const img = appData.photos && appData.photos[c.id];
+  function renderCardGrid() {
+    const dataList = currentFilter === 'all' ? CARD_DATABASE : CARD_DATABASE.filter(c => c.cat === currentFilter);
+    document.getElementById('cardContainerGrid').innerHTML = dataList.map(c => {
+      const photoUrl = systemState.imageCache && systemState.imageCache[c.id];
       return `
-        <div class="card-item ${c.cat}" id="card-${c.id}" onclick='speakPhrase(${JSON.stringify(c).replace(/'/g, "&#39;")})'>
-          <div class="card-avatar">${img ? `<img src="${img}" />` : c.icon}</div>
-          <div class="card-title">${c.mr}</div>
-          <div class="card-sub">${c.sub}</div>
-          ${editingEnabled ? `
-            <div class="edit-area">
-              <button class="btn-upload ${img ? 'has-img' : ''}" onclick="selectPhoto(event, '${c.id}')">📷 फोटो बदलावा ${img ? '✓' : ''}</button>
+        <div class="tactile-card ${c.cat}" id="card-node-${c.id}" onclick='dispatchSpeech(${JSON.stringify(c).replace(/'/g, "&#39;")})'>
+          <div class="avatar-frame">${photoUrl ? `<img src="${photoUrl}" />` : c.icon}</div>
+          <div class="card-heading">${c.mr}</div>
+          <div class="card-subtext">${c.sub}</div>
+          ${architectMode ? `
+            <div class="card-edit-dock">
+              <button class="btn-image-action ${photoUrl ? 'has-photo' : ''}" onclick="invokeImagePicker(event, '${c.id}')">📷 फोटो बदल ${photoUrl ? '✓' : ''}</button>
             </div>
           ` : ''}
         </div>
@@ -457,8 +475,8 @@
     }).join('');
   }
 
-  renderCategories();
-  renderGrid();
+  renderCategoryChips();
+  renderCardGrid();
 </script>
 </body>
 </html>
