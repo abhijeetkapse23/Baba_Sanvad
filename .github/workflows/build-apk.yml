@@ -24,14 +24,17 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-
       - name: Initialize Capacitor & Native TTS Plugin
         run: |
           npm init -y
           npm install @capacitor/core @capacitor/cli @capacitor/android @capacitor-community/text-to-speech
-          npx cap init "Baba Sanvad" "com.abhijeet.babasanvad" --web-dir www
+          cat << 'EOF' > capacitor.config.json
+          {
+            "appId": "com.abhijeet.babasanvad",
+            "appName": "Baba Sanvad",
+            "webDir": "www"
+          }
+          EOF
           npx cap add android
           npx cap sync android
 
