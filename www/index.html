@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>बाबा संवाद — Enterprise Senior OS</title>
+  <title>बाबा संवाद — Senior OS</title>
   <style>
     :root {
-      --bg: #050811;
-      --surface: #0E1626;
-      --surface-elevated: #162238;
-      --border: #1E2D4A;
-      --text-main: #FFFFFF;
-      --text-muted: #8AA2C0;
+      --bg: #030712;
+      --surface: #0F172A;
+      --surface-card: #1E293B;
+      --border: #334155;
+      --text-primary: #FFFFFF;
+      --text-secondary: #94A3B8;
       --accent-family: #10B981;
       --accent-daily: #0EA5E9;
       --accent-health: #F43F5E;
@@ -21,209 +21,207 @@
     body {
       margin: 0;
       background: var(--bg);
-      color: var(--text-main);
+      color: var(--text-primary);
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      padding: env(safe-area-inset-top, 16px) 16px 48px;
+      padding: env(safe-area-inset-top, 12px) 12px 40px;
     }
 
-    /* Master Top HUD */
+    /* Clean Streamlined HUD */
     .hud {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 14px 16px;
+      padding: 10px 14px;
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 20px;
-      margin-bottom: 16px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      border-radius: 18px;
+      margin-bottom: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.6);
     }
-    .brand-title {
-      font-size: 1.35rem;
+    .brand {
+      font-size: 1.25rem;
       font-weight: 900;
-      letter-spacing: 0.5px;
       color: #38BDF8;
       display: flex;
-      align-items: center;
-      gap: 10px;
+      flex-direction: column;
+      line-height: 1.1;
     }
-    .hud-controls { display: flex; gap: 10px; }
-    .hud-btn {
-      background: #172554;
-      color: #93C5FD;
-      border: 1px solid #2563EB;
-      padding: 10px 16px;
-      border-radius: 12px;
+    .brand span { font-size: 0.6rem; color: #64748B; letter-spacing: 0.5px; }
+    .hud-right { display: flex; gap: 8px; align-items: center; }
+    .btn-action {
+      background: #1E293B;
+      color: #E2E8F0;
+      border: 1px solid #475569;
+      padding: 8px 12px;
+      border-radius: 10px;
       font-weight: 800;
-      font-size: 0.9rem;
+      font-size: 0.82rem;
       cursor: pointer;
     }
-    .hud-btn.active { background: #2563EB; color: #FFF; }
-    .hud-sos {
-      background: #991B1B;
+    .btn-action.active { background: #0284C7; border-color: #38BDF8; color: #FFF; }
+    .btn-emergency {
+      background: #DC2626;
       color: #FFF;
       border: none;
-      padding: 10px 22px;
-      border-radius: 12px;
+      padding: 8px 14px;
+      border-radius: 10px;
       font-weight: 900;
-      font-size: 1rem;
-      box-shadow: 0 4px 14px rgba(153,27,27,0.5);
+      font-size: 0.85rem;
+      box-shadow: 0 3px 10px rgba(220,38,38,0.4);
       cursor: pointer;
     }
-    .hud-sos:active { transform: scale(0.96); }
+    .btn-emergency:active { transform: scale(0.96); }
 
-    /* Immersive Speech Display Banner */
+    /* Immersive Speech Banner */
     .speech-banner {
-      background: linear-gradient(135deg, #0C1E3E, #050E20);
+      background: linear-gradient(135deg, #0C1E3E, #090D16);
       border: 2px solid #2563EB;
-      border-radius: 24px;
-      padding: 22px 24px;
-      margin-bottom: 16px;
+      border-radius: 20px;
+      padding: 16px 18px;
+      margin-bottom: 12px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 16px;
-      box-shadow: 0 12px 40px rgba(37,99,235,0.25);
+      gap: 12px;
+      box-shadow: 0 8px 24px rgba(37,99,235,0.2);
     }
-    .banner-text-lg { font-size: 2.1rem; font-weight: 900; color: #FFFFFF; line-height: 1.15; }
-    .banner-text-sm { font-size: 1.05rem; color: #93C5FD; margin-top: 6px; font-weight: 700; }
-    .btn-repeat {
+    .banner-main { font-size: 1.65rem; font-weight: 900; color: #FFF; line-height: 1.2; }
+    .banner-sub { font-size: 0.85rem; color: #93C5FD; margin-top: 3px; font-weight: 700; }
+    .btn-speak-again {
       background: #2563EB;
       color: #FFF;
       border: none;
-      border-radius: 16px;
-      padding: 16px 24px;
-      font-size: 1.15rem;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 0.95rem;
       font-weight: 900;
       white-space: nowrap;
-      box-shadow: 0 6px 20px rgba(37,99,235,0.4);
       cursor: pointer;
+      box-shadow: 0 4px 12px rgba(37,99,235,0.4);
     }
-    .btn-repeat:active { transform: scale(0.96); }
+    .btn-speak-again:active { transform: scale(0.96); }
 
-    /* Primary Binary Row (YES / NO) */
-    .binary-row {
+    /* Binary Row (YES / NO) */
+    .binary-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-bottom: 20px;
+      gap: 12px;
+      margin-bottom: 14px;
     }
-    .binary-btn {
-      padding: 22px;
-      border-radius: 20px;
-      font-size: 2rem;
+    .bin-btn {
+      padding: 16px;
+      border-radius: 16px;
+      font-size: 1.5rem;
       font-weight: 900;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 12px;
+      gap: 10px;
       border: none;
       color: #FFF;
       cursor: pointer;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-      transition: transform 0.1s ease;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     }
-    .binary-btn:active { transform: scale(0.97); }
+    .bin-btn:active { transform: scale(0.97); }
     .b-yes { background: #065F46; border: 2px solid #10B981; }
     .b-no  { background: #991B1B; border: 2px solid #EF4444; }
 
-    /* Category Filter Navigation */
-    .categories {
+    /* Category Nav */
+    .category-scroll {
       display: flex;
-      gap: 12px;
+      gap: 8px;
       overflow-x: auto;
-      padding-bottom: 16px;
-      margin-bottom: 8px;
+      padding-bottom: 12px;
+      margin-bottom: 6px;
       scrollbar-width: none;
     }
-    .categories::-webkit-scrollbar { display: none; }
-    .cat-chip {
+    .category-scroll::-webkit-scrollbar { display: none; }
+    .cat-pill {
       background: var(--surface);
-      color: var(--text-muted);
+      color: var(--text-secondary);
       border: 1px solid var(--border);
-      padding: 12px 22px;
+      padding: 10px 18px;
       border-radius: 99px;
-      font-size: 1.05rem;
+      font-size: 0.95rem;
       font-weight: 800;
       white-space: nowrap;
       cursor: pointer;
-      transition: all 0.2s ease;
     }
-    .cat-chip.active {
-      background: #FFFFFF;
-      color: #050811;
-      border-color: #FFFFFF;
-      box-shadow: 0 4px 16px rgba(255,255,255,0.2);
+    .cat-pill.active {
+      background: #FFF;
+      color: #030712;
+      border-color: #FFF;
+      box-shadow: 0 4px 12px rgba(255,255,255,0.15);
     }
 
-    /* Touch Grid Layout */
-    .grid-container {
+    /* Card Grid */
+    .cards-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
+      gap: 12px;
     }
-    @media (min-width: 650px) {
-      .grid-container { grid-template-columns: repeat(3, 1fr); }
+    @media (min-width: 600px) {
+      .cards-grid { grid-template-columns: repeat(3, 1fr); }
     }
-    .card-tile {
-      background: var(--surface);
-      border-radius: 24px;
-      padding: 20px 16px;
+    .card-item {
+      background: var(--surface-card);
+      border-radius: 20px;
+      padding: 16px 12px;
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
       border: 2px solid var(--border);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
       cursor: pointer;
       position: relative;
-      transition: transform 0.1s ease, border-color 0.2s ease, background-color 0.2s ease;
+      transition: transform 0.1s ease, border-color 0.2s ease;
     }
-    .card-tile:active { transform: scale(0.96); }
-    .card-tile.active-speaking {
-      background: var(--surface-elevated);
+    .card-item:active { transform: scale(0.96); }
+    .card-item.active-speaking {
+      background: #1E3A8A;
       border-color: #38BDF8;
-      box-shadow: 0 0 30px rgba(56,189,248,0.3);
+      box-shadow: 0 0 25px rgba(56,189,248,0.3);
     }
-    .card-tile.family { border-top: 5px solid var(--accent-family); }
-    .card-tile.daily  { border-top: 5px solid var(--accent-daily); }
-    .card-tile.health { border-top: 5px solid var(--accent-health); }
-    .card-tile.outing { border-top: 5px solid var(--accent-outing); }
+    .card-item.family { border-top: 5px solid var(--accent-family); }
+    .card-item.daily  { border-top: 5px solid var(--accent-daily); }
+    .card-item.health { border-top: 5px solid var(--accent-health); }
+    .card-item.outing { border-top: 5px solid var(--accent-outing); }
 
-    .avatar-ring {
-      width: 104px;
-      height: 104px;
+    .card-avatar {
+      width: 84px;
+      height: 84px;
       border-radius: 50%;
-      background: #050811;
-      border: 3px solid #334155;
+      background: #030712;
+      border: 3px solid #475569;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 3.5rem;
+      font-size: 2.8rem;
       overflow: hidden;
-      margin-bottom: 14px;
-      box-shadow: inset 0 4px 10px rgba(0,0,0,0.6);
+      margin-bottom: 10px;
+      box-shadow: inset 0 3px 8px rgba(0,0,0,0.6);
     }
-    .avatar-ring img { width: 100%; height: 100%; object-fit: cover; }
-    .card-title { font-size: 1.55rem; font-weight: 900; color: #FFFFFF; line-height: 1.25; }
-    .card-subtitle { font-size: 0.95rem; color: var(--text-muted); margin-top: 4px; font-weight: 700; }
+    .card-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .card-title { font-size: 1.3rem; font-weight: 900; color: #FFF; line-height: 1.2; }
+    .card-sub { font-size: 0.8rem; color: var(--text-secondary); margin-top: 3px; font-weight: 700; }
 
-    .edit-panel {
-      margin-top: 14px;
+    .edit-area {
+      margin-top: 10px;
       width: 100%;
     }
-    .btn-photo-upload {
+    .btn-upload {
       width: 100%;
-      padding: 10px;
-      border-radius: 10px;
-      border: 1px dashed #475569;
-      background: #0B132B;
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px dashed #64748B;
+      background: #0B0F19;
       color: #CBD5E1;
-      font-size: 0.85rem;
+      font-size: 0.78rem;
       font-weight: 800;
       cursor: pointer;
     }
-    .btn-photo-upload.has-image {
+    .btn-upload.has-img {
       background: #064E3B;
       border-color: #10B981;
       color: #A7F3D0;
@@ -234,37 +232,40 @@
 <body>
 
 <div class="hud">
-  <div class="brand-title">🗣️ बाबा संवाद <span style="font-size:0.65rem; background:#0369A1; color:#fff; padding:3px 8px; border-radius:6px; letter-spacing:0.5px;">PRO ARCHITECT</span></div>
-  <div class="hud-controls">
-    <button class="hud-btn" id="editToggleBtn" onclick="toggleEdit()">🔒 संपादन</button>
-    <button class="hud-sos" onclick="triggerEmergency()">🔔 मदत</button>
+  <div class="brand">
+    🗣️ बाबा संवाद
+    <span>SENIOR OS PRO</span>
+  </div>
+  <div class="hud-right">
+    <button class="btn-action" id="editToggleBtn" onclick="toggleEdit()">🔒 संपादन</button>
+    <button class="btn-emergency" onclick="triggerSOS()">🔔 मदत</button>
   </div>
 </div>
 
 <div class="speech-banner">
   <div>
-    <div class="banner-text-lg" id="bannerTitle">कोणत्याही कार्डवर टॅप करा</div>
-    <div class="banner-text-sm" id="bannerSub">Deep Male Neural Voice Active</div>
+    <div class="banner-main" id="bannerTitle">कोणत्याही कार्डवर टॅप करा</div>
+    <div class="banner-sub" id="bannerSub">Deep Male Voice Engine Ready</div>
   </div>
-  <button class="btn-repeat" onclick="repeatCurrent()">🔊 पुन्हा</button>
+  <button class="btn-speak-again" onclick="repeatLast()">🔊 पुन्हा</button>
 </div>
 
-<div class="binary-row">
-  <button class="binary-btn b-yes" onclick="speakPhrase({id:'yes', mr:'हो, बरोबर आहे', sub:'Yes, correct', speak:'हो, बरोबर आहे', phonetic:'Hoo... Ho, barobar aahe. Yes.'})">✅ हो (YES)</button>
-  <button class="binary-btn b-no" onclick="speakPhrase({id:'no', mr:'नाही, मला नको', sub:'No, I do not want', speak:'नाही, मला नको', phonetic:'Naa-hee... Naahi, mala nako. No.'})">❌ नाही (NO)</button>
+<div class="binary-grid">
+  <button class="bin-btn b-yes" onclick="speakPhrase({id:'yes', mr:'हो, बरोबर आहे', sub:'Yes, correct', speak:'हो, बरोबर आहे', phonetic:'Hoo... Ho, barobar aahe. Yes.'})">✅ हो (YES)</button>
+  <button class="bin-btn b-no" onclick="speakPhrase({id:'no', mr:'नाही, मला नको', sub:'No, I do not want', speak:'नाही, मला नको', phonetic:'Naa-hee... Naahi, mala nako. No.'})">❌ नाही (NO)</button>
 </div>
 
-<div class="categories" id="categoryNav"></div>
-<div class="grid-container" id="tileGrid"></div>
+<div class="category-scroll" id="catScroll"></div>
+<div class="cards-grid" id="cardsGrid"></div>
 
-<input type="file" id="hiddenFileInput" accept="image/*" style="display:none" />
+<input type="file" id="fileSelector" accept="image/*" style="display:none" />
 
 <script>
-  const STORAGE_KEY = 'baba_architect_v3';
-  let editModeActive = false;
-  let activeCategory = 'all';
-  let targetPhotoId = null;
-  let lastSpokenItem = { mr:'हो, बरोबर आहे', phonetic:'Hoo... Ho, barobar aahe. Yes.', speak:'हो, बरोबर आहे' };
+  const STORAGE_KEY = 'baba_senior_os_v4';
+  let editingEnabled = false;
+  let activeTab = 'all';
+  let activeCardId = null;
+  let lastItem = { mr:'हो, बरोबर आहे', phonetic:'Hoo... Ho, barobar aahe. Yes.', speak:'हो, बरोबर आहे' };
 
   const CATEGORIES = [
     { id: 'all', label: '🌟 सर्व (All)' },
@@ -275,14 +276,12 @@
   ];
 
   const CARDS = [
-    // Family
     { id: 'sushma', cat: 'family', icon: '👩', mr: 'सुषमा', sub: 'Sushma (Wife)', speak: 'सुषमा, इकडे ये', phonetic: 'Sushma... Sushma ikade ye' },
     { id: 'abhijeet', cat: 'family', icon: '👨', mr: 'अभिजीत', sub: 'Abhijeet (Son)', speak: 'अभिजीतला बोलवा', phonetic: 'Abhijeet... Abhijeet la bolva' },
     { id: 'sonali', cat: 'family', icon: '👩', mr: 'सोनाली (ताई)', sub: 'Sonali (Sister)', speak: 'सोनाली ताईला बोलवा', phonetic: 'Sonali... Sonali tai la bolva' },
     { id: 'ira', cat: 'family', icon: '👧', mr: 'इरा', sub: 'Ira (Granddaughter)', speak: 'इराला इकडे बोलवा', phonetic: 'Era... Era la ikade bolva' },
     { id: 'swapnali', cat: 'family', icon: '👩', mr: 'स्वप्नाली', sub: 'Swapnali (Daughter-in-law)', speak: 'स्वप्नाली, इकडे ये', phonetic: 'Swapnali... Swapnali ikade ye' },
 
-    // Daily
     { id: 'water', cat: 'daily', icon: '💧', mr: 'पिण्याचे पाणी', sub: 'Drinking Water', speak: 'मला पिण्यासाठी पाणी द्या', phonetic: 'Paani... Mala pinyasathi paani dya' },
     { id: 'tablets', cat: 'daily', icon: '💊', mr: 'गोळ्या / औषधे', sub: 'Tablets / Medicine', speak: 'माझ्या गोळ्या आणि औषधे द्या', phonetic: 'Golya... Majhya golya aani aushadhe dya' },
     { id: 'food', cat: 'daily', icon: '🍛', mr: 'जेवण / भूक', sub: 'Food / Hungry', speak: 'मला भूक लागली आहे, जेवण द्या', phonetic: 'Jevan... Mala bhook lagli aahe, jevan dya' },
@@ -290,54 +289,50 @@
     { id: 'bathroom', cat: 'daily', icon: '🚻', mr: 'बाथरूम', sub: 'Washroom', speak: 'मला बाथरूमला जायचे आहे', phonetic: 'Bathroom... Mala bathroom la jayche aahe' },
     { id: 'glasses', cat: 'daily', icon: '👓', mr: 'माझा चष्मा', sub: 'My Glasses', speak: 'माझा चष्मा द्या', phonetic: 'Chashma... Majha chashma dya' },
 
-    // Health
     { id: 'toothache', cat: 'health', icon: '🦷', mr: 'दाढ दुखत आहे', sub: 'Toothache', speak: 'माझी दाढ खूप दुखत आहे', phonetic: 'Dadh dukhte... Majhi dadh khoop dukhat aahe' },
     { id: 'stomach', cat: 'health', icon: '🤢', mr: 'पोट बिघडले', sub: 'Stomach Upset', speak: 'माझे पोट बिघडले आहे', phonetic: 'Pot bighadle... Majhe pot bighadle aahe' },
     { id: 'doctor', cat: 'health', icon: '🩺', mr: 'डॉक्टरांकडे चला', sub: 'Visit Doctor', speak: 'मला डॉक्टरांकडे घेऊन चला', phonetic: 'Doctor... Mala doctoran kade gheun chala' },
     { id: 'bodypain', cat: 'health', icon: '🤕', mr: 'हात-पाय दुखणे', sub: 'Body Pain', speak: 'माझे हात पाय दुखत आहेत', phonetic: 'Haat paay dukhtat... Majhe haat paay dukhat aahet' },
 
-    // Outings
     { id: 'walk', cat: 'outing', icon: '🚶‍♂️', mr: 'फिरायला जायचे', sub: 'Go for Walk', speak: 'मला बाहेर फिरायला जायचे आहे', phonetic: 'Firayla jaane... Mala baher firayla jayche aahe' },
     { id: 'village', cat: 'outing', icon: '🏡', mr: 'गावी जायचे', sub: 'Go to Village', speak: 'मला गावी जायचे आहे', phonetic: 'Gavi jaane... Mala gavi jayche aahe' }
   ];
 
-  let appState = { photos: {} };
+  let appData = { photos: {} };
   try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) appState = JSON.parse(saved);
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) appData = JSON.parse(raw);
   } catch (e) {}
 
-  function persistState() {
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(appState)); } catch (e) {}
+  function saveAppData() {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(appData)); } catch (e) {}
   }
 
   function toggleEdit() {
-    editModeActive = !editModeActive;
+    editingEnabled = !editingEnabled;
     const btn = document.getElementById('editToggleBtn');
-    btn.textContent = editModeActive ? '🔓 संपादन: चालू' : '🔒 संपादन';
-    btn.className = editModeActive ? 'hud-btn active' : 'hud-btn';
+    btn.textContent = editingEnabled ? '🔓 संपादन: चालू' : '🔒 संपादन';
+    btn.className = editingEnabled ? 'btn-action active' : 'btn-action';
     renderGrid();
   }
 
-  // Enterprise Deep Male Voice Engine with Syllable Priming
   async function speakPhrase(item) {
-    lastSpokenItem = item;
+    lastItem = item;
     document.getElementById('bannerTitle').textContent = item.mr;
     document.getElementById('bannerSub').textContent = item.phonetic;
 
-    // Visual feedback highlight
-    document.querySelectorAll('.card-tile').forEach(el => el.classList.remove('active-speaking'));
-    const activeEl = document.getElementById(`card-${item.id}`);
-    if (activeEl) activeEl.classList.add('active-speaking');
+    document.querySelectorAll('.card-item').forEach(el => el.classList.remove('active-speaking'));
+    const targetEl = document.getElementById(`card-${item.id}`);
+    if (targetEl) targetEl.classList.add('active-speaking');
 
-    // 1. Native Android Hardware TTS (Inside compiled APK)
+    // 1. Native Android TTS inside APK
     if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.TextToSpeech) {
       try {
         await window.Capacitor.Plugins.TextToSpeech.speak({
           text: item.speak,
           lang: 'mr-IN',
           rate: 0.80,
-          pitch: 0.65, // Deep resonant bass male
+          pitch: 0.65,
           volume: 1.0
         });
         return;
@@ -355,106 +350,115 @@
       }
     }
 
-    // 2. Browser Fallback with Strict Male Filtering
+    // 2. Browser Web Speech fallback with Male Filtering
     if ('speechSynthesis' in window) {
       try { window.speechSynthesis.cancel(); } catch (e) {}
       setTimeout(() => {
         const voices = window.speechSynthesis.getVoices() || [];
-        const femaleFilter = /female|swara|heera|zira|samantha|veena|lekha|kalpana|aria|jenny/i;
-        const maleFilter = /male|rishi|prabhat|madhur|hemant|david|mark|daniel|george|alex|guy|ravi/i;
-
-        const cleanVoices = voices.filter(v => !femaleFilter.test(v.name));
-        const selectedVoice = cleanVoices.find(v => (/mr|hi|en-IN/i.test(v.lang)) && maleFilter.test(v.name)) ||
-                              cleanVoices.find(v => maleFilter.test(v.name)) ||
-                              cleanVoices.find(v => /IN/i.test(v.lang)) ||
-                              cleanVoices[0];
+        const noFemale = voices.filter(v => !/female|swara|heera|zira|samantha|veena|lekha/i.test(v.name));
+        const maleVoice = noFemale.find(v => /mr|hi|en-IN/i.test(v.lang) && /male|rishi|prabhat|madhur|hemant|david|mark|guy/i.test(v.name)) ||
+                          noFemale.find(v => /male|rishi|prabhat|madhur|hemant|david|mark|guy/i.test(v.name)) ||
+                          noFemale.find(v => /IN/i.test(v.lang)) || noFemale[0];
 
         const utterance = new SpeechSynthesisUtterance(item.phonetic);
-        window.__activeUtterance = utterance;
-
-        if (selectedVoice) {
-          utterance.voice = selectedVoice;
-          utterance.lang = selectedVoice.lang;
+        window.__uttRef = utterance;
+        if (maleVoice) {
+          utterance.voice = maleVoice;
+          utterance.lang = maleVoice.lang;
         } else {
           utterance.lang = 'en-IN';
         }
-
-        utterance.pitch = 0.65; // Deep male bass
+        utterance.pitch = 0.65;
         utterance.rate = 0.80;
         utterance.volume = 1.0;
 
         window.speechSynthesis.speak(utterance);
-      }, 40);
+      }, 30);
     }
   }
 
-  function repeatCurrent() { speakPhrase(lastSpokenItem); }
+  function repeatLast() { speakPhrase(lastItem); }
 
-  function triggerEmergency() {
+  function triggerSOS() {
     try {
       const ctx = new (window.AudioContext || window.webkitAudioContext)();
-      const t = ctx.currentTime;
-      [440, 659.25, 440, 659.25].forEach((freq, idx) => {
+      const now = ctx.currentTime;
+      [440, 659.25, 440, 659.25].forEach((f, i) => {
         const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
+        const g = ctx.createGain();
         osc.type = 'triangle';
-        osc.frequency.setValueAtTime(freq, t + idx * 0.15);
-        gain.gain.setValueAtTime(0.5, t + idx * 0.15);
-        gain.gain.exponentialRampToValueAtTime(0.001, t + idx * 0.15 + 0.35);
-        osc.connect(gain); gain.connect(ctx.destination);
-        osc.start(t + idx * 0.15); osc.stop(t + idx * 0.15 + 0.38);
+        osc.frequency.setValueAtTime(f, now + i * 0.15);
+        g.gain.setValueAtTime(0.4, now + i * 0.15);
+        g.gain.exponentialRampToValueAtTime(0.001, now + i * 0.15 + 0.35);
+        osc.connect(g); g.connect(ctx.destination);
+        osc.start(now + i * 0.15); osc.stop(now + i * 0.15 + 0.38);
       });
     } catch (e) {}
 
     speakPhrase({
       id: 'sos',
       mr: 'कृपया इकडे या!',
-      sub: 'Emergency Attention',
+      sub: 'Emergency Help',
       speak: 'कृपया इकडे या, मला मदत हवी आहे',
       phonetic: 'Krupaya ikade yaa... Mala madat havi aahe'
     });
   }
 
-  function triggerPhotoSelect(e, cardId) {
+  function selectPhoto(e, id) {
     e.stopPropagation();
-    targetPhotoId = cardId;
-    const fileInput = document.getElementById('hiddenFileInput');
-    fileInput.value = '';
-    fileInput.click();
+    activeCardId = id;
+    const picker = document.getElementById('fileSelector');
+    picker.value = '';
+    picker.click();
   }
 
-  document.getElementById('hiddenFileInput').addEventListener('change', function(evt) {
-    const file = evt.target.files && evt.target.files[0];
-    if (!file || !targetPhotoId) return;
+  document.getElementById('fileSelector').addEventListener('change', function(e) {
+    const file = e.target.files && e.target.files[0];
+    if (!file || !activeCardId) return;
     const reader = new FileReader();
-    reader.onload = function(e) {
+    reader.onload = function(ev) {
       const img = new Image();
       img.onload = function() {
         const canvas = document.createElement('canvas');
-        canvas.width = 200; canvas.height = 200;
+        canvas.width = 180; canvas.height = 180;
         const side = Math.min(img.width, img.height);
-        canvas.getContext('2d').drawImage(img, (img.width - side)/2, (img.height - side)/2, side, side, 0, 0, 200, 200);
-        appState.photos[targetPhotoId] = canvas.toDataURL('image/jpeg', 0.82);
-        persistState();
+        canvas.getContext('2d').drawImage(img, (img.width - side)/2, (img.height - side)/2, side, side, 0, 0, 180, 180);
+        appData.photos[activeCardId] = canvas.toDataURL('image/jpeg', 0.8);
+        saveAppData();
         renderGrid();
       };
-      img.src = e.target.result;
+      img.src = ev.target.result;
     };
     reader.readAsDataURL(file);
   });
 
   function renderCategories() {
-    document.getElementById('categoryNav').innerHTML = CATEGORIES.map(cat =>
-      `<button class="cat-chip ${activeCategory === cat.id ? 'active' : ''}" onclick="activeCategory='${cat.id}'; renderCategories(); renderGrid();">${cat.label}</button>`
+    document.getElementById('catScroll').innerHTML = CATEGORIES.map(cat =>
+      `<button class="cat-pill ${activeTab === cat.id ? 'active' : ''}" onclick="activeTab='${cat.id}'; renderCategories(); renderGrid();">${cat.label}</button>`
     ).join('');
   }
 
   function renderGrid() {
-    const list = activeCategory === 'all' ? CARDS : CARDS.filter(c => c.cat === activeCategory);
-    document.getElementById('tileGrid').innerHTML = list.map(c => {
-      const pic = appState.photos && appState.photos[c.id];
+    const list = activeTab === 'all' ? CARDS : CARDS.filter(c => c.cat === activeTab);
+    document.getElementById('cardsGrid').innerHTML = list.map(c => {
+      const img = appData.photos && appData.photos[c.id];
       return `
-        <div class="card-tile ${c.cat}" id="card-${c.id}" onclick='speakPhrase(${JSON.stringify(c).replace(/'/g, "&#39;")})'>
-          <div class="avatar-ring">${pic ? `<img src="${pic}" />` : c.icon}</div>
+        <div class="card-item ${c.cat}" id="card-${c.id}" onclick='speakPhrase(${JSON.stringify(c).replace(/'/g, "&#39;")})'>
+          <div class="card-avatar">${img ? `<img src="${img}" />` : c.icon}</div>
           <div class="card-title">${c.mr}</div>
-          <div class="card-subtitle">${c.sub}
+          <div class="card-sub">${c.sub}</div>
+          ${editingEnabled ? `
+            <div class="edit-area">
+              <button class="btn-upload ${img ? 'has-img' : ''}" onclick="selectPhoto(event, '${c.id}')">📷 फोटो बदलावा ${img ? '✓' : ''}</button>
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }).join('');
+  }
+
+  renderCategories();
+  renderGrid();
+</script>
+</body>
+</html>
