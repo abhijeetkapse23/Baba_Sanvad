@@ -3,13 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>बाबा संवाद</title>
+  <title>बाबा संवाद Pro - Deep Male Edition</title>
   <style>
     :root {
-      --bg: #0B1120;
-      --surface: #1E293B;
+      --bg: #070B14;
+      --card-bg: #131C2E;
+      --border: #22324A;
+      --accent-blue: #38BDF8;
+      --accent-green: #10B981;
+      --accent-red: #EF4444;
       --text: #F8FAFC;
-      --sub: #94A3B8;
+      --text-dim: #94A3B8;
     }
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; }
     body {
@@ -17,70 +21,69 @@
       background: var(--bg);
       color: var(--text);
       font-family: system-ui, -apple-system, Roboto, sans-serif;
-      padding: env(safe-area-inset-top, 12px) 12px 32px;
+      padding: env(safe-area-inset-top, 14px) 14px 40px;
     }
-    /* Top App Bar */
-    .topbar {
+    /* Header */
+    .header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 10px 6px 14px;
-      border-bottom: 1px solid #334155;
+      padding: 12px 8px 16px;
+      border-bottom: 2px solid var(--border);
     }
-    .title {
-      font-size: 1.4rem;
+    .brand {
+      font-size: 1.5rem;
       font-weight: 900;
-      letter-spacing: 0.3px;
+      letter-spacing: 0.5px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
+      color: #38BDF8;
     }
-    .top-actions { display: flex; gap: 8px; }
-    .btn-mode {
+    .header-actions { display: flex; gap: 10px; }
+    .btn-edit {
       background: #1E293B;
       color: #E2E8F0;
       border: 2px solid #475569;
-      padding: 9px 12px;
+      padding: 10px 14px;
       border-radius: 12px;
       font-weight: 800;
       font-size: 0.85rem;
     }
-    .btn-mode.unlocked {
-      border-color: #38BDF8;
-      color: #38BDF8;
-    }
+    .btn-edit.active { border-color: var(--accent-blue); color: var(--accent-blue); background: #0C213B; }
     .btn-sos {
-      background: #EA580C;
+      background: #DC2626;
       color: #FFF;
       border: none;
-      padding: 10px 18px;
+      padding: 10px 20px;
       border-radius: 14px;
       font-weight: 900;
-      font-size: 1.05rem;
-      box-shadow: 0 4px 0 #9A3412;
+      font-size: 1.1rem;
+      box-shadow: 0 4px 0 #991B1B;
     }
     .btn-sos:active { transform: translateY(3px); box-shadow: none; }
 
-    /* Giant Visual Output Banner */
-    .speaker-box {
-      margin: 12px 0;
-      background: linear-gradient(135deg, #1E3A8A, #0F172A);
-      border: 2px solid #3B82F6;
-      border-radius: 18px;
-      padding: 16px 18px;
+    /* Giant Speech Output Banner */
+    .banner {
+      margin: 14px 0;
+      background: linear-gradient(135deg, #1E3A8A, #090D16);
+      border: 3px solid #3B82F6;
+      border-radius: 20px;
+      padding: 18px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      gap: 14px;
+      box-shadow: 0 8px 24px rgba(59, 130, 246, 0.2);
     }
-    .spoken-mr { font-size: 1.7rem; font-weight: 900; color: #FFFFFF; line-height: 1.2; }
-    .spoken-sub { font-size: 0.95rem; color: #93C5FD; margin-top: 4px; font-weight: 600; }
+    .banner-text { font-size: 1.85rem; font-weight: 900; color: #FFFFFF; line-height: 1.25; }
+    .banner-sub { font-size: 1rem; color: #93C5FD; margin-top: 6px; font-weight: 700; letter-spacing: 0.3px; }
     .btn-repeat {
       background: #2563EB;
       color: #FFF;
       border: none;
       border-radius: 14px;
-      padding: 14px 18px;
+      padding: 14px 20px;
       font-size: 1.1rem;
       font-weight: 900;
       white-space: nowrap;
@@ -88,232 +91,226 @@
     }
 
     /* Split YES / NO Bar */
-    .yn-bar {
+    .yn-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 14px;
+      gap: 14px;
+      margin-bottom: 16px;
     }
     .yn-btn {
-      padding: 18px;
-      border-radius: 18px;
-      font-size: 1.75rem;
+      padding: 20px;
+      border-radius: 20px;
+      font-size: 1.85rem;
       font-weight: 900;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
+      gap: 12px;
       border: none;
       color: #FFF;
+      cursor: pointer;
     }
-    .yn-yes { background: #16A34A; box-shadow: 0 5px 0 #14532D; }
-    .yn-no { background: #DC2626; box-shadow: 0 5px 0 #7F1D1D; }
+    .yn-yes { background: #059669; box-shadow: 0 6px 0 #064E3B; border: 2px solid #34D399; }
+    .yn-no  { background: #DC2626; box-shadow: 0 6px 0 #7F1D1D; border: 2px solid #F87171; }
     .yn-btn:active { transform: translateY(4px); box-shadow: none; }
 
-    /* Category Pills */
-    .cats {
+    /* Category Navigation */
+    .tabs {
       display: flex;
-      gap: 8px;
+      gap: 10px;
       overflow-x: auto;
-      padding-bottom: 12px;
+      padding-bottom: 14px;
     }
-    .cat-pill {
+    .tab {
       background: #1E293B;
-      color: #CBD5E1;
-      border: 2px solid #334155;
-      padding: 10px 18px;
+      color: var(--text-dim);
+      border: 2px solid var(--border);
+      padding: 12px 20px;
       border-radius: 999px;
-      font-size: 1rem;
+      font-size: 1.05rem;
       font-weight: 800;
       white-space: nowrap;
     }
-    .cat-pill.active {
+    .tab.active {
       background: #F8FAFC;
       color: #0F172A;
       border-color: #F8FAFC;
+      box-shadow: 0 4px 12px rgba(255,255,255,0.15);
     }
 
-    /* Main Touch Grid */
+    /* Main Grid */
     .grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
+      gap: 14px;
     }
     @media (min-width: 600px) {
       .grid { grid-template-columns: repeat(3, 1fr); }
     }
-    .tile {
-      background: var(--surface);
-      border-radius: 20px;
-      padding: 16px 12px;
+    .card {
+      background: var(--card-bg);
+      border-radius: 22px;
+      padding: 18px 14px;
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      border: 3px solid #334155;
-      box-shadow: 0 5px 0 #090D16;
+      border: 3px solid var(--border);
+      box-shadow: 0 6px 0 #030712;
       position: relative;
     }
-    .tile:active { transform: translateY(4px); box-shadow: none; }
-    .tile.family { border-top: 6px solid #10B981; }
-    .tile.daily  { border-top: 6px solid #0EA5E9; }
-    .tile.health { border-top: 6px solid #F43F5E; }
-    .tile.outing { border-top: 6px solid #F59E0B; }
+    .card:active { transform: translateY(4px); box-shadow: none; }
+    .card.family { border-top: 6px solid #10B981; }
+    .card.daily  { border-top: 6px solid #0EA5E9; }
+    .card.health { border-top: 6px solid #F43F5E; }
+    .card.outing { border-top: 6px solid #F59E0B; }
 
     .avatar {
-      width: 88px;
-      height: 88px;
+      width: 96px;
+      height: 96px;
       border-radius: 50%;
-      background: #0F172A;
+      background: #090D16;
       border: 3px solid #475569;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 3rem;
+      font-size: 3.2rem;
       overflow: hidden;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
     .avatar img { width: 100%; height: 100%; object-fit: cover; }
-    .tile-title { font-size: 1.35rem; font-weight: 900; color: #FFF; line-height: 1.25; }
-    .tile-sub { font-size: 0.85rem; color: var(--sub); margin-top: 4px; font-weight: 700; }
+    .card-title { font-size: 1.45rem; font-weight: 900; color: #FFF; line-height: 1.25; }
+    .card-sub { font-size: 0.9rem; color: var(--text-dim); margin-top: 4px; font-weight: 700; }
 
-    .edit-row {
-      display: flex;
-      gap: 6px;
-      margin-top: 12px;
+    .card-edit {
+      margin-top: 14px;
       width: 100%;
     }
-    .edit-btn {
-      flex: 1;
-      padding: 7px 6px;
-      border-radius: 8px;
-      border: 1px solid #475569;
+    .btn-photo {
+      width: 100%;
+      padding: 9px;
+      border-radius: 10px;
+      border: 2px solid #475569;
       background: #0F172A;
       color: #E2E8F0;
-      font-size: 0.78rem;
+      font-size: 0.85rem;
       font-weight: 800;
     }
-    .edit-btn.saved { background: #065F46; border-color: #10B981; color: #A7F3D0; }
+    .btn-photo.has-photo { background: #065F46; border-color: #10B981; color: #A7F3D0; }
   </style>
 </head>
 <body>
 
-<div class="topbar">
-  <div class="title">🗣️ बाबा संवाद</div>
-  <div class="top-actions">
-    <button class="btn-mode" id="lockBtn" onclick="toggleEdit()">🔒 संपादन: बंद</button>
-    <button class="btn-sos" onclick="ringSOS()">🔔 आवाज द्या</button>
+<div class="header">
+  <div class="brand">🗣️ बाबा संवाद <span style="font-size: 0.7rem; background: #0284C7; color: #fff; padding: 3px 8px; border-radius: 6px;">PRO MALE</span></div>
+  <div class="header-actions">
+    <button class="btn-edit" id="editToggle" onclick="toggleEditMode()">🔒 संपादन: बंद</button>
+    <button class="btn-sos" onclick="triggerSOS()">🔔 मदत</button>
   </div>
 </div>
 
-<div class="speaker-box">
+<div class="banner">
   <div>
-    <div class="spoken-mr" id="mainBanner">कोणत्याही कार्डवर टॅप करा</div>
-    <div class="spoken-sub" id="subBanner">पुरुषाचा आवाज तयार आहे • Tap any button</div>
+    <div class="banner-text" id="bannerMr">कोणत्याही कार्डवर टॅप करा</div>
+    <div class="banner-sub" id="bannerSub">Deep Male Voice Engine Active • Tap any card</div>
   </div>
-  <button class="btn-repeat" onclick="repeatSpeech()">🔊 पुन्हा</button>
+  <button class="btn-repeat" onclick="repeatLast()">🔊 पुन्हा</button>
 </div>
 
-<div class="yn-bar">
-  <button class="yn-btn yn-yes" onclick="speakCard(YES_CARD)">✅ हो (YES)</button>
-  <button class="yn-btn yn-no" onclick="speakCard(NO_CARD)">❌ नाही (NO)</button>
+<div class="yn-grid">
+  <button class="yn-btn yn-yes" onclick="speak({id:'yes', mr:'हो, बरोबर आहे', sub:'Yes, correct', speak:'हो, बरोबर आहे', phonetic:'Hoo... Ho, barobar aahe. Yes.'})">✅ हो (YES)</button>
+  <button class="yn-btn yn-no" onclick="speak({id:'no', mr:'नाही, मला नको', sub:'No, I do not want', speak:'नाही, मला नको', phonetic:'Naa-hee... Naahi, mala nako. No.'})">❌ नाही (NO)</button>
 </div>
 
-<div class="cats" id="catBar"></div>
-<div class="grid" id="cardGrid"></div>
+<div class="tabs" id="tabContainer"></div>
+<div class="grid" id="gridContainer"></div>
 
-<input type="file" id="photoPicker" accept="image/*" style="display:none" />
+<input type="file" id="fileInput" accept="image/*" style="display:none" />
 
 <script>
-  const STORE_KEY = 'baba_apk_store_v1';
-  let editUnlocked = false;
-  let currentCat = 'all';
+  const STORE_KEY = 'baba_pro_male_v2';
+  let isEditing = false;
+  let currentTab = 'all';
   let activePhotoId = null;
+  let lastItem = { mr:'हो, बरोबर आहे', phonetic:'Hoo... Ho, barobar aahe. Yes.', speak:'हो, बरोबर आहे' };
 
-  const YES_CARD = { id: 'yes', mr: 'हो, बरोबर आहे', sub: 'Yes, correct', speakMr: 'हो, बरोबर आहे', phonetic: 'Hoo... Ho, barobar aahe. Yes.' };
-  const NO_CARD  = { id: 'no',  mr: 'नाही, मला नको', sub: 'No, I do not want', speakMr: 'नाही, मला नको', phonetic: 'Naa-hee... Naahi, mala nako. No.' };
-  let lastCard = YES_CARD;
-
-  const CATS = [
+  const TABS = [
     { id: 'all', label: '🌟 सर्व (All)' },
-    { id: 'family', label: '👨‍👩‍👧‍👦 कुटुंब' },
-    { id: 'daily', label: '💧 दैनंदिन' },
-    { id: 'health', label: '💊 तब्येत / डॉक्टर' },
-    { id: 'outing', label: '🚗 बाहेर / गावी' }
+    { id: 'family', label: '👨‍👩‍👧‍👦 कुटुंब (Family)' },
+    { id: 'daily', label: '💧 दैनंदिन (Daily)' },
+    { id: 'health', label: '💊 तब्येत (Health)' },
+    { id: 'outing', label: '🚗 बाहेर / गावी (Outings)' }
   ];
 
   const CARDS = [
-    { id: 'sushma', cat: 'family', icon: '👩', mr: 'सुषमा', sub: 'Sushma', speakMr: 'सुषमा, इकडे ये', phonetic: 'Sushma... Sushma ikade ye' },
-    { id: 'abhijeet', cat: 'family', icon: '👨', mr: 'अभिजीत', sub: 'Abhijeet', speakMr: 'अभिजीतला बोलवा', phonetic: 'Abhijeet... Abhijeet la bolva' },
-    { id: 'sonali', cat: 'family', icon: '👩', mr: 'सोनाली (ताई)', sub: 'Sonali / Tai', speakMr: 'सोनाली ताईला बोलवा', phonetic: 'Sonali... Sonali tai la bolva' },
-    { id: 'ira', cat: 'family', icon: '👧', mr: 'इरा', sub: 'Ira / Era', speakMr: 'इराला इकडे बोलवा', phonetic: 'Era... Era la ikade bolva' },
-    { id: 'swapnali', cat: 'family', icon: '👩', mr: 'स्वप्नाली', sub: 'Swapnali', speakMr: 'स्वप्नाली, इकडे ये', phonetic: 'Swapnali... Swapnali ikade ye' },
+    // Family (Pre-configured with your family members)
+    { id: 'sushma', cat: 'family', icon: '👩', mr: 'सुषमा', sub: 'Sushma (Wife)', speak: 'सुषमा, इकडे ये', phonetic: 'Sushma... Sushma ikade ye' },
+    { id: 'abhijeet', cat: 'family', icon: '👨', mr: 'अभिजीत', sub: 'Abhijeet (Son)', speak: 'अभिजीतला बोलवा', phonetic: 'Abhijeet... Abhijeet la bolva' },
+    { id: 'sonali', cat: 'family', icon: '👩', mr: 'सोनाली (ताई)', sub: 'Sonali (Sister)', speak: 'सोनाली ताईला बोलवा', phonetic: 'Sonali... Sonali tai la bolva' },
+    { id: 'ira', cat: 'family', icon: '👧', mr: 'इरा', sub: 'Ira (Granddaughter)', speak: 'इराला इकडे बोलवा', phonetic: 'Era... Era la ikade bolva' },
+    { id: 'swapnali', cat: 'family', icon: '👩', mr: 'स्वप्नाली', sub: 'Swapnali (Daughter-in-law)', speak: 'स्वप्नाली, इकडे ये', phonetic: 'Swapnali... Swapnali ikade ye' },
 
-    { id: 'water', cat: 'daily', icon: '💧', mr: 'पिण्याचे पाणी', sub: 'Drinking Water', speakMr: 'मला पिण्यासाठी पाणी द्या', phonetic: 'Paani... Mala pinyasathi paani dya' },
-    { id: 'tablets', cat: 'daily', icon: '💊', mr: 'गोळ्या / औषधे', sub: 'Tablets', speakMr: 'माझ्या गोळ्या आणि औषधे द्या', phonetic: 'Golya... Majhya golya aani aushadhe dya' },
-    { id: 'food', cat: 'daily', icon: '🍛', mr: 'जेवण / भूक', sub: 'Food / Hungry', speakMr: 'मला भूक लागली आहे, जेवण द्या', phonetic: 'Jevan... Mala bhook lagli aahe, jevan dya' },
-    { id: 'tea', cat: 'daily', icon: '☕', mr: 'गरम चहा', sub: 'Hot Tea', speakMr: 'मला गरम चहा हवा आहे', phonetic: 'Chaha... Mala garam chaha hava aahe' },
-    { id: 'bathroom', cat: 'daily', icon: '🚻', mr: 'बाथरूम', sub: 'Washroom', speakMr: 'मला बाथरूमला जायचे आहे', phonetic: 'Bathroom... Mala bathroom la jayche aahe' },
-    { id: 'glasses', cat: 'daily', icon: '👓', mr: 'माझा चष्मा', sub: 'My Glasses', speakMr: 'माझा चष्मा द्या', phonetic: 'Chashma... Majha chashma dya' },
+    // Daily
+    { id: 'water', cat: 'daily', icon: '💧', mr: 'पिण्याचे पाणी', sub: 'Drinking Water', speak: 'मला पिण्यासाठी पाणी द्या', phonetic: 'Paani... Mala pinyasathi paani dya' },
+    { id: 'tablets', cat: 'daily', icon: '💊', mr: 'गोळ्या / औषधे', sub: 'Tablets / Medicine', speak: 'माझ्या गोळ्या आणि औषधे द्या', phonetic: 'Golya... Majhya golya aani aushadhe dya' },
+    { id: 'food', cat: 'daily', icon: '🍛', mr: 'जेवण / भूक', sub: 'Food / Hungry', speak: 'मला भूक लागली आहे, जेवण द्या', phonetic: 'Jevan... Mala bhook lagli aahe, jevan dya' },
+    { id: 'tea', cat: 'daily', icon: '☕', mr: 'गरम चहा', sub: 'Hot Tea', speak: 'मला गरम चहा हवा आहे', phonetic: 'Chaha... Mala garam chaha hava aahe' },
+    { id: 'bathroom', cat: 'daily', icon: '🚻', mr: 'बाथरूम', sub: 'Washroom', speak: 'मला बाथरूमला जायचे आहे', phonetic: 'Bathroom... Mala bathroom la jayche aahe' },
+    { id: 'glasses', cat: 'daily', icon: '👓', mr: 'माझा चष्मा', sub: 'My Glasses', speak: 'माझा चष्मा द्या', phonetic: 'Chashma... Majha chashma dya' },
 
-    { id: 'toothache', cat: 'health', icon: '🦷', mr: 'दाढ दुखत आहे', sub: 'Dadh Dukhne', speakMr: 'माझी दाढ खूप दुखत आहे', phonetic: 'Dadh dukhte... Majhi dadh khoop dukhat aahe' },
-    { id: 'stomach', cat: 'health', icon: '🤢', mr: 'पोट बिघडले', sub: 'Pot Bighadne', speakMr: 'माझे पोट बिघडले आहे', phonetic: 'Pot bighadle... Majhe pot bighadle aahe' },
-    { id: 'doctor', cat: 'health', icon: '🩺', mr: 'डॉक्टरांकडे चला', sub: 'Doctor Kade Jaane', speakMr: 'मला डॉक्टरांकडे घेऊन चला', phonetic: 'Doctor... Mala doctoran kade gheun chala' },
-    { id: 'bodypain', cat: 'health', icon: '🤕', mr: 'हात-पाय दुखणे', sub: 'Body Pain', speakMr: 'माझे हात पाय दुखत आहेत', phonetic: 'Haat paay dukhtat... Majhe haat paay dukhat aahet' },
+    // Health
+    { id: 'toothache', cat: 'health', icon: '🦷', mr: 'दाढ दुखत आहे', sub: 'Toothache (Dadh Dukhne)', speak: 'माझी दाढ खूप दुखत आहे', phonetic: 'Dadh dukhte... Majhi dadh khoop dukhat aahe' },
+    { id: 'stomach', cat: 'health', icon: '🤢', mr: 'पोट बिघडले', sub: 'Stomach Upset (Pot Bighadne)', speak: 'माझे पोट बिघडले आहे', phonetic: 'Pot bighadle... Majhe pot bighadle aahe' },
+    { id: 'doctor', cat: 'health', icon: '🩺', mr: 'डॉक्टरांकडे चला', sub: 'Visit Doctor', speak: 'मला डॉक्टरांकडे घेऊन चला', phonetic: 'Doctor... Mala doctoran kade gheun chala' },
+    { id: 'bodypain', cat: 'health', icon: '🤕', mr: 'हात-पाय दुखणे', sub: 'Body Pain', speak: 'माझे हात पाय दुखत आहेत', phonetic: 'Haat paay dukhtat... Majhe haat paay dukhat aahet' },
 
-    { id: 'walk', cat: 'outing', icon: '🚶‍♂️', mr: 'फिरायला जायचे', sub: 'Firayla Jaane', speakMr: 'मला बाहेर फिरायला जायचे आहे', phonetic: 'Firayla jaane... Mala baher firayla jayche aahe' },
-    { id: 'village', cat: 'outing', icon: '🏡', mr: 'गावी जायचे', sub: 'Gavi Jaane', speakMr: 'मला गावी जायचे आहे', phonetic: 'Gavi jaane... Mala gavi jayche aahe' }
+    // Outings
+    { id: 'walk', cat: 'outing', icon: '🚶‍♂️', mr: 'फिरायला जायचे', sub: 'Go for Walk', speak: 'मला बाहेर फिरायला जायचे आहे', phonetic: 'Firayla jaane... Mala baher firayla jayche aahe' },
+    { id: 'village', cat: 'outing', icon: '🏡', mr: 'गावी जायचे', sub: 'Go to Village', speak: 'मला गावी जायचे आहे', phonetic: 'Gavi jaane... Mala gavi jayche aahe' }
   ];
 
-  let store = { photos: {}, audio: {} };
+  let db = { photos: {} };
   try {
     const raw = localStorage.getItem(STORE_KEY);
-    if (raw) store = JSON.parse(raw);
+    if (raw) db = JSON.parse(raw);
   } catch (e) {}
 
-  function saveStore() {
-    try { localStorage.setItem(STORE_KEY, JSON.stringify(store)); } catch (e) {}
+  function saveDb() {
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(db)); } catch (e) {}
   }
 
-  function toggleEdit() {
-    editUnlocked = !editUnlocked;
-    const btn = document.getElementById('lockBtn');
-    btn.textContent = editUnlocked ? '🔓 संपादन: चालू' : '🔒 संपादन: बंद';
-    btn.className = editUnlocked ? 'btn-mode unlocked' : 'btn-mode';
+  function toggleEditMode() {
+    isEditing = !isEditing;
+    const btn = document.getElementById('editToggle');
+    btn.textContent = isEditing ? '🔓 संपादन: चालू' : '🔒 संपादन: बंद';
+    btn.className = isEditing ? 'btn-edit active' : 'btn-edit';
     renderGrid();
   }
 
-  // Native Android Capacitor TTS + Browser Male Voice Fallback
-  async function speakCard(card) {
-    lastCard = card;
-    document.getElementById('mainBanner').textContent = card.mr;
-    document.getElementById('subBanner').textContent = card.phonetic;
+  // Strict Deep Male Voice Engine
+  async function speak(item) {
+    lastItem = item;
+    document.getElementById('bannerMr').textContent = item.mr;
+    document.getElementById('bannerSub').textContent = item.phonetic;
 
-    // 1. Custom Recorded Family Voice
-    if (store.audio && store.audio[card.id]) {
-      new Audio(store.audio[card.id]).play().catch(() => {});
-      return;
-    }
-
-    // 2. Native Android Hardware TTS (when running inside compiled APK)
+    // 1. Android Native TTS (Inside compiled APK)
     if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.TextToSpeech) {
       try {
         await window.Capacitor.Plugins.TextToSpeech.speak({
-          text: card.speakMr,
+          text: item.speak,
           lang: 'mr-IN',
-          rate: 0.85,
-          pitch: 0.72,
+          rate: 0.82,
+          pitch: 0.68, // Deep male bass pitch
           volume: 1.0
         });
         return;
       } catch (err) {
-        // Fallback to English-India phonetic on Android if Marathi voice data isn't downloaded
         try {
           await window.Capacitor.Plugins.TextToSpeech.speak({
-            text: card.phonetic,
+            text: item.phonetic,
             lang: 'en-IN',
-            rate: 0.85,
-            pitch: 0.72,
+            rate: 0.82,
+            pitch: 0.68,
             volume: 1.0
           });
           return;
@@ -321,91 +318,113 @@
       }
     }
 
-    // 3. Browser Speech Synthesis Fallback
+    // 2. Browser Web Speech Fallback (Strict Male Filtering)
     if ('speechSynthesis' in window) {
       try { window.speechSynthesis.cancel(); } catch (e) {}
       setTimeout(() => {
         const voices = window.speechSynthesis.getVoices() || [];
-        const femaleRx = /female|swara|heera|zira|samantha|veena|lekha/i;
-        const malePool = voices.filter(v => !femaleRx.test(v.name));
-        const chosen = malePool.find(v => /IN/i.test(v.lang)) || malePool[0] || voices[0];
+        const femaleRegex = /female|swara|heera|zira|samantha|veena|lekha|kalpana|aria|jenny/i;
+        const maleRegex = /male|rishi|prabhat|madhur|hemant|david|mark|daniel|george|alex|guy|ravi/i;
 
-        const utter = new SpeechSynthesisUtterance(card.phonetic);
-        window.__utt = utter;
-        if (chosen) { utter.voice = chosen; utter.lang = chosen.lang; }
-        utter.pitch = 0.72;
-        utter.rate = 0.85;
-        window.speechSynthesis.speak(utter);
-      }, 60);
+        const nonFemale = voices.filter(v => !femaleRegex.test(v.name));
+        const maleVoice = nonFemale.find(v => (/mr|hi|en-IN/i.test(v.lang)) && maleRegex.test(v.name)) ||
+                          nonFemale.find(v => maleRegex.test(v.name)) ||
+                          nonFemale.find(v => /IN/i.test(v.lang)) ||
+                          nonFemale[0];
+
+        const utterance = new SpeechSynthesisUtterance(item.phonetic);
+        window.__activeUtterance = utterance;
+
+        if (maleVoice) {
+          utterance.voice = maleVoice;
+          utterance.lang = maleVoice.lang;
+        } else {
+          utterance.lang = 'en-IN';
+        }
+
+        // Deep resonant bass male pitch
+        utterance.pitch = 0.68;
+        utterance.rate = 0.82;
+        utterance.volume = 1.0;
+
+        window.speechSynthesis.speak(utterance);
+      }, 50);
     }
   }
 
-  function repeatSpeech() { speakCard(lastCard); }
+  function repeatLast() { speak(lastItem); }
 
-  function ringSOS() {
+  function triggerSOS() {
     try {
       const ctx = new (window.AudioContext || window.webkitAudioContext)();
       const now = ctx.currentTime;
-      [587.33, 880, 587.33, 880].forEach((f, i) => {
+      [523.25, 783.99, 523.25, 783.99].forEach((f, i) => {
         const osc = ctx.createOscillator();
         const g = ctx.createGain();
         osc.type = 'triangle';
-        osc.frequency.setValueAtTime(f, now + i * 0.18);
-        g.gain.setValueAtTime(0.4, now + i * 0.18);
-        g.gain.exponentialRampToValueAtTime(0.001, now + i * 0.18 + 0.4);
+        osc.frequency.setValueAtTime(f, now + i * 0.16);
+        g.gain.setValueAtTime(0.4, now + i * 0.16);
+        g.gain.exponentialRampToValueAtTime(0.001, now + i * 0.16 + 0.38);
         osc.connect(g); g.connect(ctx.destination);
-        osc.start(now + i * 0.18); osc.stop(now + i * 0.18 + 0.42);
+        osc.start(now + i * 0.16); osc.stop(now + i * 0.16 + 0.4);
       });
     } catch (e) {}
-    speakCard({ id: 'sos', mr: 'कृपया इकडे या!', sub: 'Need Help', speakMr: 'कृपया इकडे या, मला मदत हवी आहे', phonetic: 'Krupaya ikade yaa... Mala madat havi aahe' });
+
+    speak({
+      id: 'sos',
+      mr: 'कृपया इकडे या!',
+      sub: 'Emergency Help',
+      speak: 'कृपया इकडे या, मला मदत हवी आहे',
+      phonetic: 'Krupaya ikade yaa... Mala madat havi aahe'
+    });
   }
 
-  function pickPhoto(e, id) {
+  function openFilePicker(e, id) {
     e.stopPropagation();
     activePhotoId = id;
-    const inp = document.getElementById('photoPicker');
-    inp.value = '';
-    inp.click();
+    const input = document.getElementById('fileInput');
+    input.value = '';
+    input.click();
   }
 
-  document.getElementById('photoPicker').addEventListener('change', function(e) {
-    const f = e.target.files && e.target.files[0];
-    if (!f || !activePhotoId) return;
-    const r = new FileReader();
-    r.onload = function(ev) {
+  document.getElementById('fileInput').addEventListener('change', function(e) {
+    const file = e.target.files && e.target.files[0];
+    if (!file || !activePhotoId) return;
+    const reader = new FileReader();
+    reader.onload = function(ev) {
       const img = new Image();
       img.onload = function() {
-        const c = document.createElement('canvas');
-        c.width = 180; c.height = 180;
-        const m = Math.min(img.width, img.height);
-        c.getContext('2d').drawImage(img, (img.width - m)/2, (img.height - m)/2, m, m, 0, 0, 180, 180);
-        store.photos[activePhotoId] = c.toDataURL('image/jpeg', 0.75);
-        saveStore();
+        const canvas = document.createElement('canvas');
+        canvas.width = 180; canvas.height = 180;
+        const minSide = Math.min(img.width, img.height);
+        canvas.getContext('2d').drawImage(img, (img.width - minSide)/2, (img.height - minSide)/2, minSide, minSide, 0, 0, 180, 180);
+        db.photos[activePhotoId] = canvas.toDataURL('image/jpeg', 0.78);
+        saveDb();
         renderGrid();
       };
       img.src = ev.target.result;
     };
-    r.readAsDataURL(f);
+    reader.readAsDataURL(file);
   });
 
-  function renderCats() {
-    document.getElementById('catBar').innerHTML = CATS.map(c =>
-      `<button class="cat-pill ${currentCat === c.id ? 'active' : ''}" onclick=" currentCat='${c.id}'; renderCats(); renderGrid(); ">${c.label}</button>`
+  function renderTabs() {
+    document.getElementById('tabContainer').innerHTML = TABS.map(t =>
+      `<button class="tab ${currentTab === t.id ? 'active' : ''}" onclick="currentTab='${t.id}'; renderTabs(); renderGrid();">${t.label}</button>`
     ).join('');
   }
 
   function renderGrid() {
-    const list = currentCat === 'all' ? CARDS : CARDS.filter(c => c.cat === currentCat);
-    document.getElementById('cardGrid').innerHTML = list.map(c => {
-      const img = store.photos && store.photos[c.id];
+    const list = currentTab === 'all' ? CARDS : CARDS.filter(c => c.cat === currentTab);
+    document.getElementById('gridContainer').innerHTML = list.map(c => {
+      const p = db.photos && db.photos[c.id];
       return `
-        <div class="tile ${c.cat}" onclick='speakCard(${JSON.stringify(c).replace(/'/g, "&#39;")})'>
-          <div class="avatar">${img ? `<img src="${img}"/>` : c.icon}</div>
-          <div class="tile-title">${c.mr}</div>
-          <div class="tile-sub">${c.sub}</div>
-          ${editUnlocked ? `
-            <div class="edit-row">
-              <button class="edit-btn ${img ? 'saved' : ''}" onclick="pickPhoto(event, '${c.id}')">📷 फोटो ${img ? '✓' : ''}</button>
+        <div class="card ${c.cat}" onclick='speak(${JSON.stringify(c).replace(/'/g, "&#39;")})'>
+          <div class="avatar">${p ? `<img src="${p}" />` : c.icon}</div>
+          <div class="card-title">${c.mr}</div>
+          <div class="card-sub">${c.sub}</div>
+          ${isEditing ? `
+            <div class="card-edit">
+              <button class="btn-photo ${p ? 'has-photo' : ''}" onclick="openFilePicker(event, '${c.id}')">📷 फोटो ${p ? '✓' : ''}</button>
             </div>
           ` : ''}
         </div>
@@ -413,7 +432,7 @@
     }).join('');
   }
 
-  renderCats();
+  renderTabs();
   renderGrid();
 </script>
 </body>
