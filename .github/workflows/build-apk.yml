@@ -24,13 +24,15 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Set up Gradle (caching)
+      - name: Set up Pre-Cached Gradle 8.7 (Bypasses slow gradlew download)
         uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.7'
 
       - name: Initialize Capacitor 6 and TTS Plugin v5
         run: |
           npm init -y
-          npm install @capacitor/core@6.1.2 @capacitor/cli@6.1.2 @capacitor/android@6.1.2 @capacitor-community/text-to-speech@5
+          npm install @capacitor/core@6.1.2 @capacitor/cli@6.1.2 @capacitor/android@6.1.2 @capacitor-community/text-to-speech@5.0.0
           mkdir -p www
           if [ ! -f www/index.html ]; then
             echo '<!DOCTYPE html><html><head><meta charset="utf-8"><title>Baba Sanvad</title></head><body>Baba Sanvad</body></html>' > www/index.html
@@ -39,20 +41,13 @@ jobs:
           npx cap add android
           npx cap sync android
 
-      - name: Build Debug APK with Gradle
+      - name: Build Debug APK Using Pre-Installed Gradle
         working-directory: ./android
         run: |
-          chmod +x gradlew
-          for i in 1 2 3; do
-            ./gradlew assembleDebug --no-daemon --stacktrace && exit 0
-            echo "Attempt $i failed, retrying in 20s..."
-            sleep 20
-          done
-          exit 1
+          gradle assembleDebug --no-daemon --stacktrace
 
       - name: Upload Compiled APK for Download
         uses: actions/upload-artifact@v4
         with:
           name: Baba-Sanvad-Android-APK
           path: android/app/build/outputs/apk/debug/app-debug.apk
-
