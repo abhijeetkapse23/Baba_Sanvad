@@ -1,0 +1,48 @@
+name: Build Baba Sanvad Android APK
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  build-android-apk:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Set up JDK 21 for Android Gradle
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Initialize Capacitor & Native TTS Plugin
+        run: |
+          npm init -y
+          npm install @capacitor/core @capacitor/cli @capacitor/android @capacitor-community/text-to-speech
+          npx cap init "Baba Sanvad" "com.abhijeet.babasanvad" --web-dir www
+          npx cap add android
+          npx cap sync android
+
+      - name: Build Debug APK with Gradle
+        working-directory: ./android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+      - name: Upload Compiled APK for Download
+        uses: actions/upload-artifact@v4
+        with:
+          name: Baba-Sanvad-Android-APK
+          path: android/app/build/outputs/apk/debug/app-debug.apk
