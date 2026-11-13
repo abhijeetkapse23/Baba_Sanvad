@@ -5,6 +5,12 @@ on:
     branches: [ "main", "master" ]
   workflow_dispatch:
 
+env:
+  # Natural-sounding Marathi voice used to pre-build the audio clips.
+  # Male: mr-IN-ManoharNeural   Female: mr-IN-AarohiNeural
+  TTS_VOICE: mr-IN-ManoharNeural
+  TTS_RATE: "-8%"
+
 jobs:
   build-android-apk:
     runs-on: ubuntu-latest
@@ -24,22 +30,84 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Set up Pre-Cached Gradle 8.7 (Bypasses slow gradlew download)
+      - name: Set up Pre-Cached Gradle 8.7
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.7'
+
+      - name: Set up Python (for voice generation)
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Prepare web folder
+        run: |
+          mkdir -p www/audio
+          # index.html may live in the repo root or in www/ - both work
+          if [ -f index.html ]; then cp index.html www/index.html; fi
+          # real human recordings committed to audio/ in the repo root are used as-is
+          if [ -d audio ]; then cp -n audio/* www/audio/ 2>/dev/null || true; fi
+          test -f www/index.html || { echo "index.html not found (put it in www/ or the repo root)"; exit 1; }
+
+      - name: Add Marathi typefaces (Tiro Devanagari Marathi + Anek Devanagari)
+        continue-on-error: true
+        run: |
+          mkdir -p www/fonts /tmp/fonts
+          cd /tmp/fonts && npm init -y >/dev/null
+          npm install --silent @fontsource/tiro-devanagari-marathi @fontsource/anek-devanagari
+          F=node_modules/@fontsource
+          OUT="$GITHUB_WORKSPACE/www/fonts"
+          cp $F/tiro-devanagari-marathi/files/tiro-devanagari-marathi-devanagari-400-normal.woff2 "$OUT/tiro.woff2" || true
+          for w in 500 700 800; do
+            cp $F/anek-devanagari/files/anek-devanagari-devanagari-$w-normal.woff2 "$OUT/anek-$w.woff2" || true
+          done
+          ls -la "$OUT"
+
+      - name: Generate natural Marathi voice clips (audio/<id>.mp3)
+        continue-on-error: true
+        run: |
+          pip install --quiet edge-tts
+          cat > /tmp/extract.js <<'EOF'
+          const fs = require('fs');
+          const html = fs.readFileSync('www/index.html', 'utf8');
+          const m = html.match(/\/\*DATA_START\*\/([\s\S]*?)\/\*DATA_END\*\//);
+          if (!m) { console.error('DATA block not found'); process.exit(1); }
+          const list = new Function(m[1] + ';return allAudio(DATA,[]);')();
+          fs.writeFileSync('/tmp/phrases.tsv', list.map(p => p.id + '\t' + p.text).join('\n') + '\n');
+          console.log(list.length + ' phrases');
+          EOF
+          node /tmp/extract.js
+          ok=0; fail=0
+          while IFS=$'\t' read -r id text; do
+            out="www/audio/$id.mp3"
+            # never overwrite a real recording that is already in the repo
+            if [ -s "$out" ]; then continue; fi
+            for try in 1 2 3; do
+              if edge-tts --voice "$TTS_VOICE" --rate="$TTS_RATE" --text "$text" --write-media "$out" >/dev/null 2>&1 && [ -s "$out" ]; then break; fi
+              rm -f "$out"; sleep 2
+            done
+            if [ -s "$out" ]; then ok=$((ok+1)); else fail=$((fail+1)); echo "failed: $id"; fi
+          done < /tmp/phrases.tsv
+          echo "Voice clips created: $ok, failed: $fail (failed ones fall back to the phone voice)"
+          ls www/audio | wc -l
 
       - name: Initialize Capacitor 6 and TTS Plugin v5
         run: |
           npm init -y
           npm install @capacitor/core@6.1.2 @capacitor/cli@6.1.2 @capacitor/android@6.1.2 @capacitor-community/text-to-speech@5.0.0
-          mkdir -p www
-          if [ ! -f www/index.html ]; then
-            echo '<!DOCTYPE html><html><head><meta charset="utf-8"><title>Baba Sanvad</title></head><body>Baba Sanvad</body></html>' > www/index.html
-          fi
           printf '{"appId":"com.abhijeet.babasanvad","appName":"Baba Sanvad","webDir":"www"}\n' > capacitor.config.json
           npx cap add android
           npx cap sync android
+
+      - name: Add microphone + speech permissions to the Android manifest
+        run: |
+          M=android/app/src/main/AndroidManifest.xml
+          # microphone: needed for "record family voice" and the AUM voice meter
+          # queries: needed by the text-to-speech plugin on Android 11+
+          sed -i 's#</manifest>#    <uses-permission android:name="android.permission.RECORD_AUDIO" />\n    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />\n    <queries>\n        <intent>\n            <action android:name="android.intent.action.TTS_SERVICE" />\n        </intent>\n    </queries>\n</manifest>#' "$M"
+          # keep the app upright
+          sed -i '0,/android:name=".MainActivity"/s//android:name=".MainActivity" android:screenOrientation="portrait"/' "$M"
+          cat "$M"
 
       - name: Build Debug APK Using Pre-Installed Gradle
         working-directory: ./android
