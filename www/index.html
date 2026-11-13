@@ -181,6 +181,22 @@ button{font-family:var(--ui);color:inherit;cursor:pointer}
 .lrow{width:100%;background:none;border:none;border-bottom:1px solid var(--line);text-align:left}
 .lrow small{display:block;font-weight:500;font-size:.8rem;color:var(--ink2)}
 .lrow .ib{display:grid;place-items:center;font-style:normal}
+.lv{display:flex;gap:8px;margin-top:14px}
+.lv button{flex:1;height:48px;border-radius:14px;border:2px solid rgba(255,255,255,.28);background:none;color:#fff;font-weight:800;font-size:1.25rem}
+.lv .on{background:#FFF3D1;border-color:#FFF3D1;color:var(--mor-d)}
+.lvn{margin-top:10px;color:var(--mor-l);font-size:.9rem;line-height:1.4}.lvn b{display:block;color:#fff;font-size:1.1rem}
+.xgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.xgrid button{display:flex;align-items:center;gap:8px;background:var(--white);border:2px solid var(--line);border-bottom-width:4px;border-radius:16px;padding:10px;font-weight:700;font-size:.98rem;text-align:left;line-height:1.2}
+.xgrid .e{font-size:1.5rem}
+.tiles{display:flex;flex-direction:column;gap:10px;width:100%}
+.tiles.h{flex-direction:row;flex-wrap:wrap;justify-content:center}
+.tile{min-height:62px;border-radius:18px;border:2px solid var(--line);border-bottom-width:5px;background:var(--white);font:400 1.65rem/1.3 var(--disp);padding:8px 16px;color:var(--ink)}
+.tile.ok{background:var(--zendu-t);border-color:var(--zendu-d)}
+.tile.bad{animation:shake .35s;border-color:var(--kunku)}
+.slots{min-height:66px;width:100%;border-bottom:4px dashed var(--line);display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center;padding-bottom:10px}
+.cnt{font-size:2.7rem;line-height:1.35;max-width:310px;letter-spacing:4px}
+.qs{list-style:none;padding:0;width:100%;text-align:left}
+.qs li{background:var(--white);border-radius:14px;padding:12px 14px;margin-bottom:8px;font-weight:700;font-size:1.15rem}
 /* progress */
 .nums{display:grid;grid-template-columns:repeat(3,1fr);padding-top:8px}
 .nums div+div{border-left:1px solid rgba(255,255,255,.2);padding-left:14px}
@@ -333,103 +349,176 @@ const DATA={
   {id:'village',cat:'outing',icon:'🏡',mr:'गावी',sub:'Go to village',speak:'मला गावी जायचे आहे'},
   {id:'friends',cat:'outing',icon:'👥',mr:'मित्र',sub:'Meet friends',speak:'मला मित्रांना भेटायचे आहे'},
 
-  /* practice words (not shown on the talk board) */
-  {id:'ghar',cat:'word',icon:'🏠',mr:'घर',sub:'House',cue:'घ'},
-  {id:'daar',cat:'word',icon:'🚪',mr:'दार',sub:'Door',cue:'दा'},
-  {id:'palang',cat:'word',icon:'🛏️',mr:'पलंग',sub:'Bed',cue:'प'},
-  {id:'khurchi',cat:'word',icon:'🪑',mr:'खुर्ची',sub:'Chair',cue:'खु'},
-  {id:'diva',cat:'word',icon:'💡',mr:'दिवा',sub:'Light',cue:'दि'},
-  {id:'killi',cat:'word',icon:'🔑',mr:'किल्ली',sub:'Key',cue:'कि'},
-  {id:'kulup',cat:'word',icon:'🔒',mr:'कुलूप',sub:'Lock',cue:'कु'},
-  {id:'chhatri',cat:'word',icon:'☂️',mr:'छत्री',sub:'Umbrella',cue:'छ'},
-  {id:'pustak',cat:'word',icon:'📖',mr:'पुस्तक',sub:'Book',cue:'पु'},
-  {id:'pen',cat:'word',icon:'🖊️',mr:'पेन',sub:'Pen',cue:'पे'},
-  {id:'patra',cat:'word',icon:'✉️',mr:'पत्र',sub:'Letter',cue:'प'},
-  {id:'paise',cat:'word',icon:'💵',mr:'पैसे',sub:'Money',cue:'पै'},
-  {id:'ghadyal',cat:'word',icon:'⌚',mr:'घड्याळ',sub:'Watch',cue:'घ'},
-  {id:'katri',cat:'word',icon:'✂️',mr:'कात्री',sub:'Scissors',cue:'का'},
-  {id:'saban',cat:'word',icon:'🧼',mr:'साबण',sub:'Soap',cue:'सा'},
-  {id:'chamcha',cat:'word',icon:'🥄',mr:'चमचा',sub:'Spoon',cue:'च'},
-  {id:'taat',cat:'word',icon:'🍽️',mr:'ताट',sub:'Plate',cue:'ता'},
-  {id:'pishvi',cat:'word',icon:'👜',mr:'पिशवी',sub:'Bag',cue:'पि'},
-  {id:'boot',cat:'word',icon:'👟',mr:'बूट',sub:'Shoes',cue:'बू'},
-  {id:'topi',cat:'word',icon:'🧢',mr:'टोपी',sub:'Cap',cue:'टो'},
-  {id:'sadra',cat:'word',icon:'👔',mr:'सदरा',sub:'Shirt',cue:'स'},
-  {id:'ghanta',cat:'word',icon:'🔔',mr:'घंटा',sub:'Bell',cue:'घं'},
-  {id:'radio',cat:'word',icon:'📻',mr:'रेडिओ',sub:'Radio',cue:'रे'},
-  {id:'haat',cat:'word',icon:'✋',mr:'हात',sub:'Hand',cue:'हा'},
-  {id:'paay',cat:'word',icon:'🦶',mr:'पाय',sub:'Foot',cue:'पा'},
-  {id:'dola',cat:'word',icon:'👁️',mr:'डोळा',sub:'Eye',cue:'डो'},
-  {id:'kaan',cat:'word',icon:'👂',mr:'कान',sub:'Ear',cue:'का'},
-  {id:'naak',cat:'word',icon:'👃',mr:'नाक',sub:'Nose',cue:'ना'},
-  {id:'tond',cat:'word',icon:'👄',mr:'तोंड',sub:'Mouth',cue:'तों'},
-  {id:'daat',cat:'word',icon:'🦷',mr:'दात',sub:'Tooth',cue:'दा'},
-  {id:'bot',cat:'word',icon:'☝️',mr:'बोट',sub:'Finger',cue:'बो'},
-  {id:'doodh',cat:'word',icon:'🥛',mr:'दूध',sub:'Milk',cue:'दू'},
-  {id:'bhaat',cat:'word',icon:'🍚',mr:'भात',sub:'Rice',cue:'भा'},
-  {id:'pav',cat:'word',icon:'🍞',mr:'पाव',sub:'Bread',cue:'पा'},
-  {id:'ande',cat:'word',icon:'🥚',mr:'अंडे',sub:'Egg',cue:'अं'},
-  {id:'amba',cat:'word',icon:'🥭',mr:'आंबा',sub:'Mango',cue:'आं'},
-  {id:'kele',cat:'word',icon:'🍌',mr:'केळे',sub:'Banana',cue:'के'},
-  {id:'safarchand',cat:'word',icon:'🍎',mr:'सफरचंद',sub:'Apple',cue:'स'},
-  {id:'draksha',cat:'word',icon:'🍇',mr:'द्राक्षे',sub:'Grapes',cue:'द्रा'},
-  {id:'kalingad',cat:'word',icon:'🍉',mr:'कलिंगड',sub:'Watermelon',cue:'क'},
-  {id:'limbu',cat:'word',icon:'🍋',mr:'लिंबू',sub:'Lemon',cue:'लिं'},
-  {id:'tomato',cat:'word',icon:'🍅',mr:'टोमॅटो',sub:'Tomato',cue:'टो'},
-  {id:'batata',cat:'word',icon:'🥔',mr:'बटाटा',sub:'Potato',cue:'ब'},
-  {id:'gajar',cat:'word',icon:'🥕',mr:'गाजर',sub:'Carrot',cue:'गा'},
-  {id:'vange',cat:'word',icon:'🍆',mr:'वांगे',sub:'Brinjal',cue:'वां'},
-  {id:'mirchi',cat:'word',icon:'🌶️',mr:'मिरची',sub:'Chilli',cue:'मि'},
-  {id:'maka',cat:'word',icon:'🌽',mr:'मका',sub:'Corn',cue:'म'},
-  {id:'naral',cat:'word',icon:'🥥',mr:'नारळ',sub:'Coconut',cue:'ना'},
-  {id:'shengdane',cat:'word',icon:'🥜',mr:'शेंगदाणे',sub:'Peanuts',cue:'शें'},
-  {id:'madh',cat:'word',icon:'🍯',mr:'मध',sub:'Honey',cue:'म'},
-  {id:'meeth',cat:'word',icon:'🧂',mr:'मीठ',sub:'Salt',cue:'मी'},
-  {id:'gaay',cat:'word',icon:'🐄',mr:'गाय',sub:'Cow',cue:'गा'},
-  {id:'bail',cat:'word',icon:'🐂',mr:'बैल',sub:'Bull',cue:'बै'},
-  {id:'shelli',cat:'word',icon:'🐐',mr:'शेळी',sub:'Goat',cue:'शे'},
-  {id:'kutra',cat:'word',icon:'🐕',mr:'कुत्रा',sub:'Dog',cue:'कु'},
-  {id:'manjar',cat:'word',icon:'🐈',mr:'मांजर',sub:'Cat',cue:'मां'},
-  {id:'ghoda',cat:'word',icon:'🐎',mr:'घोडा',sub:'Horse',cue:'घो'},
-  {id:'hatti',cat:'word',icon:'🐘',mr:'हत्ती',sub:'Elephant',cue:'ह'},
-  {id:'wagh',cat:'word',icon:'🐅',mr:'वाघ',sub:'Tiger',cue:'वा'},
-  {id:'makad',cat:'word',icon:'🐒',mr:'माकड',sub:'Monkey',cue:'मा'},
-  {id:'kombda',cat:'word',icon:'🐓',mr:'कोंबडा',sub:'Rooster',cue:'कों'},
-  {id:'popat',cat:'word',icon:'🦜',mr:'पोपट',sub:'Parrot',cue:'पो'},
-  {id:'mor',cat:'word',icon:'🦚',mr:'मोर',sub:'Peacock',cue:'मो'},
-  {id:'chimni',cat:'word',icon:'🐦',mr:'चिमणी',sub:'Sparrow',cue:'चि'},
-  {id:'masa',cat:'word',icon:'🐟',mr:'मासा',sub:'Fish',cue:'मा'},
-  {id:'saap',cat:'word',icon:'🐍',mr:'साप',sub:'Snake',cue:'सा'},
-  {id:'mungi',cat:'word',icon:'🐜',mr:'मुंगी',sub:'Ant',cue:'मुं'},
-  {id:'phulpakharu',cat:'word',icon:'🦋',mr:'फुलपाखरू',sub:'Butterfly',cue:'फु'},
-  {id:'surya',cat:'word',icon:'☀️',mr:'सूर्य',sub:'Sun',cue:'सू'},
-  {id:'chandra',cat:'word',icon:'🌙',mr:'चंद्र',sub:'Moon',cue:'चं'},
-  {id:'tara',cat:'word',icon:'⭐',mr:'तारा',sub:'Star',cue:'ता'},
-  {id:'paus',cat:'word',icon:'🌧️',mr:'पाऊस',sub:'Rain',cue:'पा'},
-  {id:'jhad',cat:'word',icon:'🌳',mr:'झाड',sub:'Tree',cue:'झा'},
-  {id:'phool',cat:'word',icon:'🌸',mr:'फूल',sub:'Flower',cue:'फू'},
-  {id:'dongar',cat:'word',icon:'⛰️',mr:'डोंगर',sub:'Mountain',cue:'डों'},
-  {id:'aag',cat:'word',icon:'🔥',mr:'आग',sub:'Fire',cue:'आ'},
-  {id:'gaadi',cat:'word',icon:'🚗',mr:'गाडी',sub:'Car',cue:'गा'},
-  {id:'bus',cat:'word',icon:'🚌',mr:'बस',sub:'Bus',cue:'ब'},
-  {id:'railway',cat:'word',icon:'🚂',mr:'रेल्वे',sub:'Train',cue:'रे'},
-  {id:'cycle',cat:'word',icon:'🚲',mr:'सायकल',sub:'Cycle',cue:'सा'},
-  {id:'viman',cat:'word',icon:'✈️',mr:'विमान',sub:'Aeroplane',cue:'वि'},
-  {id:'tractor',cat:'word',icon:'🚜',mr:'ट्रॅक्टर',sub:'Tractor',cue:'ट्रॅ'},
-  {id:'dukan',cat:'word',icon:'🏪',mr:'दुकान',sub:'Shop',cue:'दु'},
-  {id:'davakhana',cat:'word',icon:'🏥',mr:'दवाखाना',sub:'Hospital',cue:'द'},
-  {id:'shala',cat:'word',icon:'🏫',mr:'शाळा',sub:'School',cue:'शा'},
-  {id:'pine',cat:'word',icon:'🥤',mr:'पिणे',sub:'Drinking',cue:'पि'},
-  {id:'jhopne',cat:'word',icon:'😴',mr:'झोपणे',sub:'Sleeping',cue:'झो'},
-  {id:'chalne',cat:'word',icon:'🚶',mr:'चालणे',sub:'Walking',cue:'चा'},
-  {id:'dhavne',cat:'word',icon:'🏃',mr:'धावणे',sub:'Running',cue:'धा'},
-  {id:'hasne',cat:'word',icon:'😄',mr:'हसणे',sub:'Laughing',cue:'ह'},
-  {id:'radne',cat:'word',icon:'😭',mr:'रडणे',sub:'Crying',cue:'र'},
-  {id:'vachne',cat:'word',icon:'📚',mr:'वाचणे',sub:'Reading',cue:'वा'},
-  {id:'lihine',cat:'word',icon:'✍️',mr:'लिहिणे',sub:'Writing',cue:'लि'},
-  {id:'gaane',cat:'word',icon:'🎤',mr:'गाणे',sub:'Singing',cue:'गा'},
-  {id:'pohne',cat:'word',icon:'🏊',mr:'पोहणे',sub:'Swimming',cue:'पो'},
-  {id:'taali',cat:'word',icon:'👏',mr:'टाळी',sub:'Clapping',cue:'टा'}
+  /* practice words (not shown on the talk board). g = group */
+  {id:'ghar',cat:'word',g:'home',icon:'🏠',mr:'घर',sub:'House',cue:'घ'},
+  {id:'daar',cat:'word',g:'home',icon:'🚪',mr:'दार',sub:'Door',cue:'दा'},
+  {id:'palang',cat:'word',g:'home',icon:'🛏️',mr:'पलंग',sub:'Bed',cue:'प'},
+  {id:'khurchi',cat:'word',g:'home',icon:'🪑',mr:'खुर्ची',sub:'Chair',cue:'खु'},
+  {id:'diva',cat:'word',g:'home',icon:'💡',mr:'दिवा',sub:'Light',cue:'दि'},
+  {id:'killi',cat:'word',g:'home',icon:'🔑',mr:'किल्ली',sub:'Key',cue:'कि'},
+  {id:'kulup',cat:'word',g:'home',icon:'🔒',mr:'कुलूप',sub:'Lock',cue:'कु'},
+  {id:'chhatri',cat:'word',g:'home',icon:'☂️',mr:'छत्री',sub:'Umbrella',cue:'छ'},
+  {id:'pustak',cat:'word',g:'home',icon:'📖',mr:'पुस्तक',sub:'Book',cue:'पु'},
+  {id:'pen',cat:'word',g:'home',icon:'🖊️',mr:'पेन',sub:'Pen',cue:'पे'},
+  {id:'patra',cat:'word',g:'home',icon:'✉️',mr:'पत्र',sub:'Letter',cue:'प'},
+  {id:'paise',cat:'word',g:'home',icon:'💵',mr:'पैसे',sub:'Money',cue:'पै'},
+  {id:'ghadyal',cat:'word',g:'home',icon:'⌚',mr:'घड्याळ',sub:'Watch',cue:'घ'},
+  {id:'katri',cat:'word',g:'home',icon:'✂️',mr:'कात्री',sub:'Scissors',cue:'का'},
+  {id:'saban',cat:'word',g:'home',icon:'🧼',mr:'साबण',sub:'Soap',cue:'सा'},
+  {id:'chamcha',cat:'word',g:'home',icon:'🥄',mr:'चमचा',sub:'Spoon',cue:'च'},
+  {id:'taat',cat:'word',g:'home',icon:'🍽️',mr:'ताट',sub:'Plate',cue:'ता'},
+  {id:'pishvi',cat:'word',g:'home',icon:'👜',mr:'पिशवी',sub:'Bag',cue:'पि'},
+  {id:'ghanta',cat:'word',g:'home',icon:'🔔',mr:'घंटा',sub:'Bell',cue:'घं'},
+  {id:'radio',cat:'word',g:'home',icon:'📻',mr:'रेडिओ',sub:'Radio',cue:'रे'},
+  {id:'jhadu',cat:'word',g:'home',icon:'🧹',mr:'झाडू',sub:'Broom',cue:'झा'},
+  {id:'topli',cat:'word',g:'home',icon:'🧺',mr:'टोपली',sub:'Basket',cue:'टो'},
+  {id:'menbatti',cat:'word',g:'home',icon:'🕯️',mr:'मेणबत्ती',sub:'Candle',cue:'मे'},
+  {id:'hatoda',cat:'word',g:'home',icon:'🔨',mr:'हातोडा',sub:'Hammer',cue:'हा'},
+  {id:'paper',cat:'word',g:'home',icon:'📰',mr:'पेपर',sub:'Newspaper',cue:'पे'},
+  {id:'torch',cat:'word',g:'home',icon:'🔦',mr:'टॉर्च',sub:'Torch',cue:'टॉ'},
+  {id:'suri',cat:'word',g:'home',icon:'🔪',mr:'सुरी',sub:'Knife',cue:'सु'},
+  {id:'fuga',cat:'word',g:'home',icon:'🎈',mr:'फुगा',sub:'Balloon',cue:'फु'},
+  {id:'chendu',cat:'word',g:'home',icon:'⚽',mr:'चेंडू',sub:'Ball',cue:'चें'},
+  {id:'dhol',cat:'word',g:'home',icon:'🥁',mr:'ढोल',sub:'Drum',cue:'ढो'},
+  {id:'bhet',cat:'word',g:'home',icon:'🎁',mr:'भेट',sub:'Gift',cue:'भे'},
+  {id:'angathi',cat:'word',g:'home',icon:'💍',mr:'अंगठी',sub:'Ring',cue:'अं'},
+  {id:'calendar',cat:'word',g:'home',icon:'📅',mr:'कॅलेंडर',sub:'Calendar',cue:'कॅ'},
+  {id:'panati',cat:'word',g:'home',icon:'🪔',mr:'पणती',sub:'Lamp',cue:'प'},
+  {id:'boot',cat:'word',g:'wear',icon:'👟',mr:'बूट',sub:'Shoes',cue:'बू'},
+  {id:'topi',cat:'word',g:'wear',icon:'🧢',mr:'टोपी',sub:'Cap',cue:'टो'},
+  {id:'sadra',cat:'word',g:'wear',icon:'👔',mr:'सदरा',sub:'Shirt',cue:'स'},
+  {id:'moje',cat:'word',g:'wear',icon:'🧦',mr:'मोजे',sub:'Socks',cue:'मो'},
+  {id:'pant',cat:'word',g:'wear',icon:'👖',mr:'पँट',sub:'Trousers',cue:'पँ'},
+  {id:'maflar',cat:'word',g:'wear',icon:'🧣',mr:'मफलर',sub:'Scarf',cue:'म'},
+  {id:'sadi',cat:'word',g:'wear',icon:'🥻',mr:'साडी',sub:'Saree',cue:'सा'},
+  {id:'haat',cat:'word',g:'body',icon:'✋',mr:'हात',sub:'Hand',cue:'हा'},
+  {id:'paay',cat:'word',g:'body',icon:'🦶',mr:'पाय',sub:'Foot',cue:'पा'},
+  {id:'dola',cat:'word',g:'body',icon:'👁️',mr:'डोळा',sub:'Eye',cue:'डो'},
+  {id:'kaan',cat:'word',g:'body',icon:'👂',mr:'कान',sub:'Ear',cue:'का'},
+  {id:'naak',cat:'word',g:'body',icon:'👃',mr:'नाक',sub:'Nose',cue:'ना'},
+  {id:'tond',cat:'word',g:'body',icon:'👄',mr:'तोंड',sub:'Mouth',cue:'तों'},
+  {id:'daat',cat:'word',g:'body',icon:'🦷',mr:'दात',sub:'Tooth',cue:'दा'},
+  {id:'bot',cat:'word',g:'body',icon:'☝️',mr:'बोट',sub:'Finger',cue:'बो'},
+  {id:'jeebh',cat:'word',g:'body',icon:'👅',mr:'जीभ',sub:'Tongue',cue:'जी'},
+  {id:'dadhi',cat:'word',g:'body',icon:'🧔',mr:'दाढी',sub:'Beard',cue:'दा'},
+  {id:'doodh',cat:'word',g:'food',icon:'🥛',mr:'दूध',sub:'Milk',cue:'दू'},
+  {id:'bhaat',cat:'word',g:'food',icon:'🍚',mr:'भात',sub:'Rice',cue:'भा'},
+  {id:'pav',cat:'word',g:'food',icon:'🍞',mr:'पाव',sub:'Bread',cue:'पा'},
+  {id:'ande',cat:'word',g:'food',icon:'🥚',mr:'अंडे',sub:'Egg',cue:'अं'},
+  {id:'amba',cat:'word',g:'food',icon:'🥭',mr:'आंबा',sub:'Mango',cue:'आं'},
+  {id:'kele',cat:'word',g:'food',icon:'🍌',mr:'केळे',sub:'Banana',cue:'के'},
+  {id:'safarchand',cat:'word',g:'food',icon:'🍎',mr:'सफरचंद',sub:'Apple',cue:'स'},
+  {id:'draksha',cat:'word',g:'food',icon:'🍇',mr:'द्राक्षे',sub:'Grapes',cue:'द्रा'},
+  {id:'kalingad',cat:'word',g:'food',icon:'🍉',mr:'कलिंगड',sub:'Watermelon',cue:'क'},
+  {id:'limbu',cat:'word',g:'food',icon:'🍋',mr:'लिंबू',sub:'Lemon',cue:'लिं'},
+  {id:'tomato',cat:'word',g:'food',icon:'🍅',mr:'टोमॅटो',sub:'Tomato',cue:'टो'},
+  {id:'batata',cat:'word',g:'food',icon:'🥔',mr:'बटाटा',sub:'Potato',cue:'ब'},
+  {id:'gajar',cat:'word',g:'food',icon:'🥕',mr:'गाजर',sub:'Carrot',cue:'गा'},
+  {id:'vange',cat:'word',g:'food',icon:'🍆',mr:'वांगे',sub:'Brinjal',cue:'वां'},
+  {id:'mirchi',cat:'word',g:'food',icon:'🌶️',mr:'मिरची',sub:'Chilli',cue:'मि'},
+  {id:'maka',cat:'word',g:'food',icon:'🌽',mr:'मका',sub:'Corn',cue:'म'},
+  {id:'naral',cat:'word',g:'food',icon:'🥥',mr:'नारळ',sub:'Coconut',cue:'ना'},
+  {id:'shengdane',cat:'word',g:'food',icon:'🥜',mr:'शेंगदाणे',sub:'Peanuts',cue:'शें'},
+  {id:'madh',cat:'word',g:'food',icon:'🍯',mr:'मध',sub:'Honey',cue:'म'},
+  {id:'meeth',cat:'word',g:'food',icon:'🧂',mr:'मीठ',sub:'Salt',cue:'मी'},
+  {id:'santre',cat:'word',g:'food',icon:'🍊',mr:'संत्रे',sub:'Orange',cue:'सं'},
+  {id:'ananas',cat:'word',g:'food',icon:'🍍',mr:'अननस',sub:'Pineapple',cue:'अ'},
+  {id:'kakdi',cat:'word',g:'food',icon:'🥒',mr:'काकडी',sub:'Cucumber',cue:'का'},
+  {id:'biscuit',cat:'word',g:'food',icon:'🍪',mr:'बिस्कीट',sub:'Biscuit',cue:'बि'},
+  {id:'icecream',cat:'word',g:'food',icon:'🍦',mr:'आईस्क्रीम',sub:'Icecream',cue:'आ'},
+  {id:'cake',cat:'word',g:'food',icon:'🍰',mr:'केक',sub:'Cake',cue:'के'},
+  {id:'gaay',cat:'word',g:'animal',icon:'🐄',mr:'गाय',sub:'Cow',cue:'गा'},
+  {id:'bail',cat:'word',g:'animal',icon:'🐂',mr:'बैल',sub:'Bull',cue:'बै'},
+  {id:'mhais',cat:'word',g:'animal',icon:'🐃',mr:'म्हैस',sub:'Buffalo',cue:'म्है'},
+  {id:'shelli',cat:'word',g:'animal',icon:'🐐',mr:'शेळी',sub:'Goat',cue:'शे'},
+  {id:'kutra',cat:'word',g:'animal',icon:'🐕',mr:'कुत्रा',sub:'Dog',cue:'कु'},
+  {id:'manjar',cat:'word',g:'animal',icon:'🐈',mr:'मांजर',sub:'Cat',cue:'मां'},
+  {id:'ghoda',cat:'word',g:'animal',icon:'🐎',mr:'घोडा',sub:'Horse',cue:'घो'},
+  {id:'hatti',cat:'word',g:'animal',icon:'🐘',mr:'हत्ती',sub:'Elephant',cue:'ह'},
+  {id:'wagh',cat:'word',g:'animal',icon:'🐅',mr:'वाघ',sub:'Tiger',cue:'वा'},
+  {id:'sinha',cat:'word',g:'animal',icon:'🦁',mr:'सिंह',sub:'Lion',cue:'सिं'},
+  {id:'makad',cat:'word',g:'animal',icon:'🐒',mr:'माकड',sub:'Monkey',cue:'मा'},
+  {id:'unt',cat:'word',g:'animal',icon:'🐪',mr:'उंट',sub:'Camel',cue:'उं'},
+  {id:'aswal',cat:'word',g:'animal',icon:'🐻',mr:'अस्वल',sub:'Bear',cue:'अ'},
+  {id:'harin',cat:'word',g:'animal',icon:'🦌',mr:'हरीण',sub:'Deer',cue:'ह'},
+  {id:'sasa',cat:'word',g:'animal',icon:'🐇',mr:'ससा',sub:'Rabbit',cue:'स'},
+  {id:'undir',cat:'word',g:'animal',icon:'🐁',mr:'उंदीर',sub:'Mouse',cue:'उं'},
+  {id:'kasav',cat:'word',g:'animal',icon:'🐢',mr:'कासव',sub:'Tortoise',cue:'का'},
+  {id:'beduk',cat:'word',g:'animal',icon:'🐸',mr:'बेडूक',sub:'Frog',cue:'बे'},
+  {id:'magar',cat:'word',g:'animal',icon:'🐊',mr:'मगर',sub:'Crocodile',cue:'म'},
+  {id:'kombda',cat:'word',g:'animal',icon:'🐓',mr:'कोंबडा',sub:'Rooster',cue:'कों'},
+  {id:'badak',cat:'word',g:'animal',icon:'🦆',mr:'बदक',sub:'Duck',cue:'ब'},
+  {id:'popat',cat:'word',g:'animal',icon:'🦜',mr:'पोपट',sub:'Parrot',cue:'पो'},
+  {id:'mor',cat:'word',g:'animal',icon:'🦚',mr:'मोर',sub:'Peacock',cue:'मो'},
+  {id:'ghubad',cat:'word',g:'animal',icon:'🦉',mr:'घुबड',sub:'Owl',cue:'घु'},
+  {id:'chimni',cat:'word',g:'animal',icon:'🐦',mr:'चिमणी',sub:'Sparrow',cue:'चि'},
+  {id:'masa',cat:'word',g:'animal',icon:'🐟',mr:'मासा',sub:'Fish',cue:'मा'},
+  {id:'saap',cat:'word',g:'animal',icon:'🐍',mr:'साप',sub:'Snake',cue:'सा'},
+  {id:'mungi',cat:'word',g:'animal',icon:'🐜',mr:'मुंगी',sub:'Ant',cue:'मुं'},
+  {id:'madhmashi',cat:'word',g:'animal',icon:'🐝',mr:'मधमाशी',sub:'Bee',cue:'म'},
+  {id:'phulpakharu',cat:'word',g:'animal',icon:'🦋',mr:'फुलपाखरू',sub:'Butterfly',cue:'फु'},
+  {id:'surya',cat:'word',g:'nature',icon:'☀️',mr:'सूर्य',sub:'Sun',cue:'सू'},
+  {id:'chandra',cat:'word',g:'nature',icon:'🌙',mr:'चंद्र',sub:'Moon',cue:'चं'},
+  {id:'tara',cat:'word',g:'nature',icon:'⭐',mr:'तारा',sub:'Star',cue:'ता'},
+  {id:'paus',cat:'word',g:'nature',icon:'🌧️',mr:'पाऊस',sub:'Rain',cue:'पा'},
+  {id:'dhag',cat:'word',g:'nature',icon:'☁️',mr:'ढग',sub:'Cloud',cue:'ढ'},
+  {id:'veej',cat:'word',g:'nature',icon:'⚡',mr:'वीज',sub:'Lightning',cue:'वी'},
+  {id:'indradhanushya',cat:'word',g:'nature',icon:'🌈',mr:'इंद्रधनुष्य',sub:'Rainbow',cue:'इं'},
+  {id:'jhad',cat:'word',g:'nature',icon:'🌳',mr:'झाड',sub:'Tree',cue:'झा'},
+  {id:'phool',cat:'word',g:'nature',icon:'🌸',mr:'फूल',sub:'Flower',cue:'फू'},
+  {id:'paan',cat:'word',g:'nature',icon:'🍃',mr:'पान',sub:'Leaf',cue:'पा'},
+  {id:'dongar',cat:'word',g:'nature',icon:'⛰️',mr:'डोंगर',sub:'Mountain',cue:'डों'},
+  {id:'samudra',cat:'word',g:'nature',icon:'🌊',mr:'समुद्र',sub:'Sea',cue:'स'},
+  {id:'aag',cat:'word',g:'nature',icon:'🔥',mr:'आग',sub:'Fire',cue:'आ'},
+  {id:'shet',cat:'word',g:'nature',icon:'🌾',mr:'शेत',sub:'Farm',cue:'शे'},
+  {id:'gaadi',cat:'word',g:'travel',icon:'🚗',mr:'गाडी',sub:'Car',cue:'गा'},
+  {id:'bus',cat:'word',g:'travel',icon:'🚌',mr:'बस',sub:'Bus',cue:'ब'},
+  {id:'railway',cat:'word',g:'travel',icon:'🚂',mr:'रेल्वे',sub:'Train',cue:'रे'},
+  {id:'cycle',cat:'word',g:'travel',icon:'🚲',mr:'सायकल',sub:'Cycle',cue:'सा'},
+  {id:'viman',cat:'word',g:'travel',icon:'✈️',mr:'विमान',sub:'Aeroplane',cue:'वि'},
+  {id:'tractor',cat:'word',g:'travel',icon:'🚜',mr:'ट्रॅक्टर',sub:'Tractor',cue:'ट्रॅ'},
+  {id:'riksha',cat:'word',g:'travel',icon:'🛺',mr:'रिक्षा',sub:'Rickshaw',cue:'रि'},
+  {id:'motorcycle',cat:'word',g:'travel',icon:'🏍️',mr:'मोटारसायकल',sub:'Motorcycle',cue:'मो'},
+  {id:'truck',cat:'word',g:'travel',icon:'🚚',mr:'ट्रक',sub:'Truck',cue:'ट्र'},
+  {id:'hodi',cat:'word',g:'travel',icon:'⛵',mr:'होडी',sub:'Boat',cue:'हो'},
+  {id:'ambulance',cat:'word',g:'travel',icon:'🚑',mr:'रुग्णवाहिका',sub:'Ambulance',cue:'रु'},
+  {id:'dukan',cat:'word',g:'place',icon:'🏪',mr:'दुकान',sub:'Shop',cue:'दु'},
+  {id:'davakhana',cat:'word',g:'place',icon:'🏥',mr:'दवाखाना',sub:'Hospital',cue:'द'},
+  {id:'shala',cat:'word',g:'place',icon:'🏫',mr:'शाळा',sub:'School',cue:'शा'},
+  {id:'bank',cat:'word',g:'place',icon:'🏦',mr:'बँक',sub:'Bank',cue:'बँ'},
+  {id:'pool',cat:'word',g:'place',icon:'🌉',mr:'पूल',sub:'Bridge',cue:'पू'},
+  {id:'bal',cat:'word',g:'people',icon:'👶',mr:'बाळ',sub:'Baby',cue:'बा'},
+  {id:'mulga',cat:'word',g:'people',icon:'👦',mr:'मुलगा',sub:'Boy',cue:'मु'},
+  {id:'mulgi',cat:'word',g:'people',icon:'👧',mr:'मुलगी',sub:'Girl',cue:'मु'},
+  {id:'manus',cat:'word',g:'people',icon:'👨',mr:'माणूस',sub:'Man',cue:'मा'},
+  {id:'bai',cat:'word',g:'people',icon:'👩',mr:'बाई',sub:'Woman',cue:'बा'},
+  {id:'ajoba',cat:'word',g:'people',icon:'👴',mr:'आजोबा',sub:'Grandfather',cue:'आ'},
+  {id:'aji',cat:'word',g:'people',icon:'👵',mr:'आजी',sub:'Grandmother',cue:'आ'},
+  {id:'police',cat:'word',g:'people',icon:'👮',mr:'पोलीस',sub:'Police',cue:'पो'},
+  {id:'pine',cat:'word',g:'action',icon:'🥤',mr:'पिणे',sub:'Drinking',cue:'पि'},
+  {id:'jhopne',cat:'word',g:'action',icon:'😴',mr:'झोपणे',sub:'Sleeping',cue:'झो'},
+  {id:'chalne',cat:'word',g:'action',icon:'🚶',mr:'चालणे',sub:'Walking',cue:'चा'},
+  {id:'dhavne',cat:'word',g:'action',icon:'🏃',mr:'धावणे',sub:'Running',cue:'धा'},
+  {id:'hasne',cat:'word',g:'action',icon:'😄',mr:'हसणे',sub:'Laughing',cue:'ह'},
+  {id:'radne',cat:'word',g:'action',icon:'😭',mr:'रडणे',sub:'Crying',cue:'र'},
+  {id:'vachne',cat:'word',g:'action',icon:'📚',mr:'वाचणे',sub:'Reading',cue:'वा'},
+  {id:'lihine',cat:'word',g:'action',icon:'✍️',mr:'लिहिणे',sub:'Writing',cue:'लि'},
+  {id:'gaane',cat:'word',g:'action',icon:'🎤',mr:'गाणे',sub:'Singing',cue:'गा'},
+  {id:'pohne',cat:'word',g:'action',icon:'🏊',mr:'पोहणे',sub:'Swimming',cue:'पो'},
+  {id:'taali',cat:'word',g:'action',icon:'👏',mr:'टाळी',sub:'Clapping',cue:'टा'},
+  {id:'nachne',cat:'word',g:'action',icon:'💃',mr:'नाचणे',sub:'Dancing',cue:'ना'},
+  {id:'bolne',cat:'word',g:'action',icon:'🗣️',mr:'बोलणे',sub:'Talking',cue:'बो'},
+  {id:'pahne',cat:'word',g:'action',icon:'👀',mr:'पाहणे',sub:'Looking',cue:'पा'},
+  {id:'vichar',cat:'word',g:'action',icon:'🤔',mr:'विचार',sub:'Thinking',cue:'वि'},
+  {id:'shinkne',cat:'word',g:'action',icon:'🤧',mr:'शिंकणे',sub:'Sneezing',cue:'शिं'},
+  {id:'swayampak',cat:'word',g:'action',icon:'🍳',mr:'स्वयंपाक',sub:'Cooking',cue:'स्व'},
+  {id:'anghol',cat:'word',g:'action',icon:'🛁',mr:'अंघोळ',sub:'Bathing',cue:'अं'},
+  {id:'lal',cat:'word',g:'color',icon:'🔴',mr:'लाल',sub:'Red',cue:'ला'},
+  {id:'pivla',cat:'word',g:'color',icon:'🟡',mr:'पिवळा',sub:'Yellow',cue:'पि'},
+  {id:'hirva',cat:'word',g:'color',icon:'🟢',mr:'हिरवा',sub:'Green',cue:'हि'},
+  {id:'nila',cat:'word',g:'color',icon:'🔵',mr:'निळा',sub:'Blue',cue:'नि'},
+  {id:'kala',cat:'word',g:'color',icon:'⚫',mr:'काळा',sub:'Black',cue:'का'},
+  {id:'pandhra',cat:'word',g:'color',icon:'⚪',mr:'पांढरा',sub:'White',cue:'पां'}
  ],
  vowels:[
   {id:'v_a',mr:'अ',speak:'अ',m:['a'],tip:'तोंड थोडे उघडा'},
@@ -570,23 +659,161 @@ const DATA={
   {id:'cl_light',mr:'अंधार पडला की ___ लावतो',ans:'diva'},
   {id:'cl_phone',mr:'बोलायला ___ लावतो',ans:'phone'},
   {id:'cl_spoon',mr:'खायला हातात ___ घेतो',ans:'chamcha'}
- ]
+ ],
+ tw:[
+  {id:'tw_1',icon:'💧',mr:'पाणी द्या',sub:'Give water',speak:'पाणी द्या'},
+  {id:'tw_2',icon:'☕',mr:'चहा हवा',sub:'Want tea',speak:'चहा हवा'},
+  {id:'tw_3',icon:'💊',mr:'गोळ्या द्या',sub:'Give tablets',speak:'गोळ्या द्या'},
+  {id:'tw_4',icon:'👓',mr:'चष्मा द्या',sub:'Give glasses',speak:'चष्मा द्या'},
+  {id:'tw_5',icon:'🚪',mr:'दार उघडा',sub:'Open the door',speak:'दार उघडा'},
+  {id:'tw_6',icon:'🚪',mr:'दार लावा',sub:'Shut the door',speak:'दार लावा'},
+  {id:'tw_7',icon:'💡',mr:'दिवा लावा',sub:'Light on',speak:'दिवा लावा'},
+  {id:'tw_8',icon:'💡',mr:'दिवा बंद',sub:'Light off',speak:'दिवा बंद'},
+  {id:'tw_9',icon:'🥵',mr:'पंखा लावा',sub:'Fan on',speak:'पंखा लावा'},
+  {id:'tw_10',icon:'☕',mr:'गरम चहा',sub:'Hot tea',speak:'गरम चहा'},
+  {id:'tw_11',icon:'💧',mr:'थंड पाणी',sub:'Cold water',speak:'थंड पाणी'},
+  {id:'tw_12',icon:'🥭',mr:'गोड आंबा',sub:'Sweet mango',speak:'गोड आंबा'},
+  {id:'tw_13',icon:'🌸',mr:'लाल फूल',sub:'Red flower',speak:'लाल फूल'},
+  {id:'tw_14',icon:'🏠',mr:'मोठे घर',sub:'Big house',speak:'मोठे घर'},
+  {id:'tw_15',icon:'✋',mr:'माझा हात',sub:'My hand',speak:'माझा हात'},
+  {id:'tw_16',icon:'🏠',mr:'माझे घर',sub:'My house',speak:'माझे घर'},
+  {id:'tw_17',icon:'👋',mr:'इकडे ये',sub:'Come here',speak:'इकडे ये'},
+  {id:'tw_18',icon:'🚶',mr:'बाहेर चला',sub:'Go outside',speak:'बाहेर चला'},
+  {id:'tw_19',icon:'🪑',mr:'खाली बसा',sub:'Sit down',speak:'खाली बसा'},
+  {id:'tw_20',icon:'👀',mr:'वर बघा',sub:'Look up',speak:'वर बघा'},
+  {id:'tw_21',icon:'🧼',mr:'हात धुवा',sub:'Wash hands',speak:'हात धुवा'},
+  {id:'tw_22',icon:'🍛',mr:'जेवण वाढा',sub:'Serve food',speak:'जेवण वाढा'},
+  {id:'tw_23',icon:'📱',mr:'फोन द्या',sub:'Give the phone',speak:'फोन द्या'},
+  {id:'tw_24',icon:'📰',mr:'पेपर द्या',sub:'Give the paper',speak:'पेपर द्या'},
+  {id:'tw_25',icon:'✋',mr:'आता नको',sub:'Not now',speak:'आता नको'},
+  {id:'tw_26',icon:'🤲',mr:'अजून द्या',sub:'Give more',speak:'अजून द्या'},
+  {id:'tw_27',icon:'😴',mr:'झोप आली',sub:'Feeling sleepy',speak:'झोप आली'},
+  {id:'tw_28',icon:'🍛',mr:'भूक लागली',sub:'Feeling hungry',speak:'भूक लागली'},
+  {id:'tw_29',icon:'😊',mr:'बरं वाटतं',sub:'Feeling fine',speak:'बरं वाटतं'},
+  {id:'tw_30',icon:'📅',mr:'उद्या जाऊ',sub:'Go tomorrow',speak:'उद्या जाऊ'}
+ ],
+ /* build a sentence: the words are shown shuffled */
+ bs:[
+  {id:'bs_1',w:['मी', 'पाणी', 'पितो']},
+  {id:'bs_2',w:['मी', 'चहा', 'पितो']},
+  {id:'bs_3',w:['मी', 'पेपर', 'वाचतो']},
+  {id:'bs_4',w:['मी', 'देवळात', 'जातो']},
+  {id:'bs_5',w:['मी', 'रोज', 'चालतो']},
+  {id:'bs_6',w:['सुषमा', 'चहा', 'करते']},
+  {id:'bs_7',w:['इरा', 'शाळेत', 'जाते']},
+  {id:'bs_8',w:['अभिजीत', 'गाडी', 'चालवतो']},
+  {id:'bs_9',w:['गाय', 'दूध', 'देते']},
+  {id:'bs_10',w:['सूर्य', 'सकाळी', 'उगवतो']},
+  {id:'bs_11',w:['पाऊस', 'जोरात', 'पडतो']},
+  {id:'bs_12',w:['डॉक्टर', 'औषध', 'देतो']},
+  {id:'bs_13',w:['आम्ही', 'जेवण', 'करतो']},
+  {id:'bs_14',w:['मला', 'पाणी', 'द्या']},
+  {id:'bs_15',w:['मला', 'चहा', 'हवा']},
+  {id:'bs_16',w:['माझे', 'नाव', 'सीताराम']},
+  {id:'bs_17',w:['माझा', 'चष्मा', 'द्या']},
+  {id:'bs_18',w:['मला', 'झोप', 'आली']},
+  {id:'bs_19',w:['मला', 'भूक', 'लागली']},
+  {id:'bs_20',w:['आज', 'बाहेर', 'जाऊ']},
+  {id:'bs_21',w:['कुत्रा', 'घरात', 'आला']},
+  {id:'bs_22',w:['मुलगा', 'चेंडू', 'खेळतो']},
+  {id:'bs_23',w:['पक्षी', 'आकाशात', 'उडतो']},
+  {id:'bs_24',w:['शेतकरी', 'शेतात', 'जातो']},
+  {id:'bs_25',w:['मी', 'सकाळी', 'लवकर', 'उठतो']},
+  {id:'bs_26',w:['सुषमा', 'आज', 'भाजी', 'आणते']},
+  {id:'bs_27',w:['इरा', 'माझी', 'नात', 'आहे']},
+  {id:'bs_28',w:['अभिजीत', 'माझा', 'मुलगा', 'आहे']},
+  {id:'bs_29',w:['मला', 'बाहेर', 'फिरायला', 'जायचे']},
+  {id:'bs_30',w:['आज', 'खूप', 'ऊन', 'आहे']},
+  {id:'bs_31',w:['मी', 'रोज', 'सकाळी', 'चहा', 'पितो']},
+  {id:'bs_32',w:['आम्ही', 'संध्याकाळी', 'देवळात', 'जातो']}
+ ],
+ /* conversations: every answer is a valid choice */
+ conv:[
+  {id:'guest',mr:'पाहुणे आले',turns:[{id:'cv_guest_1',q:'नमस्कार, कसे आहात?',a:['नमस्कार, मी बरा आहे', 'ठीक आहे']},{id:'cv_guest_2',q:'चहा घेणार का?',a:['हो, द्या', 'नको, आत्ता नको']},{id:'cv_guest_3',q:'तब्येत कशी आहे?',a:['बरी आहे', 'थोडा थकवा आहे']},{id:'cv_guest_4',q:'येतो मी, काळजी घ्या',a:['हो, पुन्हा या', 'राम राम']}]},
+  {id:'morning',mr:'सकाळी',turns:[{id:'cv_morning_1',q:'झोप झाली का?',a:['हो, छान झाली', 'नाही, नीट नाही']},{id:'cv_morning_2',q:'चहा की दूध?',a:['चहा द्या', 'दूध द्या']},{id:'cv_morning_3',q:'नाश्त्याला काय हवे?',a:['पोहे द्या', 'उपमा द्या', 'काही नको']},{id:'cv_morning_4',q:'गोळ्या घेतल्या का?',a:['हो, घेतल्या', 'नाही, द्या']}]},
+  {id:'doctor',mr:'डॉक्टरकडे',turns:[{id:'cv_doctor_1',q:'काय त्रास होतो?',a:['डोके दुखते', 'थकवा येतो', 'काही नाही, बरं आहे']},{id:'cv_doctor_2',q:'झोप येते का?',a:['हो, येते', 'नाही, कमी येते']},{id:'cv_doctor_3',q:'भूक लागते का?',a:['हो, लागते', 'कमी लागते']},{id:'cv_doctor_4',q:'गोळ्या वेळेवर घेता का?',a:['हो, रोज घेतो', 'कधी विसरतो']}]},
+  {id:'phone',mr:'फोनवर',turns:[{id:'cv_phone_1',q:'हॅलो, कोण बोलतंय?',a:['मी सीताराम बोलतोय', 'हॅलो, मी बाबा']},{id:'cv_phone_2',q:'कसे आहात?',a:['मी बरा आहे', 'ठीक आहे']},{id:'cv_phone_3',q:'जेवण झाले का?',a:['हो, झाले', 'अजून नाही']},{id:'cv_phone_4',q:'फोन ठेवू का?',a:['हो, ठेवा', 'पुन्हा फोन करा']}]},
+  {id:'ira',mr:'इरासोबत',turns:[{id:'cv_ira_1',q:'आजोबा, खेळायचं का?',a:['हो, चल खेळू', 'थोड्या वेळाने']},{id:'cv_ira_2',q:'गोष्ट सांगा ना',a:['हो, बस इथे', 'उद्या सांगतो']},{id:'cv_ira_3',q:'तुम्हाला काय आवडतं?',a:['मला आंबा आवडतो', 'मला चहा आवडतो', 'मला तू आवडतेस']}]},
+  {id:'evening',mr:'संध्याकाळी',turns:[{id:'cv_evening_1',q:'बाहेर फिरायला जायचं का?',a:['हो, चला', 'आज नको']},{id:'cv_evening_2',q:'टीव्ही लावू का?',a:['हो, लावा', 'नको, शांत बसू']},{id:'cv_evening_3',q:'जेवायला काय करू?',a:['भाकरी भाजी कर', 'खिचडी कर', 'काहीही चालेल']},{id:'cv_evening_4',q:'आता झोपायचं का?',a:['हो, झोपतो', 'थोड्या वेळाने']}]},
+  {id:'shop',mr:'दुकानात',turns:[{id:'cv_shop_1',q:'काय हवे?',a:['साखर द्या', 'दूध द्या']},{id:'cv_shop_2',q:'अजून काही?',a:['नाही, एवढेच', 'हो, बिस्कीट द्या']},{id:'cv_shop_3',q:'पिशवी हवी का?',a:['हो, द्या', 'नको, आहे']}]}
+ ],
+ opp:[
+  {id:'op_1',a:'गरम',b:'थंड'},
+  {id:'op_2',a:'मोठा',b:'लहान'},
+  {id:'op_3',a:'वर',b:'खाली'},
+  {id:'op_4',a:'आत',b:'बाहेर'},
+  {id:'op_5',a:'दिवस',b:'रात्र'},
+  {id:'op_6',a:'हो',b:'नाही'},
+  {id:'op_7',a:'उघडा',b:'बंद'},
+  {id:'op_8',a:'गोड',b:'कडू'},
+  {id:'op_9',a:'हसणे',b:'रडणे'},
+  {id:'op_10',a:'जास्त',b:'कमी'},
+  {id:'op_11',a:'लवकर',b:'उशिरा'},
+  {id:'op_12',a:'नवीन',b:'जुने'},
+  {id:'op_13',a:'स्वच्छ',b:'घाण'},
+  {id:'op_14',a:'जड',b:'हलके'},
+  {id:'op_15',a:'पुढे',b:'मागे'},
+  {id:'op_16',a:'सुख',b:'दुःख'},
+  {id:'op_17',a:'उठणे',b:'बसणे'},
+  {id:'op_18',a:'येणे',b:'जाणे'},
+  {id:'op_19',a:'ओले',b:'कोरडे'},
+  {id:'op_20',a:'खरे',b:'खोटे'}
+ ],
+ open:[
+  {id:'ot_1',mr:'तुमच्या गावाबद्दल सांगा',speak:'तुमच्या गावाबद्दल सांगा'},
+  {id:'ot_2',mr:'आज काय जेवलात?',speak:'आज काय जेवलात?'},
+  {id:'ot_3',mr:'इराबद्दल सांगा',speak:'इराबद्दल सांगा'},
+  {id:'ot_4',mr:'तुम्हाला कोणते फळ आवडते?',speak:'तुम्हाला कोणते फळ आवडते?'},
+  {id:'ot_5',mr:'सकाळी उठल्यावर काय करता?',speak:'सकाळी उठल्यावर काय करता?'},
+  {id:'ot_6',mr:'तुमचे आवडते गाणे कोणते?',speak:'तुमचे आवडते गाणे कोणते?'},
+  {id:'ot_7',mr:'पावसाळ्यात काय होते?',speak:'पावसाळ्यात काय होते?'},
+  {id:'ot_8',mr:'दिवाळीत काय करतात?',speak:'दिवाळीत काय करतात?'},
+  {id:'ot_9',mr:'तुमच्या कामाबद्दल सांगा',speak:'तुमच्या कामाबद्दल सांगा'},
+  {id:'ot_10',mr:'आज बाहेर काय दिसले?',speak:'आज बाहेर काय दिसले?'},
+  {id:'ot_11',mr:'चहा कसा करतात?',speak:'चहा कसा करतात?'},
+  {id:'ot_12',mr:'तुमच्या मित्राबद्दल सांगा',speak:'तुमच्या मित्राबद्दल सांगा'},
+  {id:'ot_13',mr:'लहानपणीची एक आठवण सांगा',speak:'लहानपणीची एक आठवण सांगा'},
+  {id:'ot_14',mr:'शेतात काय पिकते?',speak:'शेतात काय पिकते?'},
+  {id:'ot_15',mr:'आज कोण भेटायला आले?',speak:'आज कोण भेटायला आले?'},
+  {id:'ot_16',mr:'तीन फळांची नावे सांगा',speak:'तीन फळांची नावे सांगा'},
+  {id:'ot_17',mr:'तीन प्राण्यांची नावे सांगा',speak:'तीन प्राण्यांची नावे सांगा'},
+  {id:'ot_18',mr:'घरातल्या तीन माणसांची नावे सांगा',speak:'घरातल्या तीन माणसांची नावे सांगा'},
+  {id:'ot_19',mr:'तीन भाज्यांची नावे सांगा',speak:'तीन भाज्यांची नावे सांगा'},
+  {id:'ot_20',mr:'तीन रंगांची नावे सांगा',speak:'तीन रंगांची नावे सांगा'}
+ ],
+ nums:['एक','दोन','तीन','चार','पाच','सहा','सात','आठ','नऊ','दहा'],
+ days:['रविवार','सोमवार','मंगळवार','बुधवार','गुरुवार','शुक्रवार','शनिवार'],
+ months:['जानेवारी','फेब्रुवारी','मार्च','एप्रिल','मे','जून','जुलै','ऑगस्ट','सप्टेंबर','ऑक्टोबर','नोव्हेंबर','डिसेंबर'],
+ dayparts:['सकाळ','दुपार','संध्याकाळ','रात्र'],
+ groups:{home:'घरातली वस्तू',wear:'कपडे',body:'शरीराचा भाग',food:'खाण्याची वस्तू',animal:'प्राणी किंवा पक्षी',nature:'निसर्ग',travel:'वाहन',place:'ठिकाण',people:'माणसे',action:'क्रिया',color:'रंग'},
+ gmap:{water:'food',food:'food',tea:'food',tablets:'home',glasses:'home',clothes:'wear',tv:'home',phone:'home',doctor:'people',temple:'place'},
+ /* questions used when describing a word */
+ dq:{home:['याचा उपयोग काय?','हे कुठे ठेवतात?','हे कसे दिसते?'],wear:['हे कुठे घालतात?','हे केव्हा घालतात?','याचा रंग कोणता?'],body:['हे कुठे असते?','याने काय करतो?','असे किती असतात?'],
+  food:['याची चव कशी?','हे केव्हा खातो?','याचा रंग कोणता?'],animal:['हे काय खाते?','हे कुठे राहते?','हे कसा आवाज करते?'],nature:['हे कुठे दिसते?','हे केव्हा दिसते?','हे कसे दिसते?'],
+  travel:['यात कोण बसते?','हे कुठे चालते?','हे वेगात जाते की हळू?'],place:['इथे काय करतात?','इथे कोण असते?','तुम्ही इथे केव्हा जाता?'],people:['हे कोण आहे?','हे काय करते?','तुमच्या घरात असे कोण आहे?'],
+  action:['हे कोण करते?','हे केव्हा करतो?','हे कुठे करतो?']}
 };
 /* Every phrase the app can speak. Used by the app AND by the GitHub build to create audio/<id>.mp3 */
 function allAudio(D,custom){
   const L=[],add=(id,text,g)=>L.push({id:id,text:text,g:g});
   D.quick.forEach(q=>add(q.id,q.speak,'बोला'));
   D.cards.concat(custom||[]).forEach(c=>{if(c.speak)add(c.id,c.speak,'बोला')});
-  D.cards.forEach(c=>{if(c.cue){const w=c.w||c.mr;add('w_'+c.id,w,'शब्द');add('c_'+c.id,c.cue,'पहिला आवाज');add('q_'+c.id,'हे '+w+' आहे का?','प्रश्न')}});
-  D.vowels.concat(D.syll,D.auto,D.melodic,D.scripts,D.moves).forEach(x=>add(x.id,x.speak,'सराव'));
+  D.cards.forEach(c=>{if(c.cue){const w=c.w||c.mr;add('w_'+c.id,w,'शब्द');add('c_'+c.id,c.cue,'पहिला आवाज');add('q_'+c.id,'हे '+w+' आहे का?','हो की नाही')}});
+  D.vowels.concat(D.syll,D.auto,D.melodic,D.scripts,D.moves,D.tw,D.open).forEach(x=>add(x.id,x.speak,'सराव'));
   D.cloze.forEach(x=>{const c=D.cards.find(k=>k.id===x.ans),w=c.w||c.mr;add(x.id,x.mr.split('___')[0].trim(),'वाक्य पूर्ण करा');add(x.id+'_f',x.mr.replace('___',w),'वाक्य पूर्ण करा')});
+  D.bs.forEach(x=>add(x.id,x.w.join(' '),'वाक्य बनवा'));
+  D.conv.forEach(s=>s.turns.forEach(t=>{add(t.id,t.q,'संवाद');t.a.forEach((a,j)=>add(t.id+'_a'+j,a,'संवाद'))}));
+  D.opp.forEach(o=>{add(o.id,o.a+' च्या उलट काय?','उलट शब्द');add(o.id+'_a',o.b,'उलट शब्द')});
+  D.nums.forEach((t,i)=>add('n_'+(i+1),t,'अंक, वार, महिने'));D.days.forEach((t,i)=>add('d_'+i,t,'अंक, वार, महिने'));
+  D.months.forEach((t,i)=>add('mo_'+i,t,'अंक, वार, महिने'));D.dayparts.forEach((t,i)=>add('dp_'+i,t,'अंक, वार, महिने'));
+  [['cnt_q','किती आहेत?'],['or_day','आज कोणता वार आहे?'],['or_month','हा कोणता महिना आहे?'],['or_time','आता दिवसाची कोणती वेळ आहे?'],['ds_cat','हे कशात मोडते?'],['pr_odd','वेगळे कोणते?']].forEach(p=>add(p[0],p[1],'प्रश्न'));
   return L;
 }
 /*DATA_END*/
 
 /* ================= state ================= */
 const KEY='baba_v6';
-let S={slow:true,days:{},words:{},bestAum:0,custom:[]};
+let S={slow:true,days:{},words:{},bestAum:0,custom:[],level:1,lvDays:0};
 try{const r=localStorage.getItem(KEY);if(r)S=Object.assign(S,JSON.parse(r))}catch(e){}
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
 const $=id=>document.getElementById(id);
@@ -769,6 +996,13 @@ function sos(){
 
 /* ================= PRACTICE ================= */
 const namePool=()=>cards().filter(c=>c.cue&&(c.icon||DB.mem['img:'+c.id]));
+/* word difficulty from its length: 1 = two simple letters, 2 = three or a joined letter, 3 = longer */
+const wl=c=>{const w=c.w||c.mr,v=(w.match(/्/g)||[]).length,n=w.replace(/[ऀ-ःऺ-ॏ]/g,'').length-v;return (n<=2&&!v)?1:n<=3?2:3};
+const pool=L=>{const p=namePool();if(L>=3)return p;const q=p.filter(c=>wl(c)<=L);return q.length>=8?q:p};
+const gOf=c=>c.g||DATA.gmap[c.id]||null;
+const LV=()=>Math.max(1,Math.min(5,S.level||1));
+const rnd=n=>Math.floor(Math.random()*n);
+function score(ok){const d=dayRec();d.n=(d.n||0)+1;if(ok)d.ok=(d.ok||0)+1;save()}
 const drill=(x,hint,extra)=>Object.assign({type:'drill',id:x.id,big:x.mr,sub:x.sub||'',speak:x.speak,hint:hint},extra||{});
 const STEPS=[
  {id:'breath',e:'🌬️',mr:'श्वास',sub:'Breathing',min:'१ मि',build:()=>[{type:'breath',n:5}]},
@@ -776,31 +1010,70 @@ const STEPS=[
  {id:'aum',e:'🕉️',mr:'ॐ सराव',sub:'AUM voice practice',min:'२ मि',build:()=>[{type:'aum',n:5}]},
  {id:'sound',e:'🗣️',mr:'स्वर आणि अक्षरे',sub:'Sounds, with mouth shapes',min:'३ मि',build:b=>rot(DATA.vowels,4,dayNo()+b).map(v=>drill(v,'ऐका. मग लांब, मोठ्याने ३ वेळा म्हणा.',{m:v.m,tip:v.tip}))
      .concat(rot(DATA.syll,4,dayNo()+b).map(v=>drill(v,'हळू आणि स्पष्ट, ३ वेळा म्हणा.',{long:1,m:v.m,tip:v.tip})))},
- {id:'auto',e:'🔢',mr:'सोपे, सवयीचे शब्द',sub:'Automatic speech',min:'२ मि',build:b=>rot(DATA.auto,2,dayNo()+b).map(a=>drill(a,'आधी सोबत म्हणा. मग एकट्याने.',{long:1,parts:a.parts}))},
- {id:'melody',e:'🎵',mr:'सुरात बोला',sub:'Melodic phrases',min:'३ मि',build:b=>rot(DATA.melodic,4,dayNo()+b).map(m=>({type:'mel',item:m}))},
- {id:'pick',e:'👂',mr:'ऐका आणि ओळखा',sub:'Listen and find',min:'२ मि',build:()=>{const pool=namePool();return shuffle(pool).slice(0,6).map(t=>({type:'pick',card:t,opts:shuffle([t].concat(shuffle(pool.filter(c=>c.id!==t.id)).slice(0,3)))}))}},
- {id:'yn',e:'❓',mr:'हो की नाही',sub:'Yes or no questions',min:'२ मि',build:()=>{const pool=namePool();return shuffle(pool).slice(0,6).map(t=>({type:'yn',card:t,ask:Math.random()<.5?t:shuffle(pool.filter(c=>c.id!==t.id))[0]}))}},
- {id:'name',e:'🖼️',mr:'नाव सांगा',sub:'Naming pictures',min:'३ मि',build:()=>{const w=S.words;return shuffle(namePool()).sort((a,b)=>((w[a.id]||{}).s||0)-((w[b.id]||{}).s||0)||((w[a.id]||{}).t||0)-((w[b.id]||{}).t||0)).slice(0,6).map(c=>({type:'name',card:c}))}},
- {id:'cloze',e:'✏️',mr:'वाक्य पूर्ण करा',sub:'Finish the sentence',min:'२ मि',build:b=>{const pool=namePool();return rot(DATA.cloze,5,dayNo()+b).map(it=>{const c=cards().find(k=>k.id===it.ans);return {type:'cloze',item:it,card:c,opts:shuffle([c].concat(shuffle(pool.filter(k=>k.id!==c.id)).slice(0,2)))}})}},
- {id:'script',e:'💬',mr:'रोजची वाक्ये',sub:'Daily sentences',min:'३ मि',build:b=>{const wk=rot(DATA.scripts,3,Math.floor(dayNo()/7)),rest=DATA.scripts.filter(x=>!wk.includes(x));
-     return (b?rot(DATA.scripts,5,dayNo()+b*3):wk.concat(rot(rest,2,dayNo()))).map(s=>drill(s,'ऐका, सोबत म्हणा, मग एकट्याने. ५ वेळा.',{long:1}))}}
+ {id:'auto',e:'🔢',mr:'सोपे, सवयीचे शब्द',sub:'Automatic speech',min:'२ मि',build:(b,L)=>{const p=L<=1?DATA.auto.filter(a=>['au_five','au_count','au_greet','au_family'].includes(a.id)):DATA.auto;
+     return rot(p,2,dayNo()+b).map(a=>drill(a,'आधी सोबत म्हणा. मग एकट्याने.',{long:1,parts:a.parts}))}},
+ {id:'repeat',e:'🔁',mr:'शब्द म्हणा',sub:'Repeat words',min:'२ मि',build:(b,L)=>shuffle(pool(L)).slice(0,6).map(c=>({type:'drill',id:'w_'+c.id,big:c.w||c.mr,sub:c.sub,speak:c.w||c.mr,hint:'चित्र पाहा, ऐका आणि ३ वेळा म्हणा.',long:1,card:c}))},
+ {id:'melody',e:'🎵',mr:'सुरात बोला',sub:'Melodic phrases',min:'३ मि',build:(b,L)=>rot(DATA.melodic.filter(m=>L>=3||m.syl.length<=3),4,dayNo()+b).map(m=>({type:'mel',item:m}))},
+ {id:'pick',e:'👂',mr:'ऐका आणि ओळखा',sub:'Listen and find',min:'२ मि',build:(b,L)=>{const p=pool(L);return shuffle(p).slice(0,6).map(t=>({type:'pick',card:t,opts:shuffle([t].concat(shuffle(p.filter(c=>c.id!==t.id)).slice(0,L<=1?1:3)))}))}},
+ {id:'yn',e:'❓',mr:'हो की नाही',sub:'Yes or no questions',min:'२ मि',build:(b,L)=>{const p=pool(L);return shuffle(p).slice(0,6).map(t=>({type:'yn',card:t,ask:Math.random()<.5?t:shuffle(p.filter(c=>c.id!==t.id))[0]}))}},
+ {id:'count',e:'🧮',mr:'मोजा',sub:'Counting',min:'२ मि',build:(b,L)=>Array.from({length:5},()=>{const mx=L<=2?5:10,n=1+rnd(mx),c=shuffle(DATA.cards.filter(c=>c.g==='food'))[0],o=new Set([n]);while(o.size<3)o.add(1+rnd(mx));
+     return {type:'choice',pic:`<div class="cnt">${c.icon.repeat(n)}</div>`,prompt:'किती आहेत?',audio:{id:'cnt_q',text:'किती आहेत?'},opts:[...o].sort((x,y)=>x-y).map(k=>({t:N(k)+'  '+DATA.nums[k-1],ok:k===n,say:{id:'n_'+k,text:DATA.nums[k-1]}})),after:'आता एक, दोन असे मोजून दाखवा.'}})},
+ {id:'name',e:'🖼️',mr:'नाव सांगा',sub:'Naming pictures',min:'३ मि',build:(b,L)=>{const w=S.words;return shuffle(pool(L)).sort((a,b)=>((w[a.id]||{}).s||0)-((w[b.id]||{}).s||0)||((w[a.id]||{}).t||0)-((w[b.id]||{}).t||0)).slice(0,6).map(c=>({type:'name',card:c}))}},
+ {id:'read',e:'📖',mr:'वाचा',sub:'Reading words',min:'२ मि',build:()=>{const p=namePool();return shuffle(p).slice(0,6).map((t,i)=>{const o=shuffle(p.filter(c=>c.id!==t.id));
+     return i%2?{type:'choice',pic:`<div class="${t.cat}">${pic(t,'xl')}</div>`,prompt:'याचे नाव कोणते?',opts:shuffle([t].concat(o.slice(0,2))).map(c=>({t:c.w||c.mr,ok:c.id===t.id,say:c.id===t.id?{id:'w_'+c.id,text:c.w||c.mr}:null})),hint:'योग्य शब्द वाचून निवडा',after:'आता हा शब्द म्हणा.'}
+       :{type:'pick',read:1,card:t,opts:shuffle([t].concat(o.slice(0,3)))}})}},
+ {id:'odd',e:'🧩',mr:'वेगळे ओळखा',sub:'Odd one out',min:'२ मि',build:()=>{const p=namePool().filter(c=>c.icon&&gOf(c)),gs=Object.keys(DATA.groups).filter(g=>p.filter(c=>gOf(c)===g).length>=3);
+     return Array.from({length:5},()=>{const g=shuffle(gs),three=shuffle(p.filter(c=>gOf(c)===g[0])).slice(0,3),odd=shuffle(p.filter(c=>gOf(c)===g[1]))[0];
+       return {type:'pick',odd:1,card:odd,opts:shuffle(three.concat(odd)),after:'बाकी तीन: '+DATA.groups[g[0]]}})}},
+ {id:'twoword',e:'✌️',mr:'दोन शब्द',sub:'Two-word phrases',min:'२ मि',build:()=>shuffle(DATA.tw).slice(0,6).map(x=>drill(x,'ऐका आणि ३ वेळा म्हणा.',{long:1,icon:x.icon}))},
+ {id:'cloze',e:'✏️',mr:'वाक्य पूर्ण करा',sub:'Finish the sentence',min:'२ मि',build:b=>{const p=namePool();return rot(DATA.cloze,5,dayNo()+b).map(it=>{const c=cards().find(k=>k.id===it.ans);return {type:'cloze',item:it,card:c,opts:shuffle([c].concat(shuffle(p.filter(k=>k.id!==c.id)).slice(0,2)))}})}},
+ {id:'describe',e:'🔍',mr:'वर्णन करा',sub:'Describe the word',min:'३ मि',build:()=>{const gk=Object.keys(DATA.groups);
+     return shuffle(namePool().filter(c=>c.icon&&gOf(c)&&gOf(c)!=='color')).slice(0,3).flatMap(c=>{const g=gOf(c);
+       return [{type:'choice',auto:1,pic:`<div class="${c.cat}">${pic(c,'xl')}</div>`,prompt:'हे कशात मोडते?',audio:{id:'ds_cat',text:'हे कशात मोडते?'},opts:shuffle([{t:DATA.groups[g],ok:1}].concat(shuffle(gk.filter(k=>k!==g)).slice(0,2).map(k=>({t:DATA.groups[k]}))))},
+               {type:'open',card:c,qs:DATA.dq[g]||DATA.dq.home}]})}},
+ {id:'build',e:'🧱',mr:'वाक्य बनवा',sub:'Build a sentence',min:'३ मि',build:(b,L)=>shuffle(DATA.bs.filter(x=>L>=5||x.w.length<=3)).slice(0,5).map(x=>({type:'build',id:x.id,words:x.w}))},
+ {id:'conv',e:'🗨️',mr:'संवाद',sub:'Conversation',min:'३ मि',build:(b,L)=>{const mk=(s,t)=>({type:'choice',any:1,prompt:t.q,sub:s.mr,audio:{id:t.id,text:t.q},opts:t.a.map((x,j)=>({t:x,say:{id:t.id+'_a'+j,text:x}})),hint:'तुमचे उत्तर निवडा',after:'आता हे उत्तर स्वतः म्हणा.'});
+     return L>=5?rot(DATA.conv,2,dayNo()+b).flatMap(s=>s.turns.map(t=>mk(s,t))):shuffle(DATA.conv.flatMap(s=>s.turns.map(t=>mk(s,t)))).slice(0,5)}},
+ {id:'opp',e:'↔️',mr:'उलट शब्द',sub:'Opposites',min:'२ मि',build:()=>shuffle(DATA.opp).slice(0,6).map(o=>{const pr=o.a+' च्या उलट काय?';
+     return {type:'choice',prompt:pr,audio:{id:o.id,text:pr},opts:shuffle([{t:o.b,ok:1,say:{id:o.id+'_a',text:o.b}},{t:shuffle(DATA.opp.filter(x=>x!==o))[0].b}]),after:'आता दोन्ही शब्द म्हणा: '+o.a+', '+o.b}})},
+ {id:'orient',e:'📅',mr:'आज कोणता दिवस',sub:'Day, month and time',min:'१ मि',build:()=>{const d=new Date(),h=d.getHours(),dp=h<5?3:h<12?0:h<16?1:h<20?2:3;
+     const mk=(pr,id,arr,pre,cur)=>{const o=new Set([cur]);while(o.size<3)o.add(rnd(arr.length));return {type:'choice',prompt:pr,audio:{id:id,text:pr},opts:shuffle([...o]).map(i=>({t:arr[i],ok:i===cur,say:{id:pre+i,text:arr[i]}})),after:'आता उत्तर मोठ्याने म्हणा.'}};
+     return [mk('आज कोणता वार आहे?','or_day',DATA.days,'d_',d.getDay()),mk('हा कोणता महिना आहे?','or_month',DATA.months,'mo_',d.getMonth()),mk('आता दिवसाची कोणती वेळ आहे?','or_time',DATA.dayparts,'dp_',dp)]}},
+ {id:'open',e:'🎤',mr:'स्वतः सांगा',sub:'Talk about it',min:'३ मि',build:()=>shuffle(DATA.open).slice(0,3).map(x=>drill(x,'दोन-तीन वाक्यांत सांगा. घरच्यांनी प्रश्न विचारून मदत करावी.',{long:1}))},
+ {id:'script',e:'💬',mr:'रोजची वाक्ये',sub:'Daily sentences',min:'३ मि',build:(b,L)=>{const p=DATA.scripts.filter(x=>L>=4||x.mr.split(' ').length<=(L<=2?2:3)),wk=rot(p,3,Math.floor(dayNo()/7)),rest=p.filter(x=>!wk.includes(x));
+     return (b?rot(p,5,dayNo()+b*3):wk.concat(rot(rest,2,dayNo()))).map(s=>drill(s,'ऐका, सोबत म्हणा, मग एकट्याने. ५ वेळा.',{long:1}))}}
 ];
+const LEVELS=[
+ {n:1,mr:'आवाज',sub:'श्वास, तोंड, स्वर आणि सोपे शब्द',steps:['breath','mouth','aum','sound','auto','repeat','pick','melody']},
+ {n:2,mr:'शब्द',sub:'शब्द ओळखणे आणि नाव सांगणे',steps:['breath','mouth','aum','sound','auto','repeat','melody','pick','yn','count','name']},
+ {n:3,mr:'जोडशब्द',sub:'दोन शब्द, वाचन आणि गट',steps:['breath','mouth','aum','melody','pick','name','read','odd','twoword','cloze','script']},
+ {n:4,mr:'वाक्ये',sub:'वाक्य बनवणे, वर्णन आणि प्रश्नोत्तरे',steps:['breath','aum','melody','name','read','describe','cloze','build','conv','orient','script']},
+ {n:5,mr:'संवाद',sub:'गप्पा, उलट शब्द आणि स्वतःचे बोलणे',steps:['breath','aum','name','describe','opp','build','conv','orient','open','script']}
+];
+const todaySteps=()=>LEVELS[LV()-1].steps.map(id=>STEPS.find(s=>s.id===id));
 function streak(){let n=0;const d=new Date();if(!(S.days[dkey(d)]&&Object.keys(S.days[dkey(d)].steps).length))d.setDate(d.getDate()-1);
   while(S.days[dkey(d)]&&Object.keys(S.days[dkey(d)].steps).length){n++;d.setDate(d.getDate()-1)}return n}
 function renderPractice(){
-  const done=dayRec().steps,k=STEPS.filter(s=>done[s.id]).length,all=k===STEPS.length,st=streak();
+  const L=LV(),lv=LEVELS[L-1],TS=todaySteps(),done=dayRec().steps,k=TS.filter(s=>done[s.id]).length,all=k===TS.length,st=streak(),up=L<5&&(S.lvDays||0)>=3;
+  const others=STEPS.filter(s=>!TS.includes(s));
   $('practice').innerHTML=`
    <div class="cap"><div class="hello">${all?'आजचा सराव पूर्ण झाला':'नमस्कार बाबा'}</div>
-     <div class="streak">${st>1?'सलग '+N(st)+' दिवस सराव केला':all?'उद्या पुन्हा भेटू':'आज '+N(STEPS.length)+' टप्पे, सुमारे २५ मिनिटे'}</div>
-     <div class="beads">${STEPS.map(s=>`<i class="${done[s.id]?'on':''}"></i>`).join('')}</div>
-     <button class="btn primary big" id="startAll">${all?'पुन्हा सराव करा':k?'पुढचा टप्पा सुरू करा':'आजचा सराव सुरू करा'}</button></div>
-   <div class="pad" style="padding-top:14px"><ol class="mala">${STEPS.map((s,i)=>`<li class="${done[s.id]?'done':''}"><button class="step" data-s="${s.id}"><span class="bead">${done[s.id]?'✓':N(i+1)}</span><span class="tx"><b>${s.mr}</b><small>${s.sub}</small></span><span class="min">${s.min}</span><span class="e">${s.e}</span></button></li>`).join('')}</ol>
+     <div class="streak">${st>1?'सलग '+N(st)+' दिवस सराव केला':'आज '+N(TS.length)+' टप्पे, सुमारे २५ मिनिटे'}</div>
+     <div class="lv">${LEVELS.map(l=>`<button data-lv="${l.n}" class="${l.n===L?'on':''}">${N(l.n)}</button>`).join('')}</div>
+     <div class="lvn"><b>पातळी ${N(L)}: ${lv.mr}</b>${lv.sub}</div>
+     <div class="beads">${TS.map(s=>`<i class="${done[s.id]?'on':''}"></i>`).join('')}</div>
+     <button class="btn primary big" id="startAll">${all?'पुन्हा सराव करा':k?'पुढचा टप्पा सुरू करा':'आजचा सराव सुरू करा'}</button>
+     ${up?`<button class="btn big" id="lvUp" style="margin-top:10px">छान प्रगती! पातळी ${N(L+1)} सुरू करा</button>`:''}</div>
+   <div class="pad" style="padding-top:14px"><ol class="mala">${TS.map((s,i)=>`<li class="${done[s.id]?'done':''}"><button class="step" data-s="${s.id}"><span class="bead">${done[s.id]?'✓':N(i+1)}</span><span class="tx"><b>${s.mr}</b><small>${s.sub}</small></span><span class="min">${s.min}</span><span class="e">${s.e}</span></button></li>`).join('')}</ol>
+   <h2 class="h2">इतर व्यायाम</h2>
+   <div class="xgrid">${others.map(s=>`<button data-s="${s.id}"><span class="e">${s.e}</span>${s.mr}</button>`).join('')}</div>
    <button class="btn big" id="lib" style="margin-top:16px">सर्व शब्द आणि वाक्ये ऐका</button>
-   <p class="muted" style="margin-top:14px">सगळे एकदम करायची गरज नाही. सकाळी काही टप्पे, संध्याकाळी उरलेले केले तरी चालेल. थकवा, चक्कर किंवा घाम आल्यास लगेच थांबा.</p></div>`;
+   <p class="muted" style="margin-top:14px">सोपे वाटू लागले की वरची पातळी निवडा; अवघड वाटले तर खालची. सगळे एकदम करायची गरज नाही. थकवा, चक्कर किंवा घाम आल्यास लगेच थांबा.</p></div>`;
 }
 $('practice').addEventListener('click',e=>{
   if(e.target.closest('#lib'))return openLib();
-  if(e.target.closest('#startAll')){const done=dayRec().steps;const nx=STEPS.find(s=>!done[s.id])||STEPS[0];return startStep(nx.id,true)}
+  const lb=e.target.closest('[data-lv]');if(lb||e.target.closest('#lvUp')){S.level=lb?+lb.dataset.lv:LV()+1;S.lvDays=0;save();$('practice').scrollTop=0;return renderPractice()}
+  if(e.target.closest('#startAll')){const done=dayRec().steps;const TS=todaySteps(),nx=TS.find(s=>!done[s.id])||TS[0];return startStep(nx.id,true)}
   const b=e.target.closest('[data-s]');if(b)startStep(b.dataset.s,false)});
 
 /* ---- stage runner ---- */
@@ -809,7 +1082,7 @@ const T=(fn,ms)=>{const t=setTimeout(fn,ms);cleanups.push(()=>clearTimeout(t));r
 function clean(){cleanups.forEach(f=>{try{f()}catch(e){}});cleanups=[];droneOff();micOff();camOff();if(rec){try{rec.stop()}catch(e){}}stopAll()}
 function openStage(title,sub){$('stage').hidden=false;$('stT').textContent=title;$('stS').textContent=sub||'';$('stBody').className='st-body';$('stBody').scrollTop=0}
 function closeStage(){clean();run=null;$('stage').hidden=true;go(view)}
-function startStep(id,session,batch){batch=batch||0;const st=STEPS.find(s=>s.id===id);const slides=st.build(batch);
+function startStep(id,session,batch){batch=batch||0;const st=STEPS.find(s=>s.id===id);const slides=st.build(batch,LV());
   if(!slides.length){toast('या सरावासाठी चित्रे नाहीत');return}
   try{ac()}catch(e){}
   run={st:st,slides:slides,i:0,session:session,batch:batch,t0:Date.now()};showSlide()}
@@ -820,7 +1093,8 @@ function showSlide(){clean();const sl=run.slides[run.i];openStage(run.st.mr,run.
   RENDER[sl.type](sl,$('stBody'))}
 function nextSlide(){if(!run)return;if(run.i<run.slides.length-1){run.i++;showSlide()}else finishStep()}
 function finishStep(){clean();const d=dayRec();d.steps[run.st.id]=1;d.sec=(d.sec||0)+Math.round((Date.now()-run.t0)/1000);save();chime();
-  const nx=run.session&&STEPS.find(s=>!d.steps[s.id]);const all=STEPS.every(s=>d.steps[s.id]);
+  const TS=todaySteps(),nx=run.session&&TS.find(s=>!d.steps[s.id]),all=TS.every(s=>d.steps[s.id]);
+  if(all&&!d.full){d.full=1;if(!d.n||d.ok/d.n>=.8)S.lvDays=(S.lvDays||0)+1;save()}
   $('stBar').style.width='100%';$('stC').textContent='';
   $('stBody').innerHTML=`<div class="done-e">${all?'🏆':'👏'}</div><div class="bigtxt long">${all?'आजचा सराव पूर्ण!':'शाब्बास!'}</div>
     <div class="subt">${all?'खूप छान मेहनत केली. उद्या पुन्हा भेटू.':run.st.mr+' पूर्ण झाले'}</div>${run.slides.length>1?'<button class="btn" id="moreB" style="margin-top:10px">याचाच अजून सराव करा</button>':''}`;
@@ -866,7 +1140,7 @@ const RENDER={
     if(await micOn()){$('meter').hidden=false;$('aMic').textContent='🎙 मोजणे बंद'}else toast('माइक वापरण्याची परवानगी द्या')}},
 
  drill(sl,body){
-  body.innerHTML=`<div class="bigtxt ${sl.long?'long':''}" style="margin-top:${sl.parts||sl.m?0:24}px">${sl.big}</div>${sl.sub?`<div class="subt">${sl.sub}</div>`:''}
+  body.innerHTML=`${sl.card?`<div class="${sl.card.cat}">${pic(sl.card,'xl')}</div>`:sl.icon?`<div class="pic sm">${sl.icon}</div>`:''}<div class="bigtxt ${sl.long?'long':''}" style="margin-top:${sl.parts||sl.m||sl.card||sl.icon?0:24}px">${sl.big}</div>${sl.sub?`<div class="subt">${sl.sub}</div>`:''}
     ${sl.m?`<div class="mrow">${sl.m.map(k=>mouth(k,sl.m.length>2?92:118)).join('<b class="then">›</b>')}${mirrorEl}</div><div class="tip">${sl.tip}</div>`:''}
     ${sl.parts?`<div class="chips">${sl.parts.map(p=>`<span class="chip s">${p}</span>`).join('')}</div>`:''}
     <div class="hint">${sl.hint}</div>
@@ -890,22 +1164,22 @@ const RENDER={
   body.innerHTML=`<div class="${c.cat}">${pic(c,'xl')}</div><div class="bigtxt long">${txt}</div>
     <button class="btn" id="yPlay">🔊 पुन्हा ऐका</button>
     <div class="yn"><button class="y" data-a="1">हो</button><button class="n" data-a="0">नाही</button></div>`;
-  const play=()=>say('q_'+q.id,txt);$('yPlay').onclick=play;$('stNext').hidden=true;T(play,450);
+  let first=true;const play=()=>say('q_'+q.id,txt);$('yPlay').onclick=play;$('stNext').hidden=true;T(play,450);
   body.querySelector('.yn').onclick=e=>{const b=e.target.closest('[data-a]');if(!b)return;
-    if((b.dataset.a==='1')===ans){b.classList.add('ok');beep(784,.3,.25);T(()=>beep(1047,.4,.25),140);T(nextSlide,1200)}
-    else{b.classList.remove('bad');void b.offsetWidth;b.classList.add('bad');beep(180,.25,.2);T(play,600)}}},
+    if((b.dataset.a==='1')===ans){score(first);b.classList.add('ok');beep(784,.3,.25);T(()=>beep(1047,.4,.25),140);T(nextSlide,1200)}
+    else{first=false;b.classList.remove('bad');void b.offsetWidth;b.classList.add('bad');beep(180,.25,.2);T(play,600)}}},
 
  cloze(sl,body){const it=sl.item,c=sl.card,w=c.w||c.mr,parts=it.mr.split('___'),stem=parts[0].trim(),full=it.mr.replace('___',w);
   body.innerHTML=`<div class="bigtxt long">${parts[0]}<span class="blank" id="bl">?</span>${parts[1]||''}</div>
     <button class="btn" id="cPlay">🔊 ऐका</button>
     <div class="opts o3">${sl.opts.map(o=>`<button class="opt ${o.cat}" data-o="${o.id}">${pic(o)}</button>`).join('')}</div>
     <div class="hint" id="cH">रिकाम्या जागी काय येईल? चित्र निवडा.</div>`;
-  let solved=false;const play=()=>solved?say(it.id+'_f',full):say(it.id,stem);
+  let solved=false,first=true;const play=()=>solved?say(it.id+'_f',full):say(it.id,stem);
   $('cPlay').onclick=play;$('stNext').hidden=true;T(play,450);
   body.querySelector('.opts').onclick=e=>{const b=e.target.closest('[data-o]');if(!b||solved)return;
-    if(b.dataset.o===c.id){solved=true;b.classList.add('ok');$('bl').textContent=w;$('bl').classList.add('fill');beep(784,.3,.25);
+    if(b.dataset.o===c.id){solved=true;score(first);b.classList.add('ok');$('bl').textContent=w;$('bl').classList.add('fill');beep(784,.3,.25);
       $('cH').textContent='आता पूर्ण वाक्य मोठ्याने म्हणा.';$('stNext').hidden=false;T(play,500)}
-    else{b.classList.remove('bad');void b.offsetWidth;b.classList.add('bad');beep(180,.25,.2)}}},
+    else{first=false;b.classList.remove('bad');void b.offsetWidth;b.classList.add('bad');beep(180,.25,.2)}}},
 
  mel(sl,body){const m=sl.item,HI=247,LO=196;
   body.innerHTML=`<div class="pic sm" style="--t:var(--brand-t)">${m.icon}</div>
@@ -924,113 +1198,13 @@ const RENDER={
     if(i>=m.syl.length){i=0;if(reps<3){dots[reps].classList.add('on');reps++;if(reps===3)T(chime,400)}T(()=>light(-1),600)}};
   $('mTune').onclick=tune;$('mSay').onclick=()=>say(m.id,m.speak);T(tune,500)},
 
- pick(sl,body){const c=sl.card,w=c.w||c.mr;
-  body.innerHTML=`<div class="cue">ऐका आणि चित्र दाखवा</div><button class="btn primary" id="pPlay">🔊 पुन्हा ऐका</button>
-    <div class="opts">${sl.opts.map(o=>`<button class="opt ${o.cat}" data-o="${o.id}">${pic(o)}</button>`).join('')}</div><div class="bigtxt long" id="pW" style="visibility:hidden">${w}</div>`;
-  const play=()=>say('w_'+c.id,w);$('pPlay').onclick=play;$('stNext').hidden=true;T(play,450);
+ pick(sl,body){const c=sl.card,w=c.w||c.mr;let first=true;
+  body.innerHTML=`<div class="${sl.read?'bigtxt':'cue'}">${sl.read?w:sl.odd?'वेगळे कोणते?':'ऐका आणि चित्र दाखवा'}</div>${sl.read?'<div class="subt">शब्द वाचा आणि चित्र दाखवा</div>':''}
+    <button class="btn primary" id="pPlay" ${sl.read?'hidden':''}>🔊 पुन्हा ऐका</button>
+    <div class="opts">${sl.opts.map(o=>`<button class="opt ${o.cat}" data-o="${o.id}">${pic(o)}</button>`).join('')}</div><div class="${sl.odd?'hint':'bigtxt long'}" id="pW" style="visibility:hidden">${sl.odd?sl.after:w}</div>`;
+  const play=()=>sl.odd?say('pr_odd','वेगळे कोणते?'):say('w_'+c.id,w);$('pPlay').onclick=play;$('stNext').hidden=true;if(!sl.read)T(play,450);
   body.querySelector('.opts').onclick=e=>{const b=e.target.closest('[data-o]');if(!b)return;
-    if(b.dataset.o===c.id){b.classList.add('ok');$('pW').style.visibility='visible';beep(784,.3,.25);T(()=>beep(1047,.4,.25),140);T(nextSlide,1300)}
-    else{b.classList.remove('bad');void b.offsetWidth;b.classList.add('bad');beep(180,.25,.2);T(play,500)}}},
+    if(b.dataset.o===c.id){score(first);b.classList.add('ok');$('pW').style.visibility='visible';beep(784,.3,.25);T(()=>beep(1047,.4,.25),140);if(sl.read)T(()=>say('w_'+c.id,w),400);T(nextSlide,sl.read||sl.odd?1900:1300)}
+    else{first=false;b.classList.remove('bad');void b.offsetWidth;b.classList.add('bad');beep(180,.25,.2);if(!sl.read)T(play,500)}}},
 
- name(sl,body){const c=sl.card,w=c.w||c.mr;
-  body.innerHTML=`<div class="${c.cat}">${pic(c,'xl')}</div><div class="bigtxt long" id="nW">${c.cat==='family'?'हे कोण आहे?':'हे काय आहे?'}</div>
-    <div class="row"><button class="btn" id="n1">💡 पहिला आवाज</button><button class="btn" id="n2">🔊 पूर्ण शब्द</button></div>
-    <div class="row">${selfBtn}</div>
-    <div class="rate"><button class="r3" data-r="1"><span class="e">👍</span>स्वतः बोलले</button><button class="r2" data-r="0"><span class="e">🤝</span>मदतीने</button><button class="r1" data-r="-1"><span class="e">⏭️</span>आज नाही</button></div>`;
-  $('stNext').hidden=true;wireSelf();
-  $('n1').onclick=()=>{$('nW').textContent=c.cue+' …';say('c_'+c.id,c.cue)};
-  $('n2').onclick=()=>{$('nW').textContent=w;say('w_'+c.id,w)};
-  body.querySelector('.rate').onclick=e=>{const b=e.target.closest('[data-r]');if(!b)return;
-    const r=S.words[c.id]||(S.words[c.id]={s:0,t:0});r.s=Math.max(0,Math.min(3,r.s+ +b.dataset.r));r.t=Date.now();save();
-    if(b.dataset.r==='1')beep(880,.25,.2);nextSlide()}}
-};
-
-/* ================= MORE (progress, settings, studio) ================= */
-function renderMore(){
-  const d=new Date(),cells=[];d.setDate(d.getDate()-13);
-  for(let i=0;i<14;i++){const r=S.days[dkey(d)],n=r?Object.keys(r.steps).length:0;cells.push(`<div class="${n>=STEPS.length?'f':n?'p':''}">${N(d.getDate())}</div>`);d.setDate(d.getDate()+1)}
-  const mins=Math.round(Object.values(S.days).reduce((a,r)=>a+(r.sec||0),0)/60);
-  const mastered=Object.values(S.words).filter(w=>w.s>=3).length;
-  const nVoice=Object.keys(DB.mem).filter(k=>k.startsWith('voice:')).length,nImg=Object.keys(DB.mem).filter(k=>k.startsWith('img:')).length;
-  $('more').innerHTML=`
-   <div class="cap"><div class="nums"><div><b>${N(streak())}</b><small>सलग दिवस</small></div><div><b>${N(mins)}</b><small>मिनिटे सराव</small></div><div><b>${N(mastered)}</b><small>पक्के शब्द</small></div></div></div>
-   <div class="pad">
-   <h2 class="h2">मागील १४ दिवस</h2><div class="cal">${cells.join('')}</div>
-   <h2 class="h2">आवाज आणि चित्रे</h2>
-   <div class="list">
-   <button class="item" data-a="voice"><span class="e">🎙</span><span>घरच्यांचा आवाज रेकॉर्ड करा<small>${N(nVoice)} रेकॉर्ड झाले. ओळखीचा आवाज सर्वात चांगला.</small></span>›</button>
-   <button class="item" data-a="photo"><span class="e">📷</span><span>खरे फोटो आणि नवीन कार्ड<small>${N(nImg)} फोटो लावले. स्वतःचा ग्लास, स्वतःचे घर, कुटुंब.</small></span>›</button>
-   <button class="item" data-a="slow"><span class="e">🐢</span><span>हळू बोलणे<small>आवाज थोडा सावकाश ऐकू येईल</small></span><i class="sw ${S.slow?'on':''}"></i></button>
-   </div>
-   <h2 class="h2">घरच्यांसाठी</h2>
-   <ul class="tips">
-     <li>एका वेळी एकच छोटे वाक्य. हळू, नेहमीच्या आवाजात बोला.</li>
-     <li>उत्तरासाठी १० सेकंद शांत थांबा. त्यांचे वाक्य तुम्ही पूर्ण करू नका.</li>
-     <li>चुका सुधारत बसू नका. प्रयत्नाचे कौतुक करा.</li>
-     <li>रोज १५ ते २० मिनिटे, शक्य असल्यास दिवसातून दोनदा. टीव्ही बंद ठेवा.</li>
-     <li>जेवणानंतर सराव करा. घाम, थरथर, चक्कर वाटली तर थांबा व साखर तपासा.</li>
-     <li>अचानक बोलणे बिघडले, चेहरा वाकडा झाला, हात-पाय लुळे पडले किंवा झटका आला तर ताबडतोब रुग्णालयात न्या.</li>
-   </ul><p class="muted">हे ॲप स्पीच थेरपिस्ट व डॉक्टरांच्या उपचाराला पूरक आहे, पर्याय नाही.</p></div>`;
-}
-$('more').addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b)return;
-  if(b.dataset.a==='slow'){S.slow=!S.slow;save();renderMore()}else openStudio(b.dataset.a)});
-
-let mode='studio',libTab='w';
-function openLib(){mode='lib';clean();run=null;openStage('शब्द आणि वाक्ये','टॅप करा, ऐका, म्हणा');
-  $('stBarW').hidden=true;$('stC').textContent='';$('stNext').hidden=true;$('stBody').className='st-body left';renderLib()}
-function renderLib(){const pool=namePool();
-  $('stBody').innerHTML=`<div class="seg"><button data-lt="w" class="${libTab==='w'?'on':''}">शब्द (${N(pool.length)})</button><button data-lt="s" class="${libTab==='s'?'on':''}">वाक्ये (${N(DATA.scripts.length)})</button></div>`+
-   (libTab==='w'?`<div class="pgrid">${pool.map(c=>`<button class="pcell ${c.cat}" data-w="${c.id}">${pic(c)}${c.w||c.mr}</button>`).join('')}</div>`
-     :DATA.scripts.map(x=>`<button class="vrow lrow" data-sc="${x.id}"><span>${x.mr}<small>${x.sub}</small></span><i class="ib">▶</i></button>`).join(''))}
-let studioTab='voice',target=null;
-function openStudio(tab){mode='studio';studioTab=tab||studioTab;clean();run=null;openStage('आवाज आणि चित्रे','घरच्यांनी एकदा सेट करा');
-  $('stBarW').hidden=true;$('stC').textContent='';$('stNext').hidden=true;$('stBody').className='st-body left';renderStudio()}
-function renderStudio(){
-  const seg=`<div class="seg"><button data-t="voice" class="${studioTab==='voice'?'on':''}">🎙 आवाज</button><button data-t="photo" class="${studioTab==='photo'?'on':''}">📷 फोटो / कार्ड</button></div>`;
-  let h='';
-  if(studioTab==='voice'){let g='';
-    h=`<p class="muted">🎙 दाबा, वाक्य स्पष्ट बोला, पुन्हा दाबा. रेकॉर्ड केलेला आवाजच ॲपमध्ये वाजेल.</p>`+allAudio(DATA,S.custom).map(a=>{
-      const has=!!DB.mem['voice:'+a.id];const head=a.g!==g?`<div class="h2">${g=a.g}</div>`:'';
-      return head+`<div class="vrow"><span>${a.text}</span><button class="ib" data-p="${a.id}">▶</button><button class="ib ${has?'has':''}" data-r="${a.id}">🎙</button>${has?`<button class="ib" data-x="${a.id}">✕</button>`:''}</div>`}).join('');
-  }else{
-    h=`<div class="form"><b>नवीन कार्ड जोडा</b><input id="fN" placeholder="नाव (उदा. पेपर)" maxlength="18"><input id="fS" placeholder="वाक्य (उदा. मला पेपर द्या)" maxlength="60">
-       <div style="display:flex;gap:8px"><select id="fC">${DATA.cats.slice(1).map(c=>`<option value="${c.id}">${c.e} ${c.l}</option>`).join('')}</select><input id="fE" placeholder="चिन्ह 📰" maxlength="4" style="width:110px"></div>
-       <button class="btn primary" id="fAdd">कार्ड जोडा</button></div>
-     <p class="muted" style="margin:12px 2px">कार्डावर टॅप करून खरा फोटो लावा. ओळखीच्या वस्तूंचे फोटो जास्त उपयोगी पडतात.</p>
-     <div class="pgrid">${cards().map(c=>`<button class="pcell ${c.cat}" data-ph="${c.id}">${pic(c)}${c.mr}${String(c.id).startsWith('x')?`<span class="del" data-del="${c.id}">✕</span>`:DB.mem['img:'+c.id]?`<span class="del" data-rm="${c.id}">✕</span>`:''}</button>`).join('')}</div>`;
-  }
-  const b=$('stBody'),y=b.scrollTop;b.innerHTML=seg+h;b.scrollTop=y;
-}
-$('stBody').addEventListener('click',e=>{
-  if(run)return;const q=s=>e.target.closest(s);let b;
-  if(mode==='lib'){
-    if(b=q('[data-lt]')){libTab=b.dataset.lt;$('stBody').scrollTop=0;return renderLib()}
-    if(b=q('[data-w]')){const c=cards().find(k=>k.id===b.dataset.w);return say('w_'+c.id,c.w||c.mr)}
-    if(b=q('[data-sc]')){const x=DATA.scripts.find(k=>k.id===b.dataset.sc);return say(x.id,x.speak)}
-    return}
-  if(b=q('[data-t]')){studioTab=b.dataset.t;$('stBody').scrollTop=0;return renderStudio()}
-  if(b=q('[data-p]')){const a=allAudio(DATA,S.custom).find(x=>x.id===b.dataset.p);return say(a.id,a.text)}
-  if(b=q('[data-r]')){const id=b.dataset.r;return recToggle(b,url=>{DB.set('voice:'+id,url);delete noClip[id];renderStudio();playSrc(url,1)},9000)}
-  if(b=q('[data-x]')){DB.del('voice:'+b.dataset.x);return renderStudio()}
-  if(b=q('[data-del]')){const id=b.dataset.del;S.custom=S.custom.filter(c=>c.id!==id);DB.del('img:'+id);DB.del('voice:'+id);save();return renderStudio()}
-  if(b=q('[data-rm]')){DB.del('img:'+b.dataset.rm);return renderStudio()}
-  if(b=q('[data-ph]')){target=b.dataset.ph;const f=$('pick');f.value='';return f.click()}
-  if(q('#fAdd')){const n=$('fN').value.trim(),s=$('fS').value.trim();if(!n){toast('नाव लिहा');return}
-    S.custom.push({id:'x'+Date.now(),cat:$('fC').value,mr:n,sub:'',speak:s||n,icon:$('fE').value.trim()||'💬'});save();toast('कार्ड जोडले ✓');renderStudio()}
-});
-$('pick').addEventListener('change',ev=>{
-  const file=ev.target.files&&ev.target.files[0];if(!file||!target)return;const id=target;
-  const r=new FileReader();
-  r.onload=e=>{const im=new Image();im.onload=()=>{
-    const c=document.createElement('canvas');c.width=c.height=400;const s=Math.min(im.width,im.height);
-    c.getContext('2d').drawImage(im,(im.width-s)/2,(im.height-s)/2,s,s,0,0,400,400);
-    DB.set('img:'+id,c.toDataURL('image/jpeg',.85));if(!$('stage').hidden&&!run)renderStudio()};im.src=e.target.result};
-  r.readAsDataURL(file);
-});
-
-/* ================= boot ================= */
-renderTabs();renderGrid();go('talk');
-DB.open().then(()=>{migrateOld();renderGrid()});
-</script>
-</body>
-</html>
+ choice(s
