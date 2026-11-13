@@ -167,6 +167,20 @@ button{font-family:var(--ui);color:inherit;cursor:pointer}
 .done-e{font-size:6rem;line-height:1;margin-top:30px;animation:pop .5s}
 @keyframes pop{0%{transform:scale(.3)}70%{transform:scale(1.15)}}
 
+.mouth{height:auto;flex:none;display:block}
+.mrow{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
+.mrow .then{font-size:1.8rem;color:var(--ink2)}
+.mirror{width:150px;height:150px;border-radius:50%;object-fit:cover;transform:scaleX(-1);border:5px solid var(--zendu);background:var(--mor-d);flex:none}
+.tip{font-size:1.2rem;font-weight:800;color:var(--mor);line-height:1.35}
+.orbwrap.s{width:170px;height:170px}.orbwrap.s .orb{width:164px;height:164px;font-size:3.8rem}
+.blank{display:inline-block;min-width:1.6em;margin:0 .15em;padding:0 .2em;border-bottom:5px solid var(--zendu);color:var(--ink2)}
+.blank.fill{background:var(--zendu-t);border-radius:10px 10px 0 0;color:var(--mor)}
+.opts.o3{grid-template-columns:repeat(3,1fr);gap:8px}.o3 .opt{padding:10px 4px}.o3 .opt .pic{width:84px;height:84px;font-size:3.4rem}
+.st-body .yn{border:none;padding:0;width:100%}
+.yn .ok{outline:5px solid var(--zendu);outline-offset:3px}.yn .bad{animation:shake .35s}
+.lrow{width:100%;background:none;border:none;border-bottom:1px solid var(--line);text-align:left}
+.lrow small{display:block;font-weight:500;font-size:.8rem;color:var(--ink2)}
+.lrow .ib{display:grid;place-items:center;font-style:normal}
 /* progress */
 .nums{display:grid;grid-template-columns:repeat(3,1fr);padding-top:8px}
 .nums div+div{border-left:1px solid rgba(255,255,255,.2);padding-left:14px}
@@ -283,7 +297,7 @@ const DATA={
   {id:'tablets',cat:'daily',icon:'💊',mr:'गोळ्या',sub:'Medicine',speak:'माझ्या गोळ्या आणि औषधे द्या',cue:'गो'},
   {id:'bathroom',cat:'daily',icon:'🚻',mr:'बाथरूम',sub:'Washroom',speak:'मला बाथरूमला जायचे आहे'},
   {id:'glasses',cat:'daily',icon:'👓',mr:'चष्मा',sub:'My glasses',speak:'माझा चष्मा द्या',cue:'च'},
-  {id:'sleep',cat:'daily',icon:'🛏️',mr:'झोप',sub:'Sleep / Rest',speak:'मला झोपायचे आहे',cue:'झो'},
+  {id:'sleep',cat:'daily',icon:'🛏️',mr:'झोप',sub:'Sleep / Rest',speak:'मला झोपायचे आहे'},
   {id:'bath',cat:'daily',icon:'🚿',mr:'अंघोळ',sub:'Bath',speak:'मला अंघोळ करायची आहे'},
   {id:'clothes',cat:'daily',icon:'👕',mr:'कपडे',sub:'Change clothes',speak:'माझे कपडे बदला',cue:'क'},
   {id:'hot',cat:'daily',icon:'🥵',mr:'गरम होतंय',sub:'Feeling hot – fan',speak:'मला गरम होत आहे, पंखा लावा'},
@@ -319,60 +333,243 @@ const DATA={
   {id:'village',cat:'outing',icon:'🏡',mr:'गावी',sub:'Go to village',speak:'मला गावी जायचे आहे'},
   {id:'friends',cat:'outing',icon:'👥',mr:'मित्र',sub:'Meet friends',speak:'मला मित्रांना भेटायचे आहे'},
 
-  /* practice-only words (not shown on the talk board) */
+  /* practice words (not shown on the talk board) */
   {id:'ghar',cat:'word',icon:'🏠',mr:'घर',sub:'House',cue:'घ'},
+  {id:'daar',cat:'word',icon:'🚪',mr:'दार',sub:'Door',cue:'दा'},
+  {id:'palang',cat:'word',icon:'🛏️',mr:'पलंग',sub:'Bed',cue:'प'},
+  {id:'khurchi',cat:'word',icon:'🪑',mr:'खुर्ची',sub:'Chair',cue:'खु'},
+  {id:'diva',cat:'word',icon:'💡',mr:'दिवा',sub:'Light',cue:'दि'},
+  {id:'killi',cat:'word',icon:'🔑',mr:'किल्ली',sub:'Key',cue:'कि'},
+  {id:'kulup',cat:'word',icon:'🔒',mr:'कुलूप',sub:'Lock',cue:'कु'},
+  {id:'chhatri',cat:'word',icon:'☂️',mr:'छत्री',sub:'Umbrella',cue:'छ'},
+  {id:'pustak',cat:'word',icon:'📖',mr:'पुस्तक',sub:'Book',cue:'पु'},
+  {id:'pen',cat:'word',icon:'🖊️',mr:'पेन',sub:'Pen',cue:'पे'},
+  {id:'patra',cat:'word',icon:'✉️',mr:'पत्र',sub:'Letter',cue:'प'},
+  {id:'paise',cat:'word',icon:'💵',mr:'पैसे',sub:'Money',cue:'पै'},
+  {id:'ghadyal',cat:'word',icon:'⌚',mr:'घड्याळ',sub:'Watch',cue:'घ'},
+  {id:'katri',cat:'word',icon:'✂️',mr:'कात्री',sub:'Scissors',cue:'का'},
+  {id:'saban',cat:'word',icon:'🧼',mr:'साबण',sub:'Soap',cue:'सा'},
+  {id:'chamcha',cat:'word',icon:'🥄',mr:'चमचा',sub:'Spoon',cue:'च'},
+  {id:'taat',cat:'word',icon:'🍽️',mr:'ताट',sub:'Plate',cue:'ता'},
+  {id:'pishvi',cat:'word',icon:'👜',mr:'पिशवी',sub:'Bag',cue:'पि'},
+  {id:'boot',cat:'word',icon:'👟',mr:'बूट',sub:'Shoes',cue:'बू'},
+  {id:'topi',cat:'word',icon:'🧢',mr:'टोपी',sub:'Cap',cue:'टो'},
+  {id:'sadra',cat:'word',icon:'👔',mr:'सदरा',sub:'Shirt',cue:'स'},
+  {id:'ghanta',cat:'word',icon:'🔔',mr:'घंटा',sub:'Bell',cue:'घं'},
+  {id:'radio',cat:'word',icon:'📻',mr:'रेडिओ',sub:'Radio',cue:'रे'},
   {id:'haat',cat:'word',icon:'✋',mr:'हात',sub:'Hand',cue:'हा'},
+  {id:'paay',cat:'word',icon:'🦶',mr:'पाय',sub:'Foot',cue:'पा'},
   {id:'dola',cat:'word',icon:'👁️',mr:'डोळा',sub:'Eye',cue:'डो'},
-  {id:'phool',cat:'word',icon:'🌸',mr:'फूल',sub:'Flower',cue:'फू'},
-  {id:'jhad',cat:'word',icon:'🌳',mr:'झाड',sub:'Tree',cue:'झा'},
-  {id:'surya',cat:'word',icon:'☀️',mr:'सूर्य',sub:'Sun',cue:'सू'},
-  {id:'gaay',cat:'word',icon:'🐄',mr:'गाय',sub:'Cow',cue:'गा'},
+  {id:'kaan',cat:'word',icon:'👂',mr:'कान',sub:'Ear',cue:'का'},
+  {id:'naak',cat:'word',icon:'👃',mr:'नाक',sub:'Nose',cue:'ना'},
+  {id:'tond',cat:'word',icon:'👄',mr:'तोंड',sub:'Mouth',cue:'तों'},
+  {id:'daat',cat:'word',icon:'🦷',mr:'दात',sub:'Tooth',cue:'दा'},
+  {id:'bot',cat:'word',icon:'☝️',mr:'बोट',sub:'Finger',cue:'बो'},
+  {id:'doodh',cat:'word',icon:'🥛',mr:'दूध',sub:'Milk',cue:'दू'},
+  {id:'bhaat',cat:'word',icon:'🍚',mr:'भात',sub:'Rice',cue:'भा'},
+  {id:'pav',cat:'word',icon:'🍞',mr:'पाव',sub:'Bread',cue:'पा'},
+  {id:'ande',cat:'word',icon:'🥚',mr:'अंडे',sub:'Egg',cue:'अं'},
   {id:'amba',cat:'word',icon:'🥭',mr:'आंबा',sub:'Mango',cue:'आं'},
   {id:'kele',cat:'word',icon:'🍌',mr:'केळे',sub:'Banana',cue:'के'},
-  {id:'doodh',cat:'word',icon:'🥛',mr:'दूध',sub:'Milk',cue:'दू'},
-  {id:'ghadyal',cat:'word',icon:'⌚',mr:'घड्याळ',sub:'Watch',cue:'घ'},
-  {id:'daar',cat:'word',icon:'🚪',mr:'दार',sub:'Door',cue:'दा'},
+  {id:'safarchand',cat:'word',icon:'🍎',mr:'सफरचंद',sub:'Apple',cue:'स'},
+  {id:'draksha',cat:'word',icon:'🍇',mr:'द्राक्षे',sub:'Grapes',cue:'द्रा'},
+  {id:'kalingad',cat:'word',icon:'🍉',mr:'कलिंगड',sub:'Watermelon',cue:'क'},
+  {id:'limbu',cat:'word',icon:'🍋',mr:'लिंबू',sub:'Lemon',cue:'लिं'},
+  {id:'tomato',cat:'word',icon:'🍅',mr:'टोमॅटो',sub:'Tomato',cue:'टो'},
+  {id:'batata',cat:'word',icon:'🥔',mr:'बटाटा',sub:'Potato',cue:'ब'},
+  {id:'gajar',cat:'word',icon:'🥕',mr:'गाजर',sub:'Carrot',cue:'गा'},
+  {id:'vange',cat:'word',icon:'🍆',mr:'वांगे',sub:'Brinjal',cue:'वां'},
+  {id:'mirchi',cat:'word',icon:'🌶️',mr:'मिरची',sub:'Chilli',cue:'मि'},
+  {id:'maka',cat:'word',icon:'🌽',mr:'मका',sub:'Corn',cue:'म'},
+  {id:'naral',cat:'word',icon:'🥥',mr:'नारळ',sub:'Coconut',cue:'ना'},
+  {id:'shengdane',cat:'word',icon:'🥜',mr:'शेंगदाणे',sub:'Peanuts',cue:'शें'},
+  {id:'madh',cat:'word',icon:'🍯',mr:'मध',sub:'Honey',cue:'म'},
+  {id:'meeth',cat:'word',icon:'🧂',mr:'मीठ',sub:'Salt',cue:'मी'},
+  {id:'gaay',cat:'word',icon:'🐄',mr:'गाय',sub:'Cow',cue:'गा'},
+  {id:'bail',cat:'word',icon:'🐂',mr:'बैल',sub:'Bull',cue:'बै'},
+  {id:'shelli',cat:'word',icon:'🐐',mr:'शेळी',sub:'Goat',cue:'शे'},
+  {id:'kutra',cat:'word',icon:'🐕',mr:'कुत्रा',sub:'Dog',cue:'कु'},
+  {id:'manjar',cat:'word',icon:'🐈',mr:'मांजर',sub:'Cat',cue:'मां'},
+  {id:'ghoda',cat:'word',icon:'🐎',mr:'घोडा',sub:'Horse',cue:'घो'},
+  {id:'hatti',cat:'word',icon:'🐘',mr:'हत्ती',sub:'Elephant',cue:'ह'},
+  {id:'wagh',cat:'word',icon:'🐅',mr:'वाघ',sub:'Tiger',cue:'वा'},
+  {id:'makad',cat:'word',icon:'🐒',mr:'माकड',sub:'Monkey',cue:'मा'},
+  {id:'kombda',cat:'word',icon:'🐓',mr:'कोंबडा',sub:'Rooster',cue:'कों'},
+  {id:'popat',cat:'word',icon:'🦜',mr:'पोपट',sub:'Parrot',cue:'पो'},
+  {id:'mor',cat:'word',icon:'🦚',mr:'मोर',sub:'Peacock',cue:'मो'},
+  {id:'chimni',cat:'word',icon:'🐦',mr:'चिमणी',sub:'Sparrow',cue:'चि'},
+  {id:'masa',cat:'word',icon:'🐟',mr:'मासा',sub:'Fish',cue:'मा'},
+  {id:'saap',cat:'word',icon:'🐍',mr:'साप',sub:'Snake',cue:'सा'},
+  {id:'mungi',cat:'word',icon:'🐜',mr:'मुंगी',sub:'Ant',cue:'मुं'},
+  {id:'phulpakharu',cat:'word',icon:'🦋',mr:'फुलपाखरू',sub:'Butterfly',cue:'फु'},
+  {id:'surya',cat:'word',icon:'☀️',mr:'सूर्य',sub:'Sun',cue:'सू'},
+  {id:'chandra',cat:'word',icon:'🌙',mr:'चंद्र',sub:'Moon',cue:'चं'},
+  {id:'tara',cat:'word',icon:'⭐',mr:'तारा',sub:'Star',cue:'ता'},
+  {id:'paus',cat:'word',icon:'🌧️',mr:'पाऊस',sub:'Rain',cue:'पा'},
+  {id:'jhad',cat:'word',icon:'🌳',mr:'झाड',sub:'Tree',cue:'झा'},
+  {id:'phool',cat:'word',icon:'🌸',mr:'फूल',sub:'Flower',cue:'फू'},
+  {id:'dongar',cat:'word',icon:'⛰️',mr:'डोंगर',sub:'Mountain',cue:'डों'},
+  {id:'aag',cat:'word',icon:'🔥',mr:'आग',sub:'Fire',cue:'आ'},
   {id:'gaadi',cat:'word',icon:'🚗',mr:'गाडी',sub:'Car',cue:'गा'},
-  {id:'paise',cat:'word',icon:'💵',mr:'पैसे',sub:'Money',cue:'पै'},
-  {id:'bhaat',cat:'word',icon:'🍚',mr:'भात',sub:'Rice',cue:'भा'}
+  {id:'bus',cat:'word',icon:'🚌',mr:'बस',sub:'Bus',cue:'ब'},
+  {id:'railway',cat:'word',icon:'🚂',mr:'रेल्वे',sub:'Train',cue:'रे'},
+  {id:'cycle',cat:'word',icon:'🚲',mr:'सायकल',sub:'Cycle',cue:'सा'},
+  {id:'viman',cat:'word',icon:'✈️',mr:'विमान',sub:'Aeroplane',cue:'वि'},
+  {id:'tractor',cat:'word',icon:'🚜',mr:'ट्रॅक्टर',sub:'Tractor',cue:'ट्रॅ'},
+  {id:'dukan',cat:'word',icon:'🏪',mr:'दुकान',sub:'Shop',cue:'दु'},
+  {id:'davakhana',cat:'word',icon:'🏥',mr:'दवाखाना',sub:'Hospital',cue:'द'},
+  {id:'shala',cat:'word',icon:'🏫',mr:'शाळा',sub:'School',cue:'शा'},
+  {id:'pine',cat:'word',icon:'🥤',mr:'पिणे',sub:'Drinking',cue:'पि'},
+  {id:'jhopne',cat:'word',icon:'😴',mr:'झोपणे',sub:'Sleeping',cue:'झो'},
+  {id:'chalne',cat:'word',icon:'🚶',mr:'चालणे',sub:'Walking',cue:'चा'},
+  {id:'dhavne',cat:'word',icon:'🏃',mr:'धावणे',sub:'Running',cue:'धा'},
+  {id:'hasne',cat:'word',icon:'😄',mr:'हसणे',sub:'Laughing',cue:'ह'},
+  {id:'radne',cat:'word',icon:'😭',mr:'रडणे',sub:'Crying',cue:'र'},
+  {id:'vachne',cat:'word',icon:'📚',mr:'वाचणे',sub:'Reading',cue:'वा'},
+  {id:'lihine',cat:'word',icon:'✍️',mr:'लिहिणे',sub:'Writing',cue:'लि'},
+  {id:'gaane',cat:'word',icon:'🎤',mr:'गाणे',sub:'Singing',cue:'गा'},
+  {id:'pohne',cat:'word',icon:'🏊',mr:'पोहणे',sub:'Swimming',cue:'पो'},
+  {id:'taali',cat:'word',icon:'👏',mr:'टाळी',sub:'Clapping',cue:'टा'}
  ],
  vowels:[
-  {id:'v_a',mr:'अ',speak:'अ'},{id:'v_aa',mr:'आ',speak:'आ'},{id:'v_i',mr:'ई',speak:'ई'},{id:'v_u',mr:'ऊ',speak:'ऊ'},
-  {id:'v_e',mr:'ए',speak:'ए'},{id:'v_o',mr:'ओ',speak:'ओ'}
+  {id:'v_a',mr:'अ',speak:'अ',m:['a'],tip:'तोंड थोडे उघडा'},
+  {id:'v_aa',mr:'आ',speak:'आ',m:['aa'],tip:'तोंड मोठे उघडा'},
+  {id:'v_i',mr:'ई',speak:'ई',m:['ee'],tip:'ओठ ताणून हसा'},
+  {id:'v_u',mr:'ऊ',speak:'ऊ',m:['oo'],tip:'ओठ गोल करून पुढे आणा'},
+  {id:'v_e',mr:'ए',speak:'ए',m:['e'],tip:'तोंड अर्धे उघडा, ओठ थोडे ताणा'},
+  {id:'v_ai',mr:'ऐ',speak:'ऐ',m:['a', 'ee'],tip:'आधी अ, मग ई कडे सरका'},
+  {id:'v_o',mr:'ओ',speak:'ओ',m:['o'],tip:'ओठ गोल, तोंड उघडे'},
+  {id:'v_au',mr:'औ',speak:'औ',m:['a', 'oo'],tip:'आधी अ, मग ऊ कडे सरका'},
+  {id:'v_am',mr:'अं',speak:'अं',m:['a', 'm'],tip:'अ म्हणा आणि ओठ मिटा'}
  ],
  syll:[
-  {id:'s_pa',mr:'पा पा पा',speak:'पा. पा. पा.'},{id:'s_ma',mr:'मा मा मा',speak:'मा. मा. मा.'},{id:'s_ba',mr:'बा बा बा',speak:'बा. बा. बा.'},
-  {id:'s_ta',mr:'ता ता ता',speak:'ता. ता. ता.'},{id:'s_ka',mr:'का का का',speak:'का. का. का.'},{id:'s_la',mr:'ला ला ला',speak:'ला. ला. ला.'}
+  {id:'s_pa',mr:'पा पा पा',speak:'पा. पा. पा.',m:['m', 'aa'],tip:'ओठ घट्ट मिटा, मग फट्कन उघडा'},
+  {id:'s_ba',mr:'बा बा बा',speak:'बा. बा. बा.',m:['m', 'aa'],tip:'ओठ मिटा, आवाजासह उघडा'},
+  {id:'s_ma',mr:'मा मा मा',speak:'मा. मा. मा.',m:['m', 'aa'],tip:'ओठ मिटून म् गुणगुणा, मग उघडा'},
+  {id:'s_ta',mr:'ता ता ता',speak:'ता. ता. ता.',m:['t', 'aa'],tip:'जिभेचे टोक वरच्या दातांमागे लावा'},
+  {id:'s_da',mr:'दा दा दा',speak:'दा. दा. दा.',m:['t', 'aa'],tip:'जिभेचे टोक वरच्या दातांमागे, आवाजासह'},
+  {id:'s_na',mr:'ना ना ना',speak:'ना. ना. ना.',m:['t', 'aa'],tip:'जीभ वर लावा, आवाज नाकातून काढा'},
+  {id:'s_la',mr:'ला ला ला',speak:'ला. ला. ला.',m:['t', 'aa'],tip:'जिभेचे टोक वर टेकवा, मग खाली सोडा'},
+  {id:'s_ka',mr:'का का का',speak:'का. का. का.',m:['k', 'aa'],tip:'जिभेचा मागचा भाग वर टाळूला लावा'},
+  {id:'s_ga',mr:'गा गा गा',speak:'गा. गा. गा.',m:['k', 'aa'],tip:'जिभेचा मागचा भाग वर, आवाजासह'},
+  {id:'s_sa',mr:'सा सा सा',speak:'सा. सा. सा.',m:['ee', 'aa'],tip:'दात जवळ आणा, स्स् अशी हवा सोडा'},
+  {id:'s_ha',mr:'हा हा हा',speak:'हा. हा. हा.',m:['aa'],tip:'तोंड उघडून श्वास सोडत हा म्हणा'},
+  {id:'s_ptk',mr:'पा टा का',speak:'पा. टा. का.',m:['m','t','k'],tip:'ओठ, मग जिभेचे टोक, मग जिभेचा मागचा भाग'}
  ],
  auto:[
-  {id:'au_count',mr:'१ ते १० मोजा',sub:'Count 1 to 10',parts:['एक','दोन','तीन','चार','पाच','सहा','सात','आठ','नऊ','दहा'],speak:'एक. दोन. तीन. चार. पाच. सहा. सात. आठ. नऊ. दहा.'},
-  {id:'au_days',mr:'वारांची नावे',sub:'Days of the week',parts:['सोमवार','मंगळवार','बुधवार','गुरुवार','शुक्रवार','शनिवार','रविवार'],speak:'सोमवार. मंगळवार. बुधवार. गुरुवार. शुक्रवार. शनिवार. रविवार.'},
-  {id:'au_greet',mr:'रोजचे शब्द',sub:'Everyday words',parts:['राम राम','नमस्कार','हो','नाही','बरं','चला'],speak:'राम राम. नमस्कार. हो. नाही. बरं. चला.'},
-  {id:'au_five',mr:'१ ते ५ मोजा',sub:'Count 1 to 5',parts:['एक','दोन','तीन','चार','पाच'],speak:'एक. दोन. तीन. चार. पाच.'}
+  {id:'au_five',mr:'१ ते ५ मोजा',sub:'Count 1 to 5',parts:['एक', 'दोन', 'तीन', 'चार', 'पाच'],speak:'एक. दोन. तीन. चार. पाच.'},
+  {id:'au_count',mr:'१ ते १० मोजा',sub:'Count 1 to 10',parts:['एक', 'दोन', 'तीन', 'चार', 'पाच', 'सहा', 'सात', 'आठ', 'नऊ', 'दहा'],speak:'एक. दोन. तीन. चार. पाच. सहा. सात. आठ. नऊ. दहा.'},
+  {id:'au_days',mr:'वारांची नावे',sub:'Days of the week',parts:['सोमवार', 'मंगळवार', 'बुधवार', 'गुरुवार', 'शुक्रवार', 'शनिवार', 'रविवार'],speak:'सोमवार. मंगळवार. बुधवार. गुरुवार. शुक्रवार. शनिवार. रविवार.'},
+  {id:'au_greet',mr:'रोजचे शब्द',sub:'Everyday words',parts:['राम राम', 'नमस्कार', 'हो', 'नाही', 'बरं', 'चला'],speak:'राम राम. नमस्कार. हो. नाही. बरं. चला.'},
+  {id:'au_months',mr:'महिन्यांची नावे',sub:'Months',parts:['जानेवारी', 'फेब्रुवारी', 'मार्च', 'एप्रिल', 'मे', 'जून', 'जुलै', 'ऑगस्ट', 'सप्टेंबर', 'ऑक्टोबर', 'नोव्हेंबर', 'डिसेंबर'],speak:'जानेवारी. फेब्रुवारी. मार्च. एप्रिल. मे. जून. जुलै. ऑगस्ट. सप्टेंबर. ऑक्टोबर. नोव्हेंबर. डिसेंबर.'},
+  {id:'au_colors',mr:'रंगांची नावे',sub:'Colours',parts:['लाल', 'पिवळा', 'हिरवा', 'निळा', 'काळा', 'पांढरा'],speak:'लाल. पिवळा. हिरवा. निळा. काळा. पांढरा.'},
+  {id:'au_daypart',mr:'दिवसाचे भाग',sub:'Parts of the day',parts:['सकाळ', 'दुपार', 'संध्याकाळ', 'रात्र'],speak:'सकाळ. दुपार. संध्याकाळ. रात्र.'},
+  {id:'au_food',mr:'जेवणातले पदार्थ',sub:'Foods on the plate',parts:['भाकरी', 'भाजी', 'वरण', 'भात', 'चटणी', 'ताक'],speak:'भाकरी. भाजी. वरण. भात. चटणी. ताक.'},
+  {id:'au_family',mr:'नाती',sub:'Family words',parts:['आई', 'बाबा', 'दादा', 'ताई', 'आजी', 'आजोबा'],speak:'आई. बाबा. दादा. ताई. आजी. आजोबा.'},
+  {id:'au_back',mr:'५ ते १ उलटे मोजा',sub:'Count back 5 to 1',parts:['पाच', 'चार', 'तीन', 'दोन', 'एक'],speak:'पाच. चार. तीन. दोन. एक.'}
  ],
  /* tone: 1 = high note, 0 = low note */
  melodic:[
-  {id:'m_pani',icon:'💧',mr:'पाणी द्या',sub:'Give me water',syl:['पा','णी','द्या'],tone:[1,0,1],speak:'पाणी द्या'},
-  {id:'m_chaha',icon:'☕',mr:'चहा हवा',sub:'I want tea',syl:['च','हा','ह','वा'],tone:[0,1,0,1],speak:'चहा हवा'},
-  {id:'m_namaskar',icon:'🙏',mr:'नमस्कार',sub:'Hello',syl:['न','म','स्का','र'],tone:[0,0,1,0],speak:'नमस्कार'},
-  {id:'m_bhook',icon:'🍛',mr:'भूक लागली',sub:'I am hungry',syl:['भूक','लाग','ली'],tone:[1,1,0],speak:'भूक लागली'},
-  {id:'m_ikade',icon:'👋',mr:'इकडे ये',sub:'Come here',syl:['इ','क','डे','ये'],tone:[1,0,0,1],speak:'इकडे ये'},
-  {id:'m_bara',icon:'😊',mr:'मी बरा आहे',sub:'I am fine',syl:['मी','ब','रा','आ','हे'],tone:[0,1,1,0,0],speak:'मी बरा आहे'},
-  {id:'m_ram',icon:'🪔',mr:'राम कृष्ण हरी',sub:'Ram Krishna Hari',syl:['राम','कृष्ण','ह','री'],tone:[1,1,0,1],speak:'राम कृष्ण हरी'},
-  {id:'m_thanks',icon:'🙏',mr:'धन्यवाद',sub:'Thank you',syl:['धन्','य','वाद'],tone:[1,0,1],speak:'धन्यवाद'},
-  {id:'m_jhop',icon:'🛏️',mr:'झोप आली',sub:'I am sleepy',syl:['झोप','आ','ली'],tone:[1,0,1],speak:'झोप आली'}
+  {id:'m_pani',icon:'💧',mr:'पाणी द्या',sub:'Give me water',syl:['पा', 'णी', 'द्या'],tone:[1,0,1],speak:'पाणी द्या'},
+  {id:'m_chaha',icon:'☕',mr:'चहा हवा',sub:'I want tea',syl:['च', 'हा', 'ह', 'वा'],tone:[0,1,0,1],speak:'चहा हवा'},
+  {id:'m_namaskar',icon:'🙏',mr:'नमस्कार',sub:'Hello',syl:['न', 'म', 'स्का', 'र'],tone:[0,0,1,0],speak:'नमस्कार'},
+  {id:'m_bhook',icon:'🍛',mr:'भूक लागली',sub:'I am hungry',syl:['भूक', 'लाग', 'ली'],tone:[1,1,0],speak:'भूक लागली'},
+  {id:'m_ikade',icon:'👋',mr:'इकडे ये',sub:'Come here',syl:['इ', 'क', 'डे', 'ये'],tone:[1,0,0,1],speak:'इकडे ये'},
+  {id:'m_bara',icon:'😊',mr:'मी बरा आहे',sub:'I am fine',syl:['मी', 'ब', 'रा', 'आ', 'हे'],tone:[0,1,1,0,0],speak:'मी बरा आहे'},
+  {id:'m_ram',icon:'🪔',mr:'राम कृष्ण हरी',sub:'Ram Krishna Hari',syl:['राम', 'कृष्ण', 'ह', 'री'],tone:[1,1,0,1],speak:'राम कृष्ण हरी'},
+  {id:'m_thanks',icon:'🙏',mr:'धन्यवाद',sub:'Thank you',syl:['धन्', 'य', 'वाद'],tone:[1,0,1],speak:'धन्यवाद'},
+  {id:'m_jhop',icon:'🛏️',mr:'झोप आली',sub:'I am sleepy',syl:['झोप', 'आ', 'ली'],tone:[1,0,1],speak:'झोप आली'},
+  {id:'m_ghari',icon:'🏠',mr:'घरी चला',sub:'Let us go home',syl:['घ', 'री', 'च', 'ला'],tone:[1,0,1,0],speak:'घरी चला'},
+  {id:'m_daar',icon:'🚪',mr:'दार उघडा',sub:'Open the door',syl:['दार', 'उ', 'घ', 'डा'],tone:[1,0,1,0],speak:'दार उघडा'},
+  {id:'m_pankha',icon:'🥵',mr:'पंखा लावा',sub:'Fan on',syl:['पं', 'खा', 'ला', 'वा'],tone:[1,0,1,0],speak:'पंखा लावा'},
+  {id:'m_kase',icon:'👋',mr:'कसे आहात',sub:'How are you',syl:['क', 'से', 'आ', 'हात'],tone:[0,1,1,0],speak:'कसे आहात'},
+  {id:'m_punha',icon:'🔁',mr:'पुन्हा या',sub:'Come again',syl:['पुन्', 'हा', 'या'],tone:[1,0,1],speak:'पुन्हा या'},
+  {id:'m_mala',icon:'🤲',mr:'मला द्या',sub:'Give it to me',syl:['म', 'ला', 'द्या'],tone:[0,1,1],speak:'मला द्या'},
+  {id:'m_basa',icon:'🪑',mr:'इथे बसा',sub:'Sit here',syl:['इ', 'थे', 'ब', 'सा'],tone:[1,0,1,0],speak:'इथे बसा'},
+  {id:'m_thamba',icon:'✋',mr:'थोडे थांबा',sub:'Wait a little',syl:['थो', 'डे', 'थां', 'बा'],tone:[0,1,1,0],speak:'थोडे थांबा'},
+  {id:'m_ramram',icon:'🙏',mr:'राम राम',sub:'Ram Ram',syl:['राम', 'राम'],tone:[1,0],speak:'राम राम'},
+  {id:'m_barahe',icon:'👍',mr:'ठीक आहे',sub:'Okay',syl:['ठीक', 'आ', 'हे'],tone:[1,0,0],speak:'ठीक आहे'},
+  {id:'m_chala',icon:'🚶',mr:'चला जाऊ',sub:'Let us go',syl:['च', 'ला', 'जा', 'ऊ'],tone:[0,1,1,0],speak:'चला जाऊ'}
  ],
  scripts:[
-  {id:'sc_name',mr:'माझे नाव सीताराम',sub:'My name is Sitaram',speak:'माझे नाव सीताराम'},
-  {id:'sc_fine',mr:'मी बरा आहे',sub:'I am fine',speak:'मी बरा आहे'},
-  {id:'sc_how',mr:'कसे आहात?',sub:'How are you?',speak:'कसे आहात?'},
-  {id:'sc_water',mr:'मला पाणी द्या',sub:'Give me water',speak:'मला पाणी द्या'},
-  {id:'sc_tea',mr:'मला चहा हवा',sub:'I want tea',speak:'मला चहा हवा'},
-  {id:'sc_ira',mr:'इरा, इकडे ये',sub:'Ira, come here',speak:'इरा, इकडे ये'},
-  {id:'sc_jevan',mr:'जेवण झाले का?',sub:'Have you eaten?',speak:'जेवण झाले का?'},
+  {id:'sc_name',mr:'माझे नाव सीताराम',sub:"My name is Sitaram",speak:'माझे नाव सीताराम'},
+  {id:'sc_fine',mr:'मी बरा आहे',sub:"I am fine",speak:'मी बरा आहे'},
+  {id:'sc_how',mr:'कसे आहात?',sub:"How are you?",speak:'कसे आहात?'},
+  {id:'sc_water',mr:'मला पाणी द्या',sub:"Give me water",speak:'मला पाणी द्या'},
+  {id:'sc_tea',mr:'मला चहा हवा',sub:"I want tea",speak:'मला चहा हवा'},
+  {id:'sc_ira',mr:'इरा, इकडे ये',sub:"Ira, come here",speak:'इरा, इकडे ये'},
+  {id:'sc_jevan',mr:'जेवण झाले का?',sub:"Have you eaten?",speak:'जेवण झाले का?'},
   {id:'sc_out',mr:'चला, बाहेर जाऊ',sub:"Let's go out",speak:'चला, बाहेर जाऊ'},
-  {id:'sc_sleep',mr:'मला झोप आली',sub:'I am sleepy',speak:'मला झोप आली'},
-  {id:'sc_ok',mr:'ठीक आहे',sub:'Okay',speak:'ठीक आहे'}
+  {id:'sc_sleep',mr:'मला झोप आली',sub:"I am sleepy",speak:'मला झोप आली'},
+  {id:'sc_ok',mr:'ठीक आहे',sub:"Okay",speak:'ठीक आहे'},
+  {id:'sc_namaskar',mr:'नमस्कार',sub:"Hello",speak:'नमस्कार'},
+  {id:'sc_ramram',mr:'राम राम',sub:"Ram Ram",speak:'राम राम'},
+  {id:'sc_thanks',mr:'धन्यवाद',sub:"Thank you",speak:'धन्यवाद'},
+  {id:'sc_basa',mr:'या, बसा',sub:"Come, sit",speak:'या, बसा'},
+  {id:'sc_punha',mr:'पुन्हा या',sub:"Come again",speak:'पुन्हा या'},
+  {id:'sc_nagar',mr:'मी नगरला राहतो',sub:"I live in Nagar",speak:'मी नगरला राहतो'},
+  {id:'sc_bhook',mr:'मला भूक लागली',sub:"I am hungry",speak:'मला भूक लागली'},
+  {id:'sc_bath',mr:'मला बाथरूमला जायचे',sub:"I need the washroom",speak:'मला बाथरूमला जायचे'},
+  {id:'sc_chashma',mr:'माझा चष्मा द्या',sub:"Give me my glasses",speak:'माझा चष्मा द्या'},
+  {id:'sc_pankha',mr:'पंखा लावा',sub:"Switch on the fan",speak:'पंखा लावा'},
+  {id:'sc_tv',mr:'टीव्ही लावा',sub:"Switch on the TV",speak:'टीव्ही लावा'},
+  {id:'sc_daar',mr:'दार उघडा',sub:"Open the door",speak:'दार उघडा'},
+  {id:'sc_diva',mr:'दिवा बंद करा',sub:"Switch off the light",speak:'दिवा बंद करा'},
+  {id:'sc_madat',mr:'मला मदत करा',sub:"Help me",speak:'मला मदत करा'},
+  {id:'sc_thamba',mr:'थोडे थांबा',sub:"Wait a little",speak:'थोडे थांबा'},
+  {id:'sc_sushma',mr:'सुषमा, चहा दे',sub:"Sushma, give me tea",speak:'सुषमा, चहा दे'},
+  {id:'sc_abhi',mr:'अभिजीत कुठे आहे?',sub:"Where is Abhijeet?",speak:'अभिजीत कुठे आहे?'},
+  {id:'sc_kon',mr:'कोण आले?',sub:"Who has come?",speak:'कोण आले?'},
+  {id:'sc_phone',mr:'फोन लावून द्या',sub:"Make a call for me",speak:'फोन लावून द्या'},
+  {id:'sc_bare',mr:'मला बरं वाटत नाही',sub:"I do not feel well",speak:'मला बरं वाटत नाही'},
+  {id:'sc_doke',mr:'माझे डोके दुखते',sub:"My head hurts",speak:'माझे डोके दुखते'},
+  {id:'sc_thaklo',mr:'मी थकलो',sub:"I am tired",speak:'मी थकलो'},
+  {id:'sc_anand',mr:'मला आनंद झाला',sub:"I am happy",speak:'मला आनंद झाला'},
+  {id:'sc_kalji',mr:'काळजी करू नका',sub:"Do not worry",speak:'काळजी करू नका'},
+  {id:'sc_phirayla',mr:'मला फिरायला जायचे',sub:"I want to go for a walk",speak:'मला फिरायला जायचे'},
+  {id:'sc_deul',mr:'देवळात जाऊ',sub:"Let's go to the temple",speak:'देवळात जाऊ'},
+  {id:'sc_ghari',mr:'घरी चला',sub:"Let's go home",speak:'घरी चला'},
+  {id:'sc_ho',mr:'हो, बरोबर',sub:"Yes, right",speak:'हो, बरोबर'},
+  {id:'sc_nako',mr:'नाही, नको',sub:"No, I do not want it",speak:'नाही, नको'},
+  {id:'sc_mahit',mr:'मला माहीत नाही',sub:"I do not know",speak:'मला माहीत नाही'},
+  {id:'sc_sanga',mr:'पुन्हा सांगा',sub:"Say it again",speak:'पुन्हा सांगा'},
+  {id:'sc_halu',mr:'हळू बोला',sub:"Speak slowly",speak:'हळू बोला'},
+  {id:'sc_vajle',mr:'किती वाजले?',sub:"What time is it?",speak:'किती वाजले?'},
+  {id:'sc_vaar',mr:'आज कोणता वार?',sub:"What day is it today?",speak:'आज कोणता वार?'}
+ ],
+ /* mouth exercises: the picture alternates between shape a and shape b */
+ moves:[
+  {id:'mv_smile',mr:'हसा आणि ओठ गोल करा',sub:'Smile, then pucker',a:'ee',ta:'ई… मोठे हसा',b:'oo',tb:'ऊ… ओठ गोल करून पुढे',ms:1800,speak:'मोठे हसा. मग ओठ गोल करा.'},
+  {id:'mv_open',mr:'तोंड उघडा, बंद करा',sub:'Open wide, close',a:'aa',ta:'आ… तोंड मोठे उघडा',b:'m',tb:'ओठ घट्ट मिटा',ms:1800,speak:'तोंड मोठे उघडा. मग बंद करा.'},
+  {id:'mv_puff',mr:'गाल फुगवा',sub:'Puff the cheeks',a:'puff',ta:'गाल फुगवा, हवा धरा',b:'rest',tb:'हवा सोडा',ms:2600,speak:'गाल फुगवा. हवा धरून ठेवा. मग सोडा.'},
+  {id:'mv_tout',mr:'जीभ बाहेर, आत',sub:'Tongue out, in',a:'tout',ta:'जीभ सरळ बाहेर काढा',b:'a',tb:'जीभ आत घ्या',ms:1800,speak:'जीभ बाहेर काढा. मग आत घ्या.'},
+  {id:'mv_tside',mr:'जीभ दोन्ही बाजूंना',sub:'Tongue side to side',a:'tl',ta:'जीभ एका बाजूला',b:'tr',tb:'जीभ दुसऱ्या बाजूला',ms:1800,speak:'जीभ एका बाजूला न्या. मग दुसऱ्या बाजूला.'},
+  {id:'mv_tup',mr:'जीभ वर, खाली',sub:'Tongue up, down',a:'tup',ta:'जीभ वरच्या ओठाकडे',b:'tout',tb:'जीभ खाली हनुवटीकडे',ms:1800,speak:'जीभ वर न्या. मग खाली न्या.'},
+  {id:'mv_pop',mr:'ओठ दाबा, प म्हणा',sub:'Press lips, pop',a:'m',ta:'ओठ घट्ट दाबा',b:'p',tb:'प! असा आवाज काढा',ms:1500,speak:'ओठ घट्ट दाबा. मग प म्हणा.'},
+  {id:'mv_blow',mr:'फुंकर मारा',sub:'Blow gently',a:'blow',ta:'मेणबत्ती विझवल्यासारखी फुंकर',b:'rest',tb:'विश्रांती',ms:2400,speak:'ओठ गोल करा आणि हळू फुंकर मारा.'}
+ ],
+ /* finish the sentence: ans = id of a card */
+ cloze:[
+  {id:'cl_water',mr:'तहान लागली की मी ___ पितो',ans:'water'},
+  {id:'cl_tea',mr:'सकाळी उठल्यावर मी ___ पितो',ans:'tea'},
+  {id:'cl_food',mr:'भूक लागली की मी ___ करतो',ans:'food'},
+  {id:'cl_glasses',mr:'वाचताना मी ___ लावतो',ans:'glasses'},
+  {id:'cl_watch',mr:'वेळ पाहायला ___ लागते',ans:'ghadyal'},
+  {id:'cl_milk',mr:'गाय आपल्याला ___ देते',ans:'doodh'},
+  {id:'cl_sun',mr:'सकाळी आकाशात ___ उगवतो',ans:'surya'},
+  {id:'cl_moon',mr:'रात्री आकाशात ___ दिसतो',ans:'chandra'},
+  {id:'cl_umb',mr:'पाऊस आला की ___ उघडतो',ans:'chhatri'},
+  {id:'cl_key',mr:'कुलूप उघडायला ___ लागते',ans:'killi'},
+  {id:'cl_tv',mr:'बातम्या पाहायला ___ लावतो',ans:'tv'},
+  {id:'cl_flower',mr:'देवाला आपण ___ वाहतो',ans:'phool'},
+  {id:'cl_bed',mr:'झोपायला ___ लागतो',ans:'palang'},
+  {id:'cl_shoe',mr:'पायात आपण ___ घालतो',ans:'boot'},
+  {id:'cl_soap',mr:'हात धुवायला ___ लागतो',ans:'saban'},
+  {id:'cl_bus',mr:'गावी जायला ___ पकडतो',ans:'bus'},
+  {id:'cl_doc',mr:'आजारी पडलो की ___ बोलावतो',ans:'doctor'},
+  {id:'cl_light',mr:'अंधार पडला की ___ लावतो',ans:'diva'},
+  {id:'cl_phone',mr:'बोलायला ___ लावतो',ans:'phone'},
+  {id:'cl_spoon',mr:'खायला हातात ___ घेतो',ans:'chamcha'}
  ]
 };
 /* Every phrase the app can speak. Used by the app AND by the GitHub build to create audio/<id>.mp3 */
@@ -380,8 +577,9 @@ function allAudio(D,custom){
   const L=[],add=(id,text,g)=>L.push({id:id,text:text,g:g});
   D.quick.forEach(q=>add(q.id,q.speak,'बोला'));
   D.cards.concat(custom||[]).forEach(c=>{if(c.speak)add(c.id,c.speak,'बोला')});
-  D.cards.forEach(c=>{if(c.cue){add('w_'+c.id,c.w||c.mr,'शब्द');add('c_'+c.id,c.cue,'पहिला आवाज')}});
-  D.vowels.concat(D.syll,D.auto,D.melodic,D.scripts).forEach(x=>add(x.id,x.speak,'सराव'));
+  D.cards.forEach(c=>{if(c.cue){const w=c.w||c.mr;add('w_'+c.id,w,'शब्द');add('c_'+c.id,c.cue,'पहिला आवाज');add('q_'+c.id,'हे '+w+' आहे का?','प्रश्न')}});
+  D.vowels.concat(D.syll,D.auto,D.melodic,D.scripts,D.moves).forEach(x=>add(x.id,x.speak,'सराव'));
+  D.cloze.forEach(x=>{const c=D.cards.find(k=>k.id===x.ans),w=c.w||c.mr;add(x.id,x.mr.split('___')[0].trim(),'वाक्य पूर्ण करा');add(x.id+'_f',x.mr.replace('___',w),'वाक्य पूर्ण करा')});
   return L;
 }
 /*DATA_END*/
@@ -484,6 +682,50 @@ async function micOn(){try{const s=await navigator.mediaDevices.getUserMedia({au
 function micLevel(){if(!mic)return 0;mic.an.getByteTimeDomainData(mic.buf);let sum=0;for(let i=0;i<mic.buf.length;i++){const x=(mic.buf[i]-128)/128;sum+=x*x}return Math.sqrt(sum/mic.buf.length)}
 function micOff(){if(mic){try{mic.s.getTracks().forEach(t=>t.stop())}catch(e){}mic=null}}
 
+/* ================= mouth pictures ================= */
+const MOUTHS={
+  rest:{w:58,h:17},m:{w:56,h:15,press:1},
+  a:{w:56,h:34,ow:40,oh:19,teeth:1,tg:'low'},aa:{w:60,h:54,ow:44,oh:39,teeth:1,tg:'low'},
+  ee:{w:80,h:25,ow:65,oh:12,teeth:2},e:{w:70,h:35,ow:54,oh:19,teeth:1,tg:'low'},
+  oo:{w:30,h:30,ow:11,oh:11},o:{w:42,h:46,ow:25,oh:29,tg:'low'},
+  puff:{w:46,h:15,cheeks:1},p:{w:54,h:17,pop:1},blow:{w:28,h:28,ow:9,oh:9,air:1},
+  tout:{w:56,h:38,ow:40,oh:22,teeth:1,tg:'out'},tl:{w:56,h:34,ow:40,oh:18,teeth:1,tg:'left'},tr:{w:56,h:34,ow:40,oh:18,teeth:1,tg:'right'},
+  tup:{w:56,h:36,ow:40,oh:20,tg:'up'},t:{w:58,h:38,ow:42,oh:22,teeth:1,tg:'tip'},k:{w:58,h:42,ow:42,oh:26,teeth:1,tg:'back'}
+};
+let mN=0;
+function mouth(k,size){const c=MOUTHS[k]||MOUTHS.rest,id='mc'+(++mN),x=100,y=84,T='#F08A9B',TL='#D96A80';let g='';
+  g+=`<rect x="6" y="6" width="188" height="160" rx="62" fill="#F9DCC8"/>`;
+  if(c.cheeks)g+=`<circle cx="${x-c.w-26}" cy="${y}" r="34" fill="#F3B9A2"/><circle cx="${x+c.w+26}" cy="${y}" r="34" fill="#F3B9A2"/>`;
+  g+=`<ellipse cx="${x}" cy="${y}" rx="${c.w}" ry="${c.h}" fill="#CF4A63"/>`;
+  if(c.ow){
+    g+=`<clipPath id="${id}"><ellipse cx="${x}" cy="${y}" rx="${c.ow}" ry="${c.oh}"/></clipPath><ellipse cx="${x}" cy="${y}" rx="${c.ow}" ry="${c.oh}" fill="#4A1420"/><g clip-path="url(#${id})">`;
+    if(c.tg==='low')g+=`<ellipse cx="${x}" cy="${y+c.oh}" rx="${c.ow*.72}" ry="${c.oh*.6}" fill="${T}"/>`;
+    if(c.tg==='back')g+=`<ellipse cx="${x}" cy="${y+c.oh*.25}" rx="${c.ow*.8}" ry="${c.oh*.75}" fill="${T}"/><path d="M${x} ${y+c.oh*.1}v-${c.oh*.5}m-7 8l7-8 7 8" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+    if(c.teeth)g+=`<rect x="${x-c.ow}" y="${y-c.oh}" width="${c.ow*2}" height="${Math.min(12,c.oh*.55)}" fill="#fff"/>`;
+    if(c.teeth===2)g+=`<rect x="${x-c.ow}" y="${y+c.oh-Math.min(11,c.oh*.5)}" width="${c.ow*2}" height="12" fill="#fff"/><path d="M${x-c.ow} ${y}h${c.ow*2}" stroke="#D9DEE2" stroke-width="1.5"/>`;
+    if(c.tg==='tip')g+=`<ellipse cx="${x}" cy="${y-c.oh*.05}" rx="${c.ow*.42}" ry="${c.oh*.95}" fill="${T}"/><path d="M${x} ${y+c.oh*.6}v-${c.oh*.9}" stroke="${TL}" stroke-width="2"/>`;
+    g+=`</g>`;
+    if(c.tg==='out')g+=`<ellipse cx="${x}" cy="${y+c.oh+12}" rx="21" ry="30" fill="${T}"/><path d="M${x} ${y+c.oh-8}v40" stroke="${TL}" stroke-width="2"/>`;
+    if(c.tg==='up')g+=`<ellipse cx="${x}" cy="${y-c.oh-6}" rx="19" ry="27" fill="${T}"/><path d="M${x} ${y-c.oh+14}v-36" stroke="${TL}" stroke-width="2"/>`;
+    if(c.tg==='left')g+=`<ellipse cx="${x-c.ow-10}" cy="${y+4}" rx="32" ry="15" fill="${T}"/>`;
+    if(c.tg==='right')g+=`<ellipse cx="${x+c.ow+10}" cy="${y+4}" rx="32" ry="15" fill="${T}"/>`;
+  }else g+=`<path d="M${x-c.w+9} ${y-1}Q${x} ${y+(c.press?1:6)} ${x+c.w-9} ${y-1}" stroke="#8E2F45" stroke-width="${c.press?4:3}" fill="none" stroke-linecap="round"/>`;
+  if(c.pop)g+=`<path d="M${x} ${y-30}v-16M${x-26} ${y-26}l-9-13M${x+26} ${y-26}l9-13" stroke="#F6A609" stroke-width="5" stroke-linecap="round"/>`;
+  if(c.air)g+=`<path d="M${x} ${y+38}v22M${x-18} ${y+35}l-9 19M${x+18} ${y+35}l9 19" stroke="#6FB1D6" stroke-width="5" stroke-linecap="round"/>`;
+  return `<svg class="mouth" viewBox="0 0 200 172" style="width:${size||150}px" aria-hidden="true">${g}</svg>`}
+
+/* front camera as a mirror */
+let cam=null,mirrorOn=false;
+function camOff(){if(cam){try{cam.getTracks().forEach(t=>t.stop())}catch(e){}cam=null}}
+async function camStart(){const el=$('mir');if(!el)return;
+  try{cam=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:480},height:{ideal:480}},audio:false});
+    el.srcObject=cam;el.hidden=false;const p=el.play();if(p&&p.catch)p.catch(()=>{});mirrorOn=true;const b=$('mirB');if(b)b.textContent='🪞 आरसा बंद'}
+  catch(e){mirrorOn=false;toast('कॅमेरा वापरण्याची परवानगी द्या')}}
+function wireMirror(){const b=$('mirB');if(!b)return;
+  b.onclick=()=>{if(cam){camOff();mirrorOn=false;$('mir').hidden=true;b.textContent='🪞 आरसा'}else camStart()};
+  if(mirrorOn)camStart()}
+const mirrorEl=`<video class="mirror" id="mir" playsinline muted hidden></video>`;
+
 /* ================= pictures ================= */
 function pic(c,cls){cls=cls||'';const p=DB.mem['img:'+c.id];
   if(p)return `<div class="pic ${c.cat==='family'?'round':''} ${cls}"><img src="${p}" alt=""></div>`;
@@ -530,14 +772,18 @@ const namePool=()=>cards().filter(c=>c.cue&&(c.icon||DB.mem['img:'+c.id]));
 const drill=(x,hint,extra)=>Object.assign({type:'drill',id:x.id,big:x.mr,sub:x.sub||'',speak:x.speak,hint:hint},extra||{});
 const STEPS=[
  {id:'breath',e:'🌬️',mr:'श्वास',sub:'Breathing',min:'१ मि',build:()=>[{type:'breath',n:5}]},
+ {id:'mouth',e:'👄',mr:'तोंडाचे व्यायाम',sub:'Lip, cheek and tongue exercises',min:'३ मि',build:()=>DATA.moves.map(v=>({type:'mouth',mv:v}))},
  {id:'aum',e:'🕉️',mr:'ॐ सराव',sub:'AUM voice practice',min:'२ मि',build:()=>[{type:'aum',n:5}]},
- {id:'sound',e:'🗣️',mr:'स्वर आणि आवाज',sub:'Sounds',min:'२ मि',build:()=>rot(DATA.vowels,3,dayNo()).map(v=>drill(v,'ऐका. मग लांब, मोठ्याने ३ वेळा म्हणा.'))
-     .concat(rot(DATA.syll,3,dayNo()).map(v=>drill(v,'हळू आणि स्पष्ट, ३ वेळा म्हणा.',{long:1})))},
- {id:'auto',e:'🔢',mr:'सोपे, सवयीचे शब्द',sub:'Automatic speech',min:'२ मि',build:()=>rot(DATA.auto,2,dayNo()).map(a=>drill(a,'आधी सोबत म्हणा. मग एकट्याने.',{long:1,parts:a.parts}))},
- {id:'melody',e:'🎵',mr:'सुरात बोला',sub:'Melodic phrases',min:'३ मि',build:()=>rot(DATA.melodic,3,dayNo()).map(m=>({type:'mel',item:m}))},
- {id:'pick',e:'👂',mr:'ऐका आणि ओळखा',sub:'Listen & find',min:'२ मि',build:()=>{const pool=namePool();return rot(shuffle(pool),5,0).map(t=>({type:'pick',card:t,opts:shuffle([t].concat(shuffle(pool.filter(c=>c.id!==t.id)).slice(0,3)))}))}},
- {id:'name',e:'🖼️',mr:'नाव सांगा',sub:'Naming',min:'३ मि',build:()=>{const w=S.words;return namePool().slice().sort((a,b)=>((w[a.id]||{}).s||0)-((w[b.id]||{}).s||0)||((w[a.id]||{}).t||0)-((w[b.id]||{}).t||0)).slice(0,5).map(c=>({type:'name',card:c}))}},
- {id:'script',e:'💬',mr:'रोजची वाक्ये',sub:'Daily sentences',min:'२ मि',build:()=>rot(DATA.scripts,3,Math.floor(dayNo()/7)).map(s=>drill(s,'या आठवड्याचे वाक्य. ऐका, सोबत म्हणा, मग एकट्याने. ५ वेळा.',{long:1}))}
+ {id:'sound',e:'🗣️',mr:'स्वर आणि अक्षरे',sub:'Sounds, with mouth shapes',min:'३ मि',build:b=>rot(DATA.vowels,4,dayNo()+b).map(v=>drill(v,'ऐका. मग लांब, मोठ्याने ३ वेळा म्हणा.',{m:v.m,tip:v.tip}))
+     .concat(rot(DATA.syll,4,dayNo()+b).map(v=>drill(v,'हळू आणि स्पष्ट, ३ वेळा म्हणा.',{long:1,m:v.m,tip:v.tip})))},
+ {id:'auto',e:'🔢',mr:'सोपे, सवयीचे शब्द',sub:'Automatic speech',min:'२ मि',build:b=>rot(DATA.auto,2,dayNo()+b).map(a=>drill(a,'आधी सोबत म्हणा. मग एकट्याने.',{long:1,parts:a.parts}))},
+ {id:'melody',e:'🎵',mr:'सुरात बोला',sub:'Melodic phrases',min:'३ मि',build:b=>rot(DATA.melodic,4,dayNo()+b).map(m=>({type:'mel',item:m}))},
+ {id:'pick',e:'👂',mr:'ऐका आणि ओळखा',sub:'Listen and find',min:'२ मि',build:()=>{const pool=namePool();return shuffle(pool).slice(0,6).map(t=>({type:'pick',card:t,opts:shuffle([t].concat(shuffle(pool.filter(c=>c.id!==t.id)).slice(0,3)))}))}},
+ {id:'yn',e:'❓',mr:'हो की नाही',sub:'Yes or no questions',min:'२ मि',build:()=>{const pool=namePool();return shuffle(pool).slice(0,6).map(t=>({type:'yn',card:t,ask:Math.random()<.5?t:shuffle(pool.filter(c=>c.id!==t.id))[0]}))}},
+ {id:'name',e:'🖼️',mr:'नाव सांगा',sub:'Naming pictures',min:'३ मि',build:()=>{const w=S.words;return shuffle(namePool()).sort((a,b)=>((w[a.id]||{}).s||0)-((w[b.id]||{}).s||0)||((w[a.id]||{}).t||0)-((w[b.id]||{}).t||0)).slice(0,6).map(c=>({type:'name',card:c}))}},
+ {id:'cloze',e:'✏️',mr:'वाक्य पूर्ण करा',sub:'Finish the sentence',min:'२ मि',build:b=>{const pool=namePool();return rot(DATA.cloze,5,dayNo()+b).map(it=>{const c=cards().find(k=>k.id===it.ans);return {type:'cloze',item:it,card:c,opts:shuffle([c].concat(shuffle(pool.filter(k=>k.id!==c.id)).slice(0,2)))}})}},
+ {id:'script',e:'💬',mr:'रोजची वाक्ये',sub:'Daily sentences',min:'३ मि',build:b=>{const wk=rot(DATA.scripts,3,Math.floor(dayNo()/7)),rest=DATA.scripts.filter(x=>!wk.includes(x));
+     return (b?rot(DATA.scripts,5,dayNo()+b*3):wk.concat(rot(rest,2,dayNo()))).map(s=>drill(s,'ऐका, सोबत म्हणा, मग एकट्याने. ५ वेळा.',{long:1}))}}
 ];
 function streak(){let n=0;const d=new Date();if(!(S.days[dkey(d)]&&Object.keys(S.days[dkey(d)].steps).length))d.setDate(d.getDate()-1);
   while(S.days[dkey(d)]&&Object.keys(S.days[dkey(d)].steps).length){n++;d.setDate(d.getDate()-1)}return n}
@@ -545,26 +791,28 @@ function renderPractice(){
   const done=dayRec().steps,k=STEPS.filter(s=>done[s.id]).length,all=k===STEPS.length,st=streak();
   $('practice').innerHTML=`
    <div class="cap"><div class="hello">${all?'आजचा सराव पूर्ण झाला':'नमस्कार बाबा'}</div>
-     <div class="streak">${st>1?'सलग '+N(st)+' दिवस सराव केला':all?'उद्या पुन्हा भेटू':'आज '+N(STEPS.length)+' टप्पे, सुमारे १५ ते २० मिनिटे'}</div>
+     <div class="streak">${st>1?'सलग '+N(st)+' दिवस सराव केला':all?'उद्या पुन्हा भेटू':'आज '+N(STEPS.length)+' टप्पे, सुमारे २५ मिनिटे'}</div>
      <div class="beads">${STEPS.map(s=>`<i class="${done[s.id]?'on':''}"></i>`).join('')}</div>
      <button class="btn primary big" id="startAll">${all?'पुन्हा सराव करा':k?'पुढचा टप्पा सुरू करा':'आजचा सराव सुरू करा'}</button></div>
    <div class="pad" style="padding-top:14px"><ol class="mala">${STEPS.map((s,i)=>`<li class="${done[s.id]?'done':''}"><button class="step" data-s="${s.id}"><span class="bead">${done[s.id]?'✓':N(i+1)}</span><span class="tx"><b>${s.mr}</b><small>${s.sub}</small></span><span class="min">${s.min}</span><span class="e">${s.e}</span></button></li>`).join('')}</ol>
-   <p class="muted" style="margin-top:14px">थकवा, चक्कर किंवा घाम आल्यास लगेच थांबा. जेवणानंतर, ताजेतवाने असताना सराव करा.</p></div>`;
+   <button class="btn big" id="lib" style="margin-top:16px">सर्व शब्द आणि वाक्ये ऐका</button>
+   <p class="muted" style="margin-top:14px">सगळे एकदम करायची गरज नाही. सकाळी काही टप्पे, संध्याकाळी उरलेले केले तरी चालेल. थकवा, चक्कर किंवा घाम आल्यास लगेच थांबा.</p></div>`;
 }
 $('practice').addEventListener('click',e=>{
+  if(e.target.closest('#lib'))return openLib();
   if(e.target.closest('#startAll')){const done=dayRec().steps;const nx=STEPS.find(s=>!done[s.id])||STEPS[0];return startStep(nx.id,true)}
   const b=e.target.closest('[data-s]');if(b)startStep(b.dataset.s,false)});
 
 /* ---- stage runner ---- */
 let run=null,cleanups=[];
 const T=(fn,ms)=>{const t=setTimeout(fn,ms);cleanups.push(()=>clearTimeout(t));return t};
-function clean(){cleanups.forEach(f=>{try{f()}catch(e){}});cleanups=[];droneOff();micOff();if(rec){try{rec.stop()}catch(e){}}stopAll()}
+function clean(){cleanups.forEach(f=>{try{f()}catch(e){}});cleanups=[];droneOff();micOff();camOff();if(rec){try{rec.stop()}catch(e){}}stopAll()}
 function openStage(title,sub){$('stage').hidden=false;$('stT').textContent=title;$('stS').textContent=sub||'';$('stBody').className='st-body';$('stBody').scrollTop=0}
 function closeStage(){clean();run=null;$('stage').hidden=true;go(view)}
-function startStep(id,session){const st=STEPS.find(s=>s.id===id);const slides=st.build();
+function startStep(id,session,batch){batch=batch||0;const st=STEPS.find(s=>s.id===id);const slides=st.build(batch);
   if(!slides.length){toast('या सरावासाठी चित्रे नाहीत');return}
   try{ac()}catch(e){}
-  run={st:st,slides:slides,i:0,session:session,t0:Date.now()};showSlide()}
+  run={st:st,slides:slides,i:0,session:session,batch:batch,t0:Date.now()};showSlide()}
 function showSlide(){clean();const sl=run.slides[run.i];openStage(run.st.mr,run.st.sub);
   $('stBarW').hidden=false;$('stBar').style.width=(run.i/run.slides.length*100)+'%';
   $('stC').textContent=N(run.i+1)+'/'+N(run.slides.length);
@@ -575,7 +823,8 @@ function finishStep(){clean();const d=dayRec();d.steps[run.st.id]=1;d.sec=(d.sec
   const nx=run.session&&STEPS.find(s=>!d.steps[s.id]);const all=STEPS.every(s=>d.steps[s.id]);
   $('stBar').style.width='100%';$('stC').textContent='';
   $('stBody').innerHTML=`<div class="done-e">${all?'🏆':'👏'}</div><div class="bigtxt long">${all?'आजचा सराव पूर्ण!':'शाब्बास!'}</div>
-    <div class="subt">${all?'खूप छान मेहनत केली. उद्या पुन्हा भेटू.':run.st.mr+' पूर्ण झाले'}</div>`;
+    <div class="subt">${all?'खूप छान मेहनत केली. उद्या पुन्हा भेटू.':run.st.mr+' पूर्ण झाले'}</div>${run.slides.length>1?'<button class="btn" id="moreB" style="margin-top:10px">याचाच अजून सराव करा</button>':''}`;
+  const cur0=run;if($('moreB'))$('moreB').onclick=()=>startStep(cur0.st.id,cur0.session,cur0.batch+1);
   $('stNext').hidden=false;$('stNext').textContent=nx?('पुढचा टप्पा: '+nx.mr):'पूर्ण झाले';
   $('stNext').onclick=()=>{if(nx)startStep(nx.id,true);else closeStage()}}
 
@@ -593,7 +842,7 @@ const RENDER={
 
  aum(sl,body){
   body.innerHTML=`<div class="aum-l"><span data-k="a">अ</span><span data-k="u">उ</span><span data-k="m">म्</span></div>
-    <div class="orbwrap"><div class="orb gold" id="orb">ॐ</div></div>
+    <div class="mrow"><div class="orbwrap s"><div class="orb gold" id="orb">ॐ</div></div><div id="aM">${mouth('rest',120)}</div></div>
     <div class="cue" id="cue">ताठ बसा. सोबत सगळ्यांनी म्हणा.</div>
     <div class="meter" id="meter" hidden><i id="lvl"></i></div><div class="count" id="cnt"></div>
     <div class="row"><button class="btn primary" id="aGo">▶ सुरू करा</button><button class="btn" id="aMic">🎙 आवाज मोजा</button></div>
@@ -603,7 +852,7 @@ const RENDER={
     if(sounding&&l>.025){voiced+=.1;$('cnt').textContent=N(round)+'/'+N(sl.n)+' · आवाज '+N(voiced.toFixed(1))+' से'}},100);
   cleanups.push(()=>clearInterval(iv));
   const ph=(k,txt,ms,sc)=>{body.querySelectorAll('.aum-l span').forEach(s=>s.classList.toggle('on',s.dataset.k===k));
-    $('cue').textContent=txt;orb.style.transition='transform '+ms+'ms linear';orb.style.transform='scale('+sc+')'};
+    $('aM').innerHTML=mouth({a:'aa',u:'oo',m:'m'}[k]||'rest',120);$('cue').textContent=txt;orb.style.transition='transform '+ms+'ms linear';orb.style.transform='scale('+sc+')'};
   const cyc=()=>{if(round>=sl.n){ph('','ॐ शांती. खूप छान! 🙏',500,.7);$('aGo').hidden=false;$('aGo').textContent='पुन्हा करा';round=0;return}
     round++;voiced=0;sounding=false;$('cnt').textContent=N(round)+' / '+N(sl.n);
     ph('','नाकाने खोल श्वास घ्या',3000,1);
@@ -617,11 +866,46 @@ const RENDER={
     if(await micOn()){$('meter').hidden=false;$('aMic').textContent='🎙 मोजणे बंद'}else toast('माइक वापरण्याची परवानगी द्या')}},
 
  drill(sl,body){
-  body.innerHTML=`<div class="bigtxt ${sl.long?'long':''}" style="margin-top:${sl.parts?0:24}px">${sl.big}</div><div class="subt">${sl.sub}</div>
+  body.innerHTML=`<div class="bigtxt ${sl.long?'long':''}" style="margin-top:${sl.parts||sl.m?0:24}px">${sl.big}</div>${sl.sub?`<div class="subt">${sl.sub}</div>`:''}
+    ${sl.m?`<div class="mrow">${sl.m.map(k=>mouth(k,sl.m.length>2?92:118)).join('<b class="then">›</b>')}${mirrorEl}</div><div class="tip">${sl.tip}</div>`:''}
     ${sl.parts?`<div class="chips">${sl.parts.map(p=>`<span class="chip s">${p}</span>`).join('')}</div>`:''}
     <div class="hint">${sl.hint}</div>
-    <div class="row"><button class="btn primary" id="dPlay">🔊 ऐका</button>${selfBtn}</div>`;
-  $('dPlay').onclick=()=>say(sl.id,sl.speak);wireSelf();T(()=>say(sl.id,sl.speak),450)},
+    <div class="row"><button class="btn primary" id="dPlay">🔊 ऐका</button>${selfBtn}${sl.m?'<button class="btn" id="mirB">🪞 आरसा</button>':''}</div>`;
+  $('dPlay').onclick=()=>say(sl.id,sl.speak);wireSelf();wireMirror();T(()=>say(sl.id,sl.speak),450)},
+
+ mouth(sl,body){const v=sl.mv;
+  body.innerHTML=`<div class="bigtxt long">${v.mr}</div>
+    <div class="mrow"><div id="mBox">${mouth(v.a,172)}</div>${mirrorEl}</div>
+    <div class="cue" id="cue">${v.ta}</div><div class="dots">${'<i></i>'.repeat(5)}</div>
+    <div class="row"><button class="btn primary" id="mvGo">सुरू करा</button><button class="btn" id="mirB">🪞 आरसा</button></div>
+    <div class="hint">चित्राप्रमाणे ५ वेळा करा. आरशात पाहिले तर सोपे जाते.</div>`;
+  const dots=[...body.querySelectorAll('.dots i')];let n=0;
+  const set=(k,t)=>{$('mBox').innerHTML=mouth(k,172);$('cue').textContent=t};
+  const cyc=()=>{if(n>=5){set('rest','छान! 👍');chime();$('mvGo').hidden=false;$('mvGo').textContent='पुन्हा करा';n=0;return}
+    set(v.a,v.ta);beep(523,.15,.15);T(()=>{set(v.b,v.tb);T(()=>{dots[n].classList.add('on');n++;cyc()},v.ms)},v.ms)};
+  $('mvGo').onclick=()=>{stopAll();$('mvGo').hidden=true;dots.forEach(d=>d.classList.remove('on'));cyc()};
+  wireMirror();T(()=>say(v.id,v.speak),450)},
+
+ yn(sl,body){const c=sl.card,q=sl.ask,qw=q.w||q.mr,ans=c.id===q.id,txt='हे '+qw+' आहे का?';
+  body.innerHTML=`<div class="${c.cat}">${pic(c,'xl')}</div><div class="bigtxt long">${txt}</div>
+    <button class="btn" id="yPlay">🔊 पुन्हा ऐका</button>
+    <div class="yn"><button class="y" data-a="1">हो</button><button class="n" data-a="0">नाही</button></div>`;
+  const play=()=>say('q_'+q.id,txt);$('yPlay').onclick=play;$('stNext').hidden=true;T(play,450);
+  body.querySelector('.yn').onclick=e=>{const b=e.target.closest('[data-a]');if(!b)return;
+    if((b.dataset.a==='1')===ans){b.classList.add('ok');beep(784,.3,.25);T(()=>beep(1047,.4,.25),140);T(nextSlide,1200)}
+    else{b.classList.remove('bad');void b.offsetWidth;b.classList.add('bad');beep(180,.25,.2);T(play,600)}}},
+
+ cloze(sl,body){const it=sl.item,c=sl.card,w=c.w||c.mr,parts=it.mr.split('___'),stem=parts[0].trim(),full=it.mr.replace('___',w);
+  body.innerHTML=`<div class="bigtxt long">${parts[0]}<span class="blank" id="bl">?</span>${parts[1]||''}</div>
+    <button class="btn" id="cPlay">🔊 ऐका</button>
+    <div class="opts o3">${sl.opts.map(o=>`<button class="opt ${o.cat}" data-o="${o.id}">${pic(o)}</button>`).join('')}</div>
+    <div class="hint" id="cH">रिकाम्या जागी काय येईल? चित्र निवडा.</div>`;
+  let solved=false;const play=()=>solved?say(it.id+'_f',full):say(it.id,stem);
+  $('cPlay').onclick=play;$('stNext').hidden=true;T(play,450);
+  body.querySelector('.opts').onclick=e=>{const b=e.target.closest('[data-o]');if(!b||solved)return;
+    if(b.dataset.o===c.id){solved=true;b.classList.add('ok');$('bl').textContent=w;$('bl').classList.add('fill');beep(784,.3,.25);
+      $('cH').textContent='आता पूर्ण वाक्य मोठ्याने म्हणा.';$('stNext').hidden=false;T(play,500)}
+    else{b.classList.remove('bad');void b.offsetWidth;b.classList.add('bad');beep(180,.25,.2)}}},
 
  mel(sl,body){const m=sl.item,HI=247,LO=196;
   body.innerHTML=`<div class="pic sm" style="--t:var(--brand-t)">${m.icon}</div>
@@ -691,8 +975,15 @@ function renderMore(){
 $('more').addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b)return;
   if(b.dataset.a==='slow'){S.slow=!S.slow;save();renderMore()}else openStudio(b.dataset.a)});
 
+let mode='studio',libTab='w';
+function openLib(){mode='lib';clean();run=null;openStage('शब्द आणि वाक्ये','टॅप करा, ऐका, म्हणा');
+  $('stBarW').hidden=true;$('stC').textContent='';$('stNext').hidden=true;$('stBody').className='st-body left';renderLib()}
+function renderLib(){const pool=namePool();
+  $('stBody').innerHTML=`<div class="seg"><button data-lt="w" class="${libTab==='w'?'on':''}">शब्द (${N(pool.length)})</button><button data-lt="s" class="${libTab==='s'?'on':''}">वाक्ये (${N(DATA.scripts.length)})</button></div>`+
+   (libTab==='w'?`<div class="pgrid">${pool.map(c=>`<button class="pcell ${c.cat}" data-w="${c.id}">${pic(c)}${c.w||c.mr}</button>`).join('')}</div>`
+     :DATA.scripts.map(x=>`<button class="vrow lrow" data-sc="${x.id}"><span>${x.mr}<small>${x.sub}</small></span><i class="ib">▶</i></button>`).join(''))}
 let studioTab='voice',target=null;
-function openStudio(tab){studioTab=tab||studioTab;clean();run=null;openStage('आवाज आणि चित्रे','घरच्यांनी एकदा सेट करा');
+function openStudio(tab){mode='studio';studioTab=tab||studioTab;clean();run=null;openStage('आवाज आणि चित्रे','घरच्यांनी एकदा सेट करा');
   $('stBarW').hidden=true;$('stC').textContent='';$('stNext').hidden=true;$('stBody').className='st-body left';renderStudio()}
 function renderStudio(){
   const seg=`<div class="seg"><button data-t="voice" class="${studioTab==='voice'?'on':''}">🎙 आवाज</button><button data-t="photo" class="${studioTab==='photo'?'on':''}">📷 फोटो / कार्ड</button></div>`;
@@ -712,6 +1003,11 @@ function renderStudio(){
 }
 $('stBody').addEventListener('click',e=>{
   if(run)return;const q=s=>e.target.closest(s);let b;
+  if(mode==='lib'){
+    if(b=q('[data-lt]')){libTab=b.dataset.lt;$('stBody').scrollTop=0;return renderLib()}
+    if(b=q('[data-w]')){const c=cards().find(k=>k.id===b.dataset.w);return say('w_'+c.id,c.w||c.mr)}
+    if(b=q('[data-sc]')){const x=DATA.scripts.find(k=>k.id===b.dataset.sc);return say(x.id,x.speak)}
+    return}
   if(b=q('[data-t]')){studioTab=b.dataset.t;$('stBody').scrollTop=0;return renderStudio()}
   if(b=q('[data-p]')){const a=allAudio(DATA,S.custom).find(x=>x.id===b.dataset.p);return say(a.id,a.text)}
   if(b=q('[data-r]')){const id=b.dataset.r;return recToggle(b,url=>{DB.set('voice:'+id,url);delete noClip[id];renderStudio();playSrc(url,1)},9000)}
