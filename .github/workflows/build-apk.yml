@@ -63,6 +63,14 @@ jobs:
           done
           ls -la "$OUT"
 
+      - name: Reuse voice clips from earlier builds
+        uses: actions/cache@v4
+        with:
+          path: www/audio
+          key: baba-audio-${{ env.TTS_VOICE }}-${{ github.run_id }}
+          restore-keys: |
+            baba-audio-${{ env.TTS_VOICE }}-
+
       - name: Generate natural Marathi voice clips (audio/<id>.mp3)
         continue-on-error: true
         run: |
@@ -77,19 +85,21 @@ jobs:
           console.log(list.length + ' phrases');
           EOF
           node /tmp/extract.js
-          ok=0; fail=0
-          while IFS=$'\t' read -r id text; do
-            out="www/audio/$id.mp3"
-            # never overwrite a real recording that is already in the repo
-            if [ -s "$out" ]; then continue; fi
-            for try in 1 2 3; do
-              if edge-tts --voice "$TTS_VOICE" --rate="$TTS_RATE" --text "$text" --write-media "$out" >/dev/null 2>&1 && [ -s "$out" ]; then break; fi
-              rm -f "$out"; sleep 2
-            done
-            if [ -s "$out" ]; then ok=$((ok+1)); else fail=$((fail+1)); echo "failed: $id"; fi
-          done < /tmp/phrases.tsv
-          echo "Voice clips created: $ok, failed: $fail (failed ones fall back to the phone voice)"
-          ls www/audio | wc -l
+          cat > /tmp/gen.sh <<'EOF'
+          #!/bin/bash
+          id="${1%%$'\t'*}"; text="${1#*$'\t'}"; out="www/audio/$id.mp3"
+          # never overwrite a real recording or a clip that already exists
+          [ -s "$out" ] && exit 0
+          for try in 1 2 3; do
+            edge-tts --voice "$TTS_VOICE" --rate="$TTS_RATE" --text "$text" --write-media "$out" >/dev/null 2>&1 && [ -s "$out" ] && exit 0
+            rm -f "$out"; sleep 2
+          done
+          echo "failed: $id"
+          exit 0
+          EOF
+          chmod +x /tmp/gen.sh
+          xargs -d '\n' -P 6 -n 1 /tmp/gen.sh < /tmp/phrases.tsv || true
+          echo "Voice clips in app: $(ls www/audio | wc -l) of $(wc -l < /tmp/phrases.tsv) (missing ones fall back to the phone voice)"
 
       - name: Initialize Capacitor 6 and TTS Plugin v5
         run: |
@@ -102,12 +112,18 @@ jobs:
       - name: Add microphone + speech permissions to the Android manifest
         run: |
           M=android/app/src/main/AndroidManifest.xml
-          # microphone: needed for "record family voice" and the AUM voice meter
+          # microphone: record family voice + AUM voice meter; camera: the practice mirror
           # queries: needed by the text-to-speech plugin on Android 11+
-          sed -i 's#</manifest>#    <uses-permission android:name="android.permission.RECORD_AUDIO" />\n    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />\n    <queries>\n        <intent>\n            <action android:name="android.intent.action.TTS_SERVICE" />\n        </intent>\n    </queries>\n</manifest>#' "$M"
+          sed -i 's#</manifest>#    <uses-permission android:name="android.permission.RECORD_AUDIO" />\n    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />\n    <uses-permission android:name="android.permission.CAMERA" />\n    <uses-feature android:name="android.hardware.camera" android:required="false" />\n    <queries>\n        <intent>\n            <action android:name="android.intent.action.TTS_SERVICE" />\n        </intent>\n    </queries>\n</manifest>#' "$M"
           # keep the app upright
           sed -i '0,/android:name=".MainActivity"/s//android:name=".MainActivity" android:screenOrientation="portrait"/' "$M"
           cat "$M"
+
+      - name: Keep the same signing key between builds
+        uses: actions/cache@v4
+        with:
+          path: ~/.android/debug.keystore
+          key: baba-debug-keystore-v1
 
       - name: Build Debug APK Using Pre-Installed Gradle
         working-directory: ./android
@@ -119,3 +135,4 @@ jobs:
         with:
           name: Baba-Sanvad-Android-APK
           path: android/app/build/outputs/apk/debug/app-debug.apk
+
