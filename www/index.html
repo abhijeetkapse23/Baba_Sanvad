@@ -232,6 +232,15 @@ button{font-family:var(--ui);color:inherit;cursor:pointer}
 </style>
 </head>
 <body>
+<script>
+/* shows any script error on screen, so a broken or cut-off file is easy to spot */
+function showErr(t){var d=document.getElementById('err');if(!d){d=document.createElement('div');d.id='err';
+  d.style.cssText='position:fixed;left:8px;right:8px;top:40%;z-index:99;background:#C2182B;color:#fff;padding:14px;border-radius:14px;font:600 14px/1.4 sans-serif;word-break:break-word';
+  (document.body||document.documentElement).appendChild(d)}d.textContent='Error: '+t}
+window.onerror=function(m,src,l,c){showErr(m+' (line '+l+':'+c+')')};
+window.addEventListener('unhandledrejection',function(e){showErr(String(e.reason&&e.reason.message||e.reason))});
+window.addEventListener('load',function(){if(!window.__booted)showErr('App script did not finish loading. The index.html file in GitHub is probably cut off or damaged. Upload the file again instead of pasting it.')});
+</script>
 <div class="app">
   <header class="top">
     <div class="title">बाबा संवाद<small id="tag"></small></div>
@@ -1207,4 +1216,135 @@ const RENDER={
     if(b.dataset.o===c.id){score(first);b.classList.add('ok');$('pW').style.visibility='visible';beep(784,.3,.25);T(()=>beep(1047,.4,.25),140);if(sl.read)T(()=>say('w_'+c.id,w),400);T(nextSlide,sl.read||sl.odd?1900:1300)}
     else{first=false;b.classList.remove('bad');void b.offsetWidth;b.classList.add('bad');beep(180,.25,.2);if(!sl.read)T(play,500)}}},
 
- choice(s
+ choice(sl,body){let first=true,done=false;
+  body.innerHTML=`${sl.pic||''}<div class="bigtxt long">${sl.prompt}</div>${sl.sub?`<div class="subt">${sl.sub}</div>`:''}
+    ${sl.audio?'<button class="btn" id="cPlay">🔊 ऐका</button>':''}
+    <div class="tiles">${sl.opts.map((o,i)=>`<button class="tile" data-i="${i}">${o.t}</button>`).join('')}</div><div class="hint" id="cH">${sl.hint||'योग्य उत्तर निवडा'}</div>`;
+  const play=()=>sl.audio&&say(sl.audio.id,sl.audio.text);if(sl.audio){$('cPlay').onclick=play;T(play,450)}$('stNext').hidden=true;
+  body.querySelector('.tiles').onclick=e=>{const b=e.target.closest('[data-i]');if(!b)return;const o=sl.opts[+b.dataset.i];
+    if(done&&!sl.any)return;
+    if(sl.any||o.ok){if(!done&&!sl.any)score(first);done=true;body.querySelectorAll('.tile').forEach(t=>t.classList.remove('ok'));b.classList.add('ok');beep(784,.25,.2);
+      if(o.say)T(()=>say(o.say.id,o.say.text),350);
+      if(sl.auto)T(nextSlide,1100);else{$('cH').textContent=sl.after||'आता तुम्ही मोठ्याने म्हणा.';$('stNext').hidden=false}}
+    else{first=false;b.classList.remove('bad');void b.offsetWidth;b.classList.add('bad');beep(180,.25,.2)}}},
+
+ open(sl,body){const c=sl.card,w=c.w||c.mr;
+  body.innerHTML=`<div class="${c.cat}">${pic(c,'xl')}</div><div class="bigtxt long">${w}</div>
+    <ul class="qs">${sl.qs.map(q=>`<li>${q}</li>`).join('')}</ul><div class="row">${selfBtn}</div>
+    <div class="hint">प्रत्येक प्रश्नाचे उत्तर एक-दोन शब्दांत सांगा.</div>`;
+  wireSelf();T(()=>say('w_'+c.id,w),450)},
+
+ build(sl,body){const words=sl.words,full=words.join(' ');let order=shuffle(words.map((w,i)=>i)),got=0,first=true;
+  while(order.every((v,i)=>v===i))order=shuffle(order);
+  body.innerHTML=`<div class="cue">शब्द क्रमाने लावा</div><div class="slots" id="slots"></div>
+    <div class="tiles h" id="pool">${order.map(i=>`<button class="tile" data-i="${i}">${words[i]}</button>`).join('')}</div>
+    <div class="row"><button class="btn" id="bPlay">🔊 वाक्य ऐका</button></div><div class="hint" id="cH">पहिला शब्द कोणता?</div>`;
+  $('stNext').hidden=true;$('bPlay').onclick=()=>say(sl.id,full);
+  $('pool').onclick=e=>{const b=e.target.closest('[data-i]');if(!b)return;
+    if(+b.dataset.i===got){got++;b.style.visibility='hidden';$('slots').innerHTML=words.slice(0,got).map(w=>`<span class="chip s on">${w}</span>`).join('');beep(660,.15,.2);
+      if(got===words.length){score(first);$('cH').textContent='आता पूर्ण वाक्य मोठ्याने म्हणा.';$('stNext').hidden=false;T(()=>say(sl.id,full),350)}else $('cH').textContent='पुढचा शब्द कोणता?'}
+    else{first=false;b.classList.remove('bad');void b.offsetWidth;b.classList.add('bad');beep(180,.25,.2)}}},
+
+ name(sl,body){const c=sl.card,w=c.w||c.mr;
+  body.innerHTML=`<div class="${c.cat}">${pic(c,'xl')}</div><div class="bigtxt long" id="nW">${c.cat==='family'?'हे कोण आहे?':'हे काय आहे?'}</div>
+    <div class="row"><button class="btn" id="n1">💡 पहिला आवाज</button><button class="btn" id="n2">🔊 पूर्ण शब्द</button></div>
+    <div class="row">${selfBtn}</div>
+    <div class="rate"><button class="r3" data-r="1"><span class="e">👍</span>स्वतः बोलले</button><button class="r2" data-r="0"><span class="e">🤝</span>मदतीने</button><button class="r1" data-r="-1"><span class="e">⏭️</span>आज नाही</button></div>`;
+  $('stNext').hidden=true;wireSelf();
+  $('n1').onclick=()=>{$('nW').textContent=c.cue+' …';say('c_'+c.id,c.cue)};
+  $('n2').onclick=()=>{$('nW').textContent=w;say('w_'+c.id,w)};
+  body.querySelector('.rate').onclick=e=>{const b=e.target.closest('[data-r]');if(!b)return;
+    const r=S.words[c.id]||(S.words[c.id]={s:0,t:0});r.s=Math.max(0,Math.min(3,r.s+ +b.dataset.r));r.t=Date.now();save();
+    if(b.dataset.r==='1')beep(880,.25,.2);nextSlide()}}
+};
+
+/* ================= MORE (progress, settings, studio) ================= */
+function renderMore(){
+  const d=new Date(),cells=[];d.setDate(d.getDate()-13);
+  for(let i=0;i<14;i++){const r=S.days[dkey(d)],n=r?Object.keys(r.steps).length:0;cells.push(`<div class="${r&&r.full?'f':n?'p':''}">${N(d.getDate())}</div>`);d.setDate(d.getDate()+1)}
+  const mins=Math.round(Object.values(S.days).reduce((a,r)=>a+(r.sec||0),0)/60);
+  let aok=0,an=0;const d7=new Date();for(let i=0;i<7;i++){const r=S.days[dkey(d7)];if(r){aok+=r.ok||0;an+=r.n||0}d7.setDate(d7.getDate()-1)}
+  const acc=an?N(Math.round(aok/an*100))+'%':'–';
+  const nVoice=Object.keys(DB.mem).filter(k=>k.startsWith('voice:')).length,nImg=Object.keys(DB.mem).filter(k=>k.startsWith('img:')).length;
+  $('more').innerHTML=`
+   <div class="cap"><div class="nums"><div><b>${N(streak())}</b><small>सलग दिवस</small></div><div><b>${N(mins)}</b><small>मिनिटे सराव</small></div><div><b>${acc}</b><small>बरोबर उत्तरे, ७ दिवस</small></div></div></div>
+   <div class="pad">
+   <h2 class="h2">मागील १४ दिवस</h2><div class="cal">${cells.join('')}</div>
+   <h2 class="h2">आवाज आणि चित्रे</h2>
+   <div class="list">
+   <button class="item" data-a="voice"><span class="e">🎙</span><span>घरच्यांचा आवाज रेकॉर्ड करा<small>${N(nVoice)} रेकॉर्ड झाले. ओळखीचा आवाज सर्वात चांगला.</small></span>›</button>
+   <button class="item" data-a="photo"><span class="e">📷</span><span>खरे फोटो आणि नवीन कार्ड<small>${N(nImg)} फोटो लावले. स्वतःचा ग्लास, स्वतःचे घर, कुटुंब.</small></span>›</button>
+   <button class="item" data-a="slow"><span class="e">🐢</span><span>हळू बोलणे<small>आवाज थोडा सावकाश ऐकू येईल</small></span><i class="sw ${S.slow?'on':''}"></i></button>
+   </div>
+   <h2 class="h2">घरच्यांसाठी</h2>
+   <ul class="tips">
+     <li>एका वेळी एकच छोटे वाक्य. हळू, नेहमीच्या आवाजात बोला.</li>
+     <li>उत्तरासाठी १० सेकंद शांत थांबा. त्यांचे वाक्य तुम्ही पूर्ण करू नका.</li>
+     <li>चुका सुधारत बसू नका. प्रयत्नाचे कौतुक करा.</li>
+     <li>रोज १५ ते २० मिनिटे, शक्य असल्यास दिवसातून दोनदा. टीव्ही बंद ठेवा.</li>
+     <li>जेवणानंतर सराव करा. घाम, थरथर, चक्कर वाटली तर थांबा व साखर तपासा.</li>
+     <li>अचानक बोलणे बिघडले, चेहरा वाकडा झाला, हात-पाय लुळे पडले किंवा झटका आला तर ताबडतोब रुग्णालयात न्या.</li>
+   </ul><p class="muted">हे ॲप स्पीच थेरपिस्ट व डॉक्टरांच्या उपचाराला पूरक आहे, पर्याय नाही.</p></div>`;
+}
+$('more').addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b)return;
+  if(b.dataset.a==='slow'){S.slow=!S.slow;save();renderMore()}else openStudio(b.dataset.a)});
+
+let mode='studio',libTab='w';
+function openLib(){mode='lib';clean();run=null;openStage('शब्द आणि वाक्ये','टॅप करा, ऐका, म्हणा');
+  $('stBarW').hidden=true;$('stC').textContent='';$('stNext').hidden=true;$('stBody').className='st-body left';renderLib()}
+function renderLib(){const pool=namePool();
+  $('stBody').innerHTML=`<div class="seg"><button data-lt="w" class="${libTab==='w'?'on':''}">शब्द (${N(pool.length)})</button><button data-lt="s" class="${libTab==='s'?'on':''}">वाक्ये (${N(DATA.scripts.length)})</button></div>`+
+   (libTab==='w'?`<div class="pgrid">${pool.map(c=>`<button class="pcell ${c.cat}" data-w="${c.id}">${pic(c)}${c.w||c.mr}</button>`).join('')}</div>`
+     :DATA.scripts.map(x=>`<button class="vrow lrow" data-sc="${x.id}"><span>${x.mr}<small>${x.sub}</small></span><i class="ib">▶</i></button>`).join(''))}
+let studioTab='voice',target=null;
+function openStudio(tab){mode='studio';studioTab=tab||studioTab;clean();run=null;openStage('आवाज आणि चित्रे','घरच्यांनी एकदा सेट करा');
+  $('stBarW').hidden=true;$('stC').textContent='';$('stNext').hidden=true;$('stBody').className='st-body left';renderStudio()}
+function renderStudio(){
+  const seg=`<div class="seg"><button data-t="voice" class="${studioTab==='voice'?'on':''}">🎙 आवाज</button><button data-t="photo" class="${studioTab==='photo'?'on':''}">📷 फोटो / कार्ड</button></div>`;
+  let h='';
+  if(studioTab==='voice'){let g='';
+    h=`<p class="muted">🎙 दाबा, वाक्य स्पष्ट बोला, पुन्हा दाबा. रेकॉर्ड केलेला आवाजच ॲपमध्ये वाजेल.</p>`+allAudio(DATA,S.custom).map(a=>{
+      const has=!!DB.mem['voice:'+a.id];const head=a.g!==g?`<div class="h2">${g=a.g}</div>`:'';
+      return head+`<div class="vrow"><span>${a.text}</span><button class="ib" data-p="${a.id}">▶</button><button class="ib ${has?'has':''}" data-r="${a.id}">🎙</button>${has?`<button class="ib" data-x="${a.id}">✕</button>`:''}</div>`}).join('');
+  }else{
+    h=`<div class="form"><b>नवीन कार्ड जोडा</b><input id="fN" placeholder="नाव (उदा. पेपर)" maxlength="18"><input id="fS" placeholder="वाक्य (उदा. मला पेपर द्या)" maxlength="60">
+       <div style="display:flex;gap:8px"><select id="fC">${DATA.cats.slice(1).map(c=>`<option value="${c.id}">${c.e} ${c.l}</option>`).join('')}</select><input id="fE" placeholder="चिन्ह 📰" maxlength="4" style="width:110px"></div>
+       <button class="btn primary" id="fAdd">कार्ड जोडा</button></div>
+     <p class="muted" style="margin:12px 2px">कार्डावर टॅप करून खरा फोटो लावा. ओळखीच्या वस्तूंचे फोटो जास्त उपयोगी पडतात.</p>
+     <div class="pgrid">${cards().map(c=>`<button class="pcell ${c.cat}" data-ph="${c.id}">${pic(c)}${c.mr}${String(c.id).startsWith('x')?`<span class="del" data-del="${c.id}">✕</span>`:DB.mem['img:'+c.id]?`<span class="del" data-rm="${c.id}">✕</span>`:''}</button>`).join('')}</div>`;
+  }
+  const b=$('stBody'),y=b.scrollTop;b.innerHTML=seg+h;b.scrollTop=y;
+}
+$('stBody').addEventListener('click',e=>{
+  if(run)return;const q=s=>e.target.closest(s);let b;
+  if(mode==='lib'){
+    if(b=q('[data-lt]')){libTab=b.dataset.lt;$('stBody').scrollTop=0;return renderLib()}
+    if(b=q('[data-w]')){const c=cards().find(k=>k.id===b.dataset.w);return say('w_'+c.id,c.w||c.mr)}
+    if(b=q('[data-sc]')){const x=DATA.scripts.find(k=>k.id===b.dataset.sc);return say(x.id,x.speak)}
+    return}
+  if(b=q('[data-t]')){studioTab=b.dataset.t;$('stBody').scrollTop=0;return renderStudio()}
+  if(b=q('[data-p]')){const a=allAudio(DATA,S.custom).find(x=>x.id===b.dataset.p);return say(a.id,a.text)}
+  if(b=q('[data-r]')){const id=b.dataset.r;return recToggle(b,url=>{DB.set('voice:'+id,url);delete noClip[id];renderStudio();playSrc(url,1)},9000)}
+  if(b=q('[data-x]')){DB.del('voice:'+b.dataset.x);return renderStudio()}
+  if(b=q('[data-del]')){const id=b.dataset.del;S.custom=S.custom.filter(c=>c.id!==id);DB.del('img:'+id);DB.del('voice:'+id);save();return renderStudio()}
+  if(b=q('[data-rm]')){DB.del('img:'+b.dataset.rm);return renderStudio()}
+  if(b=q('[data-ph]')){target=b.dataset.ph;const f=$('pick');f.value='';return f.click()}
+  if(q('#fAdd')){const n=$('fN').value.trim(),s=$('fS').value.trim();if(!n){toast('नाव लिहा');return}
+    S.custom.push({id:'x'+Date.now(),cat:$('fC').value,mr:n,sub:'',speak:s||n,icon:$('fE').value.trim()||'💬'});save();toast('कार्ड जोडले ✓');renderStudio()}
+});
+$('pick').addEventListener('change',ev=>{
+  const file=ev.target.files&&ev.target.files[0];if(!file||!target)return;const id=target;
+  const r=new FileReader();
+  r.onload=e=>{const im=new Image();im.onload=()=>{
+    const c=document.createElement('canvas');c.width=c.height=400;const s=Math.min(im.width,im.height);
+    c.getContext('2d').drawImage(im,(im.width-s)/2,(im.height-s)/2,s,s,0,0,400,400);
+    DB.set('img:'+id,c.toDataURL('image/jpeg',.85));if(!$('stage').hidden&&!run)renderStudio()};im.src=e.target.result};
+  r.readAsDataURL(file);
+});
+
+/* ================= boot ================= */
+renderTabs();renderGrid();go('talk');window.__booted=true;
+DB.open().then(()=>{migrateOld();renderGrid()});
+</script>
+</body>
+</html>
